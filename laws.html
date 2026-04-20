@@ -3,1664 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Physics Laws &amp; Formulas</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    <title>Laws & Meanings | Physics Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary: #0047AB;
+            --secondary: #89E37B;
+            --accent: #FFD700;
+            --dark: #0a192f;
+            --light: #f8fafc;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --glass: rgba(255, 255, 255, 0.9);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
 
-:root {
-    --bg-color: #f0f4f8;
-    --card-bg: #ffffff;
-    --primary-color: #1a365d;
-    --accent-color: #e53e3e;
-    --text-color: #2d3748;
-    --text-light: #718096;
-    --border-radius: 12px;
-    --box-shadow: 0 4px 6px rgba(0,0,0,0.07);
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
 
-* { margin:0; padding:0; box-sizing:border-box; }
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
-    min-height: 100vh;
-}
-.container { max-width: 1100px; margin: 0 auto; padding: 20px; }
-.page-header {
-    background: linear-gradient(135deg, var(--primary-color), #2a4a7f);
-    color: white; padding: 35px 30px; border-radius: var(--border-radius);
-    margin-bottom: 20px; box-shadow: var(--box-shadow);
-    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
-}
-.page-header h1 { font-size: 28px; }
-.page-header p { opacity: 0.85; font-size: 14px; width: 100%; }
-.header-actions { display: flex; gap: 8px; }
-.header-btn {
-    padding: 8px 16px; border: 2px solid rgba(255,255,255,0.4); border-radius: 8px;
-    background: rgba(255,255,255,0.1); color: white; font-size: 13px;
-    font-weight: 600; cursor: pointer; transition: all 0.15s; white-space: nowrap;
-}
-.header-btn:hover { background: rgba(255,255,255,0.25); border-color: white; }
-.search-bar {
-    display: flex; gap: 0; margin-bottom: 16px; background: var(--card-bg);
-    border-radius: var(--border-radius); box-shadow: var(--box-shadow); overflow: hidden;
-}
-.search-bar input {
-    flex: 1; border: none; padding: 14px 18px; font-size: 15px;
-    outline: none; background: transparent; color: var(--text-color);
-}
-.search-bar input::placeholder { color: var(--text-light); }
-.search-count {
-    display: flex; align-items: center; padding: 0 18px; font-size: 13px;
-    color: var(--text-light); white-space: nowrap; border-left: 2px solid #e2e8f0;
-}
-.filter-bar { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; align-items: center; }
-.filter-btn {
-    padding: 8px 14px; border: 1px solid #e2e8f0; border-radius: 8px;
-    background: var(--card-bg); color: var(--text-light); font-size: 13px;
-    font-weight: 500; cursor: pointer; transition: all 0.15s;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-}
-.filter-btn:hover { border-color: var(--primary-color); color: var(--primary-color); }
-.filter-btn.active { background: var(--primary-color); color: white; border-color: var(--primary-color); }
-.filter-sep { width: 1px; height: 24px; background: #e2e8f0; margin: 0 4px; }
-.card-grid {
-    display: grid; grid-template-columns: repeat(auto-fill, minmax(500px, 1fr)); gap: 16px;
-}
-@media (max-width: 560px) { .card-grid { grid-template-columns: 1fr; } }
-.formula-card {
-    background: var(--card-bg); border-radius: var(--border-radius);
-    overflow: hidden; box-shadow: var(--box-shadow);
-    transition: transform 0.15s, box-shadow 0.15s; position: relative;
-}
-.formula-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
-.formula-card.highlight { animation: highlightPulse 1.5s ease; }
-@keyframes highlightPulse {
-    0% { box-shadow: 0 0 0 4px rgba(26,54,93,0.35); }
-    100% { box-shadow: 0 4px 6px rgba(0,0,0,0.07); }
-}
-.card-top { display: flex; align-items: center; padding: 14px 18px 0; gap: 8px; flex-wrap: wrap; }
-.card-topic {
-    display: inline-block; padding: 4px 12px; color: white;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-    text-transform: uppercase; border-radius: 6px;
-}
-.diff-badge {
-    display: inline-block; padding: 2px 8px; border-radius: 10px;
-    font-size: 10px; font-weight: 700; text-transform: uppercase;
-}
-.diff-easy { background: #c6f6d5; color: #276749; }
-.diff-medium { background: #fefcbf; color: #975a16; }
-.diff-hard { background: #fed7d7; color: #9b2c2c; }
-.fav-btn {
-    margin-left: auto; background: none; border: none; font-size: 22px;
-    cursor: pointer; opacity: 0.25; transition: opacity 0.2s, transform 0.2s;
-    line-height: 1; padding: 0 4px;
-}
-.formula-card:hover .fav-btn { opacity: 0.6; }
-.fav-btn.active { opacity: 1; transform: scale(1.15); }
-.card-title {
-    font-size: 17px; font-weight: 700; color: var(--primary-color);
-    padding: 6px 18px 0;
-}
-.formula-wrap { position: relative; margin: 10px 14px; }
-.card-formula {
-    font-size: 22px; font-weight: 700; color: var(--text-color);
-    padding: 14px 18px; letter-spacing: 0.5px;
-    background: linear-gradient(135deg, #f7fafc, #edf2f7);
-    border-radius: 8px; text-align: center; border: 1px solid #e2e8f0;
-}
-.card-formula .katex { font-size: 1.3em; }
-.copy-btn {
-    position: absolute; top: 8px; right: 8px; background: rgba(0,0,0,0.06);
-    border: none; border-radius: 6px; padding: 4px 10px; font-size: 11px;
-    cursor: pointer; opacity: 0; transition: opacity 0.2s, background 0.15s;
-    color: var(--text-light); font-weight: 600;
-}
-.formula-wrap:hover .copy-btn { opacity: 1; }
-.copy-btn:hover { background: rgba(0,0,0,0.12); }
-.copy-btn.copied { background: #38a169; color: white; opacity: 1; }
-.var-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.var-table thead th {
-    background: #f7fafc; padding: 8px 14px; text-align: left;
-    font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px;
-    color: var(--text-light); border-bottom: 2px solid #e2e8f0;
-}
-.var-table tbody td { padding: 6px 14px; border-bottom: 1px solid #f0f4f8; }
-.var-sym {
-    font-family: 'Courier New', monospace; font-weight: 700;
-    color: var(--accent-color); white-space: nowrap;
-}
-.var-desc { color: var(--text-color); }
-.var-unit { color: var(--text-light); font-size: 12px; text-align: right; }
-.card-conditions {
-    padding: 12px 18px; font-size: 12.5px; line-height: 1.6;
-    color: var(--text-color); background: #fffff0;
-    border-top: 1px solid #fefcbf; border-bottom: 1px solid #e2e8f0;
-}
-.example-details { margin: 0; }
-.example-details summary {
-    padding: 10px 18px; font-size: 13px; font-weight: 600;
-    cursor: pointer; color: var(--primary-color); transition: background 0.15s;
-}
-.example-details summary:hover { background: #f7fafc; }
-.example-pre {
-    padding: 12px 18px 16px; font-family: 'Courier New', monospace;
-    font-size: 12.5px; line-height: 1.7; color: var(--text-color);
-    background: #f0fff4; white-space: pre-wrap; word-break: break-word; margin: 0;
-}
-.related-links {
-    padding: 10px 18px; font-size: 12px; border-top: 1px solid #e2e8f0;
-    color: var(--text-light);
-}
-.related-links a { color: var(--primary-color); text-decoration: none; font-weight: 600; }
-.related-links a:hover { text-decoration: underline; }
-.no-results {
-    grid-column: 1 / -1; text-align: center; padding: 60px 20px;
-    color: var(--text-light); font-size: 16px;
-}
-.no-results span { font-size: 40px; display: block; margin-bottom: 12px; }
-.study-overlay {
-    display: none; position: fixed; inset: 0; z-index: 1000;
-    background: var(--bg-color); padding: 40px;
-    flex-direction: column; align-items: center; justify-content: center;
-}
-.study-overlay.active { display: flex; }
-.study-top {
-    position: absolute; top: 20px; left: 20px; right: 20px;
-    display: flex; align-items: center; gap: 12px;
-}
-.study-close {
-    padding: 10px 20px; background: #e53e3e; color: white; border: none;
-    border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
-}
-.study-progress { font-weight: 700; font-size: 15px; color: var(--text-color); }
-.study-score { font-size: 13px; color: var(--text-light); margin-left: auto; }
-.study-card {
-    background: var(--card-bg); border-radius: 16px; padding: 50px 60px;
-    max-width: 650px; width: 100%; text-align: center;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.12); min-height: 280px;
-    display: flex; flex-direction: column; justify-content: center;
-    cursor: pointer; transition: transform 0.2s; user-select: none;
-}
-.study-card:hover { transform: scale(1.01); }
-.study-topic-badge {
-    display: inline-block; padding: 4px 12px; color: white;
-    font-size: 11px; font-weight: 700; letter-spacing: 0.5px;
-    text-transform: uppercase; border-radius: 6px; margin-bottom: 12px;
-}
-.study-card .study-title { font-size: 22px; font-weight: 700; color: var(--primary-color); }
-.study-card .study-hint { margin-top: 20px; color: var(--text-light); font-size: 14px; }
-.study-card .study-answer { display: none; margin-top: 24px; }
-.study-card.flipped .study-answer { display: block; }
-.study-card.flipped .study-hint { display: none; }
-.study-card .study-formula { font-size: 30px; margin-bottom: 16px; }
-.study-card .study-formula .katex { font-size: 1.2em; }
-.study-card .study-cond {
-    font-size: 13px; color: var(--text-light); line-height: 1.6;
-    text-align: left; max-width: 500px; margin: 0 auto;
-    padding: 12px; background: #fffff0; border-radius: 8px;
-}
-.study-btns { display: flex; gap: 12px; margin-top: 28px; }
-.study-btn {
-    padding: 14px 32px; border: 2px solid transparent; border-radius: 10px;
-    font-size: 15px; font-weight: 700; cursor: pointer; transition: all 0.15s;
-}
-.study-btn.got { background: #38a169; color: white; }
-.study-btn.got:hover { background: #2f855a; }
-.study-btn.miss { background: white; color: #e53e3e; border-color: #e53e3e; }
-.study-btn.miss:hover { background: #fff5f5; }
-.study-done { text-align: center; }
-.study-done h2 { font-size: 28px; color: var(--primary-color); margin-bottom: 8px; }
-.study-done p { color: var(--text-light); margin-bottom: 20px; font-size: 15px; }
-.study-done .study-btn { margin: 6px; }
-@media print {
-    .search-bar, .filter-bar, .fav-btn, .copy-btn, .related-links,
-    .header-actions, .study-overlay { display: none !important; }
-    .formula-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
-    .example-details > summary { display: none; }
-    .example-details .example-pre { display: block !important; }
-    .page-header { background: #1a365d !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-    body { background: white; }
-    .container { max-width: 100%; padding: 0; }
-}
+        body {
+            background-color: var(--light);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 71, 171, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(137, 227, 123, 0.03) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        nav {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .back-home {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: transform 0.2s;
+        }
+
+        .back-home:hover {
+            transform: translateX(-5px);
+        }
+
+        header {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            letter-spacing: -0.05em;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto 6rem;
+            padding: 0 2rem;
+        }
+
+        .category-section {
+            margin-bottom: 5rem;
+        }
+
+        .category-title {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .category-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), transparent);
+            opacity: 0.2;
+        }
+
+        .laws-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .law-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .law-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+            border-color: var(--secondary);
+        }
+
+        .law-card h3 {
+            font-size: 1.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .law-card .formula {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 12px;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1.2rem;
+        }
+
+        .law-card .meaning {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+        }
+
+        .law-card .variables {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        .law-card .variables span {
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .law-card .variables b {
+            color: var(--dark);
+        }
+
+        footer {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
     </style>
 </head>
 <body>
-    <a href="index.html" style="display:inline-block;margin:20px 0 0 20px;padding:10px 22px;background:var(--primary-color);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;">← Back to Home</a>
-    
-    <div class="study-overlay" id="studyOverlay">
-        <div class="study-top">
-            <button class="study-close" onclick="closeStudy()">X Close</button>
-            <span class="study-progress" id="studyProgress">1 / 40</span>
-            <span class="study-score" id="studyScore"></span>
-        </div>
-        <div id="studyContent">
-            <div class="study-card" id="studyCard" onclick="flipStudyCard()">
-                <div class="study-topic-badge" id="studyTopic"></div>
-                <div class="study-title" id="studyTitle"></div>
-                <div class="study-hint">Click card or press Space to reveal</div>
-                <div class="study-answer">
-                    <div class="study-formula" id="studyFormula"></div>
-                    <div class="study-cond" id="studyCond"></div>
+
+    <nav>
+        <a href="index.html" class="back-home">
+            <i class="fas fa-arrow-left"></i> Back to Lab
+        </a>
+        <div style="font-weight: 800; color: var(--primary); font-size: 1.2rem;">PhysicsLab</div>
+    </nav>
+
+    <header>
+        <h1>Laws & Meanings</h1>
+        <p>A comprehensive repository of physical laws, principles, and mathematical foundations for high school physics.</p>
+    </header>
+
+    <div class="container">
+        
+        <!-- Classical Mechanics -->
+        <section class="category-section">
+            <h2 class="category-title"><i class="fas fa-cogs"></i> <span data-i18n="laws.mechanics">Classical Mechanics</span></h2>
+            <div class="laws-grid">
+                <div class="law-card">
+                    <h3 data-i18n="law.newton2.name">Newton's Second Law</h3>
+                    <div class="formula">F = m · a</div>
+                    <p class="meaning" data-i18n="law.newton2.meaning">The acceleration of an object is directly proportional to the net force acting on it and inversely proportional to its mass.</p>
+                    <div class="variables">
+                        <span><b>F</b>: <span data-i18n="law.newton2.F">Net force (N)</span></span>
+                        <span><b>m</b>: <span data-i18n="law.newton2.m">Mass (kg)</span></span>
+                        <span><b>a</b>: <span data-i18n="law.newton2.a">Acceleration (m/s²)</span></span>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h3 data-i18n="law.gravity.name">Law of Universal Gravitation</h3>
+                    <div class="formula">F = G · (m₁m₂) / r²</div>
+                    <p class="meaning" data-i18n="law.gravity.meaning">Every point mass attracts every other point mass by a force acting along the line intersecting both points.</p>
+                    <div class="variables">
+                        <span><b>G</b>: <span data-i18n="law.gravity.G">Gravitational constant</span></span>
+                        <span><b>m₁, m₂</b>: <span data-i18n="law.gravity.m">Masses (kg)</span></span>
+                        <span><b>r</b>: <span data-i18n="law.gravity.r">Distance (m)</span></span>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h3 data-i18n="law.work.name">Work-Energy Theorem</h3>
+                    <div class="formula">W = ΔK</div>
+                    <p class="meaning" data-i18n="law.work.meaning">The work done by the net force on a particle equals the change in its kinetic energy.</p>
+                    <div class="variables">
+                        <span><b>W</b>: <span data-i18n="law.work.W">Work (J)</span></span>
+                        <span><b>ΔK</b>: <span data-i18n="law.work.K">Change in Kinetic Energy (J)</span></span>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h3 data-i18n="law.momentum.name">Conservation of Momentum</h3>
+                    <div class="formula">p_initial = p_final</div>
+                    <p class="meaning" data-i18n="law.momentum.meaning">In an isolated system, the total momentum remains constant during a collision or interaction.</p>
+                    <div class="variables">
+                        <span><b>p</b>: <span data-i18n="law.momentum.p">Momentum (kg·m/s)</span></span>
+                        <span><b>p = m · v</b></span>
+                    </div>
                 </div>
             </div>
-            <div class="study-btns" id="studyBtns" style="display:none;">
-                <button class="study-btn miss" onclick="studyNext(true)">Missed</button>
-                <button class="study-btn got" onclick="studyNext(false)">Got it</button>
-            </div>
-        </div>
-        <div class="study-done" id="studyDone" style="display:none;">
-            <h2 id="studyDoneTitle">Round Complete!</h2>
-            <p id="studyDoneMsg"></p>
-            <button class="study-btn got" onclick="reviewMissed()">Review Missed</button>
-            <button class="study-btn miss" onclick="closeStudy()">Close</button>
-        </div>
-    </div>
-    <div class="container">
-        <div class="page-header">
-            <div>
-                <h1>Physics Laws &amp; Formulas</h1>
-                <p>49 formulas across 11 topics - search, filter, study, favorite.</p>
-            </div>
-            <div class="header-actions">
-                <button class="header-btn" onclick="window.print()">Print</button>
-                <button class="header-btn" onclick="startStudy()" style="background:rgba(255,255,255,0.2);">Study Mode</button>
-            </div>
-        </div>
+        </section>
 
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Search formulas, variables, topics...  (Ctrl+K)">
-            <div class="search-count" id="searchCount">49 formulas</div>
-        </div>
+        <!-- Thermodynamics -->
+        <section class="category-section">
+            <h2 class="category-title"><i class="fas fa-fire"></i> <span data-i18n="laws.thermo">Thermodynamics</span></h2>
+            <div class="laws-grid">
+                <div class="law-card">
+                    <h3 data-i18n="law.thermo1.name">First Law of Thermodynamics</h3>
+                    <div class="formula">ΔU = Q - W</div>
+                    <p class="meaning" data-i18n="law.thermo1.meaning">The change in internal energy of a system is equal to the heat added to the system minus the work done by the system.</p>
+                    <div class="variables">
+                        <span><b>ΔU</b>: <span data-i18n="law.thermo1.U">Internal energy change (J)</span></span>
+                        <span><b>Q</b>: <span data-i18n="law.thermo1.Q">Heat added (J)</span></span>
+                        <span><b>W</b>: <span data-i18n="law.thermo1.W">Work done (J)</span></span>
+                    </div>
+                </div>
 
-        <div class="filter-bar" id="filterBar">
-            <button class="filter-btn active" data-topic="all">All (49)</button><button class="filter-btn" data-topic="Kinematics" style="border-left:3px solid #e53e3e">Kinematics (5)</button><button class="filter-btn" data-topic="Dynamics" style="border-left:3px solid #dd6b20">Dynamics (6)</button><button class="filter-btn" data-topic="Energy & Work" style="border-left:3px solid #38a169">Energy & Work (8)</button><button class="filter-btn" data-topic="Momentum" style="border-left:3px solid #805ad5">Momentum (4)</button><button class="filter-btn" data-topic="Circular Motion" style="border-left:3px solid #d69e2e">Circular Motion (3)</button><button class="filter-btn" data-topic="Gravitation" style="border-left:3px solid #3182ce">Gravitation (4)</button><button class="filter-btn" data-topic="Waves" style="border-left:3px solid #00b5d8">Waves (4)</button><button class="filter-btn" data-topic="Electricity" style="border-left:3px solid #e53e3e">Electricity (7)</button><button class="filter-btn" data-topic="Magnetism" style="border-left:3px solid #6b46c1">Magnetism (2)</button><button class="filter-btn" data-topic="Thermodynamics" style="border-left:3px solid #c05621">Thermodynamics (2)</button><button class="filter-btn" data-topic="Modern Physics" style="border-left:3px solid #2b6cb0">Modern Physics (4)</button><div class="filter-sep"></div><button class="filter-btn" data-topic="__favorites__" style="border-left:3px solid #f6ad55">* Favorites</button>
-        </div>
+                <div class="law-card">
+                    <h3 data-i18n="law.ideal.name">Ideal Gas Law</h3>
+                    <div class="formula">PV = nRT</div>
+                    <p class="meaning" data-i18n="law.ideal.meaning">The state of an amount of gas is determined by its pressure, volume, and temperature.</p>
+                    <div class="variables">
+                        <span><b>P</b>: <span data-i18n="law.ideal.P">Pressure (Pa)</span></span>
+                        <span><b>V</b>: <span data-i18n="law.ideal.V">Volume (m³)</span></span>
+                        <span><b>n</b>: <span data-i18n="law.ideal.n">Amount of substance (mol)</span></span>
+                        <span><b>R</b>: <span data-i18n="law.ideal.R">Ideal gas constant</span></span>
+                        <span><b>T</b>: <span data-i18n="law.ideal.T">Temperature (K)</span></span>
+                    </div>
+                </div>
 
-        <div class="card-grid" id="cardGrid">
-            
-        <div class="formula-card" data-topic="Kinematics" data-idx="0">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Kinematics</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="0" onclick="toggleFav(0,this)">*</button>
-            </div>
-            <div class="card-title">Velocity</div>
-            <div class="formula-wrap" data-plain="v = v0 + at">
-                <div class="card-formula">$v = v_0 + at$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">v</td><td class="var-desc">final velocity</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">v0</td><td class="var-desc">initial velocity</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">a</td><td class="var-desc">acceleration</td><td class="var-unit">m/s^2</td></tr><tr><td class="var-sym">t</td><td class="var-desc">time</td><td class="var-unit">s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Constant acceleration. Does NOT work for changing acceleration.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A car starts from rest (v0=0) and accelerates at 3 m/s^2 for 4 s.
-v = 0 + 3(4) = 12 m/s</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(1);return false;">Displacement</a> &middot; <a href="#" onclick="goToCard(2);return false;">Velocity-Displacement</a></div>
-        </div>
-        <div class="formula-card" data-topic="Kinematics" data-idx="1">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Kinematics</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="1" onclick="toggleFav(1,this)">*</button>
-            </div>
-            <div class="card-title">Displacement</div>
-            <div class="formula-wrap" data-plain="dx = v0*t + 0.5*a*t^2">
-                <div class="card-formula">$\Delta x = v_0 t + \frac{1}{2}at^2$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">dx</td><td class="var-desc">displacement</td><td class="var-unit">m</td></tr><tr><td class="var-sym">v0</td><td class="var-desc">initial velocity</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">a</td><td class="var-desc">acceleration</td><td class="var-unit">m/s^2</td></tr><tr><td class="var-sym">t</td><td class="var-desc">time</td><td class="var-unit">s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Constant acceleration. Choose a consistent direction as positive.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A ball is thrown up at 20 m/s. How far in 2 s? (a = -9.8)
-dx = 20(2) + 0.5(-9.8)(4) = 40 - 19.6 = 20.4 m</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(0);return false;">Velocity</a> &middot; <a href="#" onclick="goToCard(4);return false;">Free Fall (no v0)</a></div>
-        </div>
-        <div class="formula-card" data-topic="Kinematics" data-idx="2">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Kinematics</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="2" onclick="toggleFav(2,this)">*</button>
-            </div>
-            <div class="card-title">Velocity-Displacement</div>
-            <div class="formula-wrap" data-plain="v^2 = v0^2 + 2*a*dx">
-                <div class="card-formula">$v^2 = v_0^2 + 2a\Delta x$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">v</td><td class="var-desc">final velocity</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">v0</td><td class="var-desc">initial velocity</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">a</td><td class="var-desc">acceleration</td><td class="var-unit">m/s^2</td></tr><tr><td class="var-sym">dx</td><td class="var-desc">displacement</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Constant acceleration. Useful when time is unknown. No t in the equation!</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A car brakes from 30 m/s over 45 m. Find deceleration.
-0 = 900 + 2a(45) -> a = -10 m/s^2</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(0);return false;">Velocity</a> &middot; <a href="#" onclick="goToCard(1);return false;">Displacement</a></div>
-        </div>
-        <div class="formula-card" data-topic="Kinematics" data-idx="3">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Kinematics</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="3" onclick="toggleFav(3,this)">*</button>
-            </div>
-            <div class="card-title">Average Velocity</div>
-            <div class="formula-wrap" data-plain="v_avg = (v0 + v) / 2">
-                <div class="card-formula">$\bar{v} = \frac{v_0 + v}{2}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">v_avg</td><td class="var-desc">average velocity</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">v0</td><td class="var-desc">initial velocity</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">v</td><td class="var-desc">final velocity</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">ONLY valid for constant acceleration. For non-constant a, use dx/dt instead.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A bike speeds up from 4 m/s to 12 m/s.
-v_avg = (4+12)/2 = 8 m/s</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(0);return false;">Velocity</a></div>
-        </div>
-        <div class="formula-card" data-topic="Kinematics" data-idx="4">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Kinematics</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="4" onclick="toggleFav(4,this)">*</button>
-            </div>
-            <div class="card-title">Free Fall (no v0)</div>
-            <div class="formula-wrap" data-plain="dy = 0.5*g*t^2">
-                <div class="card-formula">$\Delta y = \frac{1}{2}gt^2$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">dy</td><td class="var-desc">distance fallen</td><td class="var-unit">m</td></tr><tr><td class="var-sym">g</td><td class="var-desc">9.8 m/s^2</td><td class="var-unit">m/s^2</td></tr><tr><td class="var-sym">t</td><td class="var-desc">time</td><td class="var-unit">s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Object dropped from rest. Ignores air resistance. Down is positive.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A rock falls for 3 s.
-dy = 0.5(9.8)(9) = 44.1 m</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(1);return false;">Displacement</a></div>
-        </div>
-        <div class="formula-card" data-topic="Dynamics" data-idx="5">
-            <div class="card-top">
-                <span class="card-topic" style="background:#dd6b20">Dynamics</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="5" onclick="toggleFav(5,this)">*</button>
-            </div>
-            <div class="card-title">Newton's Second Law</div>
-            <div class="formula-wrap" data-plain="F = ma">
-                <div class="card-formula">$F = ma$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">F</td><td class="var-desc">net force</td><td class="var-unit">N</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">a</td><td class="var-desc">acceleration</td><td class="var-unit">m/s^2</td></tr></tbody>
-            </table>
-            <div class="card-conditions">F is the NET force (sum of all forces). Mass must be constant.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 5 kg box is pushed with 20 N. Friction is 5 N.
-F_net = 20 - 5 = 15 N
-a = 15/5 = 3 m/s^2</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(6);return false;">Weight</a> &middot; <a href="#" onclick="goToCard(7);return false;">Friction (Kinetic)</a></div>
-        </div>
-        <div class="formula-card" data-topic="Dynamics" data-idx="6">
-            <div class="card-top">
-                <span class="card-topic" style="background:#dd6b20">Dynamics</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="6" onclick="toggleFav(6,this)">*</button>
-            </div>
-            <div class="card-title">Weight</div>
-            <div class="formula-wrap" data-plain="W = mg">
-                <div class="card-formula">$W = mg$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">W</td><td class="var-desc">weight</td><td class="var-unit">N</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">g</td><td class="var-desc">9.8 m/s^2</td><td class="var-unit">m/s^2</td></tr></tbody>
-            </table>
-            <div class="card-conditions">On Earth's surface. g varies: Moon ~ 1.6, Mars ~ 3.7, Jupiter ~ 24.8 m/s^2</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 60 kg person on Earth:
-W = 60 x 9.8 = 588 N</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(5);return false;">Newton's Second Law</a> &middot; <a href="#" onclick="goToCard(10);return false;">Apparent Weight (Elevator)</a></div>
-        </div>
-        <div class="formula-card" data-topic="Dynamics" data-idx="7">
-            <div class="card-top">
-                <span class="card-topic" style="background:#dd6b20">Dynamics</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="7" onclick="toggleFav(7,this)">*</button>
-            </div>
-            <div class="card-title">Friction (Kinetic)</div>
-            <div class="formula-wrap" data-plain="f_k = mu_k * N">
-                <div class="card-formula">$f_k = \mu_k N$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">f_k</td><td class="var-desc">kinetic friction</td><td class="var-unit">N</td></tr><tr><td class="var-sym">mu_k</td><td class="var-desc">coefficient of kinetic friction</td><td class="var-unit">dimensionless</td></tr><tr><td class="var-sym">N</td><td class="var-desc">normal force</td><td class="var-unit">N</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Object is already moving. mu_k < mu_s always. N != mg on inclined planes.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 10 kg crate on a floor (mu_k = 0.3):
-N = mg = 98 N
-f_k = 0.3 x 98 = 29.4 N</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(8);return false;">Friction (Static Max)</a> &middot; <a href="#" onclick="goToCard(9);return false;">Inclined Plane Net Force</a></div>
-        </div>
-        <div class="formula-card" data-topic="Dynamics" data-idx="8">
-            <div class="card-top">
-                <span class="card-topic" style="background:#dd6b20">Dynamics</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="8" onclick="toggleFav(8,this)">*</button>
-            </div>
-            <div class="card-title">Friction (Static Max)</div>
-            <div class="formula-wrap" data-plain="f_s <= mu_s * N">
-                <div class="card-formula">$f_s \leq \mu_s N$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">f_s</td><td class="var-desc">static friction</td><td class="var-unit">N</td></tr><tr><td class="var-sym">mu_s</td><td class="var-desc">coefficient of static friction</td><td class="var-unit">dimensionless</td></tr><tr><td class="var-sym">N</td><td class="var-desc">normal force</td><td class="var-unit">N</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Object is at rest. The <= means static friction adjusts up to a MAX. It's not a fixed value.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 5 kg box on a ramp (mu_s = 0.5, theta = 30 deg):
-N = mg cos30 = 42.5 N
-f_s_max = 0.5 x 42.5 = 21.2 N
-mg sin30 = 24.5 N -> it slides!</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(7);return false;">Friction (Kinetic)</a> &middot; <a href="#" onclick="goToCard(9);return false;">Inclined Plane Net Force</a></div>
-        </div>
-        <div class="formula-card" data-topic="Dynamics" data-idx="9">
-            <div class="card-top">
-                <span class="card-topic" style="background:#dd6b20">Dynamics</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="9" onclick="toggleFav(9,this)">*</button>
-            </div>
-            <div class="card-title">Inclined Plane Net Force</div>
-            <div class="formula-wrap" data-plain="F_parallel = mg*sin(theta)">
-                <div class="card-formula">$F_{\parallel} = mg\sin\theta$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">F_parallel</td><td class="var-desc">force parallel to ramp</td><td class="var-unit">N</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">g</td><td class="var-desc">9.8 m/s^2</td><td class="var-unit">m/s^2</td></tr><tr><td class="var-sym">theta</td><td class="var-desc">incline angle</td><td class="var-unit">deg</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Component of weight along the ramp. Normal force on ramp: N = mg cos(theta).</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 2 kg block on a 30 deg ramp:
-F_parallel = 2 x 9.8 x sin30 = 9.8 N down the ramp</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(7);return false;">Friction (Kinetic)</a> &middot; <a href="#" onclick="goToCard(5);return false;">Newton's Second Law</a></div>
-        </div>
-        <div class="formula-card" data-topic="Dynamics" data-idx="10">
-            <div class="card-top">
-                <span class="card-topic" style="background:#dd6b20">Dynamics</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="10" onclick="toggleFav(10,this)">*</button>
-            </div>
-            <div class="card-title">Apparent Weight (Elevator)</div>
-            <div class="formula-wrap" data-plain="N = m(g +/- a)">
-                <div class="card-formula">$N = m(g \pm a)$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">N</td><td class="var-desc">normal force (scale reading)</td><td class="var-unit">N</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">g</td><td class="var-desc">9.8 m/s^2</td><td class="var-unit">m/s^2</td></tr><tr><td class="var-sym">a</td><td class="var-desc">elevator acceleration</td><td class="var-unit">m/s^2</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Use + when accelerating UP, - when accelerating DOWN. Constant velocity -> N = mg.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">60 kg person, elevator accelerates up at 2 m/s^2:
-N = 60(9.8 + 2) = 708 N (feels heavier)</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(6);return false;">Weight</a> &middot; <a href="#" onclick="goToCard(5);return false;">Newton's Second Law</a></div>
-        </div>
-        <div class="formula-card" data-topic="Energy & Work" data-idx="11">
-            <div class="card-top">
-                <span class="card-topic" style="background:#38a169">Energy & Work</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="11" onclick="toggleFav(11,this)">*</button>
-            </div>
-            <div class="card-title">Kinetic Energy</div>
-            <div class="formula-wrap" data-plain="KE = 0.5*m*v^2">
-                <div class="card-formula">$KE = \frac{1}{2}mv^2$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">KE</td><td class="var-desc">kinetic energy</td><td class="var-unit">J</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">v</td><td class="var-desc">speed</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">KE is always positive (depends on v^2, not v). Double the speed -> 4x the energy!</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 1000 kg car at 20 m/s:
-KE = 0.5(1000)(400) = 200,000 J = 200 kJ</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(14);return false;">Work-Energy Theorem</a> &middot; <a href="#" onclick="goToCard(15);return false;">Conservation of Energy</a></div>
-        </div>
-        <div class="formula-card" data-topic="Energy & Work" data-idx="12">
-            <div class="card-top">
-                <span class="card-topic" style="background:#38a169">Energy & Work</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="12" onclick="toggleFav(12,this)">*</button>
-            </div>
-            <div class="card-title">Gravitational PE</div>
-            <div class="formula-wrap" data-plain="PE = mgh">
-                <div class="card-formula">$PE = mgh$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">PE</td><td class="var-desc">gravitational potential energy</td><td class="var-unit">J</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">g</td><td class="var-desc">9.8 m/s^2</td><td class="var-unit">m/s^2</td></tr><tr><td class="var-sym">h</td><td class="var-desc">height above reference</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">h depends on where you set h = 0. Only dPE matters physically. Near Earth's surface only.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 0.5 kg ball at 10 m height:
-PE = 0.5 x 9.8 x 10 = 49 J</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(15);return false;">Conservation of Energy</a> &middot; <a href="#" onclick="goToCard(11);return false;">Kinetic Energy</a></div>
-        </div>
-        <div class="formula-card" data-topic="Energy & Work" data-idx="13">
-            <div class="card-top">
-                <span class="card-topic" style="background:#38a169">Energy & Work</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="13" onclick="toggleFav(13,this)">*</button>
-            </div>
-            <div class="card-title">Work</div>
-            <div class="formula-wrap" data-plain="W = F*d*cos(theta)">
-                <div class="card-formula">$W = Fd\cos\theta$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">W</td><td class="var-desc">work</td><td class="var-unit">J</td></tr><tr><td class="var-sym">F</td><td class="var-desc">force</td><td class="var-unit">N</td></tr><tr><td class="var-sym">d</td><td class="var-desc">displacement</td><td class="var-unit">m</td></tr><tr><td class="var-sym">theta</td><td class="var-desc">angle between F and d</td><td class="var-unit">deg</td></tr></tbody>
-            </table>
-            <div class="card-conditions">theta = 0 deg -> max work. theta = 90 deg -> zero work. theta = 180 deg -> negative work.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">Push a crate with 50 N at 30 deg below horizontal for 6 m:
-W = 50 x 6 x cos30 = 259.8 J</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(14);return false;">Work-Energy Theorem</a> &middot; <a href="#" onclick="goToCard(18);return false;">Power</a></div>
-        </div>
-        <div class="formula-card" data-topic="Energy & Work" data-idx="14">
-            <div class="card-top">
-                <span class="card-topic" style="background:#38a169">Energy & Work</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="14" onclick="toggleFav(14,this)">*</button>
-            </div>
-            <div class="card-title">Work-Energy Theorem</div>
-            <div class="formula-wrap" data-plain="W_net = dKE = 0.5*m*v^2 - 0.5*m*v0^2">
-                <div class="card-formula">$W_{net} = \Delta KE = \frac{1}{2}mv^2 - \frac{1}{2}mv_0^2$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">W_net</td><td class="var-desc">net work done</td><td class="var-unit">J</td></tr><tr><td class="var-sym">dKE</td><td class="var-desc">change in kinetic energy</td><td class="var-unit">J</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">v</td><td class="var-desc">final speed</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">v0</td><td class="var-desc">initial speed</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">One of the most powerful theorems. Bypasses force analysis entirely - connect work to speed directly.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 2 kg block speeds up from 3 m/s to 7 m/s.
-dKE = 0.5(2)(49) - 0.5(2)(9) = 49 - 9 = 40 J
-So W_net = 40 J</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(11);return false;">Kinetic Energy</a> &middot; <a href="#" onclick="goToCard(13);return false;">Work</a></div>
-        </div>
-        <div class="formula-card" data-topic="Energy & Work" data-idx="15">
-            <div class="card-top">
-                <span class="card-topic" style="background:#38a169">Energy & Work</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="15" onclick="toggleFav(15,this)">*</button>
-            </div>
-            <div class="card-title">Conservation of Energy</div>
-            <div class="formula-wrap" data-plain="KE1 + PE1 = KE2 + PE2">
-                <div class="card-formula">$KE_1 + PE_1 = KE_2 + PE_2$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">KE1</td><td class="var-desc">initial kinetic energy</td><td class="var-unit">J</td></tr><tr><td class="var-sym">PE1</td><td class="var-desc">initial potential energy</td><td class="var-unit">J</td></tr><tr><td class="var-sym">KE2</td><td class="var-desc">final kinetic energy</td><td class="var-unit">J</td></tr><tr><td class="var-sym">PE2</td><td class="var-desc">final potential energy</td><td class="var-unit">J</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Only when NO friction or non-conservative forces. If friction exists: KE1 + PE1 + W_nc = KE2 + PE2</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 1 kg ball dropped from 5 m (v0 = 0):
-0 + 49 = 0.5(1)v^2 + 0
-v = sqrt(98) = 9.9 m/s</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(11);return false;">Kinetic Energy</a> &middot; <a href="#" onclick="goToCard(12);return false;">Gravitational PE</a> &middot; <a href="#" onclick="goToCard(16);return false;">Spring Potential Energy</a></div>
-        </div>
-        <div class="formula-card" data-topic="Energy & Work" data-idx="16">
-            <div class="card-top">
-                <span class="card-topic" style="background:#38a169">Energy & Work</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="16" onclick="toggleFav(16,this)">*</button>
-            </div>
-            <div class="card-title">Spring Potential Energy</div>
-            <div class="formula-wrap" data-plain="PE_spring = 0.5*k*x^2">
-                <div class="card-formula">$PE_s = \frac{1}{2}kx^2$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">PE_spring</td><td class="var-desc">spring potential energy</td><td class="var-unit">J</td></tr><tr><td class="var-sym">k</td><td class="var-desc">spring constant</td><td class="var-unit">N/m</td></tr><tr><td class="var-sym">x</td><td class="var-desc">displacement from equilibrium</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">x is measured from the relaxed length, not from the stretched end. Works for compression too.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A spring (k = 200 N/m) compressed 0.1 m:
-PE_spring = 0.5(200)(0.01) = 1 J</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(17);return false;">Hooke's Law</a> &middot; <a href="#" onclick="goToCard(15);return false;">Conservation of Energy</a></div>
-        </div>
-        <div class="formula-card" data-topic="Energy & Work" data-idx="17">
-            <div class="card-top">
-                <span class="card-topic" style="background:#38a169">Energy & Work</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="17" onclick="toggleFav(17,this)">*</button>
-            </div>
-            <div class="card-title">Hooke's Law</div>
-            <div class="formula-wrap" data-plain="F_spring = -k*x">
-                <div class="card-formula">$F_s = -kx$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">F_spring</td><td class="var-desc">spring force</td><td class="var-unit">N</td></tr><tr><td class="var-sym">k</td><td class="var-desc">spring constant</td><td class="var-unit">N/m</td></tr><tr><td class="var-sym">x</td><td class="var-desc">displacement from equilibrium</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">The negative sign means the force opposes displacement (restoring force). Only valid within elastic limit.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A spring (k = 500 N/m) stretched 0.05 m:
-F_spring = -500(0.05) = -25 N (pulls back)</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(16);return false;">Spring Potential Energy</a></div>
-        </div>
-        <div class="formula-card" data-topic="Energy & Work" data-idx="18">
-            <div class="card-top">
-                <span class="card-topic" style="background:#38a169">Energy & Work</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="18" onclick="toggleFav(18,this)">*</button>
-            </div>
-            <div class="card-title">Power</div>
-            <div class="formula-wrap" data-plain="P = W/t = F*v">
-                <div class="card-formula">$P = \frac{W}{t} = Fv$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">P</td><td class="var-desc">power</td><td class="var-unit">W</td></tr><tr><td class="var-sym">W</td><td class="var-desc">work</td><td class="var-unit">J</td></tr><tr><td class="var-sym">t</td><td class="var-desc">time</td><td class="var-unit">s</td></tr><tr><td class="var-sym">F</td><td class="var-desc">force</td><td class="var-unit">N</td></tr><tr><td class="var-sym">v</td><td class="var-desc">velocity</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">P = Fv only when F and v are in the same direction. 1 hp = 746 W.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A motor lifts 500 kg at 2 m/s:
-P = Fv = (500x9.8)(2) = 9,800 W ~ 13.1 hp</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(13);return false;">Work</a></div>
-        </div>
-        <div class="formula-card" data-topic="Momentum" data-idx="19">
-            <div class="card-top">
-                <span class="card-topic" style="background:#805ad5">Momentum</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="19" onclick="toggleFav(19,this)">*</button>
-            </div>
-            <div class="card-title">Momentum</div>
-            <div class="formula-wrap" data-plain="p = mv">
-                <div class="card-formula">$p = mv$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">p</td><td class="var-desc">momentum</td><td class="var-unit">kg*m/s</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">v</td><td class="var-desc">velocity</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Momentum is a vector (has direction). Always conserved in a closed system with no external forces.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 0.15 kg baseball at 40 m/s:
-p = 0.15 x 40 = 6 kg*m/s</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(20);return false;">Impulse-Momentum Theorem</a> &middot; <a href="#" onclick="goToCard(21);return false;">Conservation of Momentum</a></div>
-        </div>
-        <div class="formula-card" data-topic="Momentum" data-idx="20">
-            <div class="card-top">
-                <span class="card-topic" style="background:#805ad5">Momentum</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="20" onclick="toggleFav(20,this)">*</button>
-            </div>
-            <div class="card-title">Impulse-Momentum Theorem</div>
-            <div class="formula-wrap" data-plain="F*dt = dp = m*dv">
-                <div class="card-formula">$F\Delta t = \Delta p = m\Delta v$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">F</td><td class="var-desc">average force</td><td class="var-unit">N</td></tr><tr><td class="var-sym">dt</td><td class="var-desc">time interval</td><td class="var-unit">s</td></tr><tr><td class="var-sym">dp</td><td class="var-desc">change in momentum</td><td class="var-unit">kg*m/s</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">dv</td><td class="var-desc">change in velocity</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">This is WHY airbags work: they increase dt, so F decreases for the same dp. Same impulse, less force.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 70 kg person stops from 10 m/s.
-Without airbag (dt=0.01s): F = 70(10)/0.01 = 70,000 N
-With airbag (dt=0.5s):  F = 70(10)/0.5 = 1,400 N</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(19);return false;">Momentum</a> &middot; <a href="#" onclick="goToCard(21);return false;">Conservation of Momentum</a></div>
-        </div>
-        <div class="formula-card" data-topic="Momentum" data-idx="21">
-            <div class="card-top">
-                <span class="card-topic" style="background:#805ad5">Momentum</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="21" onclick="toggleFav(21,this)">*</button>
-            </div>
-            <div class="card-title">Conservation of Momentum</div>
-            <div class="formula-wrap" data-plain="m1*v1i + m2*v2i = m1*v1f + m2*v2f">
-                <div class="card-formula">$m_1 v_{1i} + m_2 v_{2i} = m_1 v_{1f} + m_2 v_{2f}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">m1,m2</td><td class="var-desc">masses</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">v1i,v2i</td><td class="var-desc">initial velocities</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">v1f,v2f</td><td class="var-desc">final velocities</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">NO external net force. Works for all collisions. Velocities include sign (+/- for direction).</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 2 kg ball (3 m/s) hits a 1 kg ball at rest. They stick together:
-2(3) + 1(0) = (2+1)v_f
-v_f = 6/3 = 2 m/s</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(19);return false;">Momentum</a> &middot; <a href="#" onclick="goToCard(22);return false;">Perfectly Elastic Collision (v1f)</a></div>
-        </div>
-        <div class="formula-card" data-topic="Momentum" data-idx="22">
-            <div class="card-top">
-                <span class="card-topic" style="background:#805ad5">Momentum</span>
-                <span class="diff-badge diff-hard">hard</span>
-                <button class="fav-btn" data-idx="22" onclick="toggleFav(22,this)">*</button>
-            </div>
-            <div class="card-title">Perfectly Elastic Collision (v1f)</div>
-            <div class="formula-wrap" data-plain="v1f = ((m1-m2)*v1i + 2*m2*v2i) / (m1+m2)">
-                <div class="card-formula">$v_{1f} = \frac{(m_1 - m_2)v_{1i} + 2m_2 v_{2i}}{m_1 + m_2}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">v1f</td><td class="var-desc">final velocity of object 1</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">m1,m2</td><td class="var-desc">masses</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">v1i,v2i</td><td class="var-desc">initial velocities</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">KE is conserved (perfectly elastic). Swap v1/v2 and m1/m2 for v2f. If m1=m2, they swap velocities!</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">Equal masses, m1=m2=2kg, v1i=5, v2i=0:
-v1f = [(0)(5)+2(2)(0)]/4 = 0
-v2f = 5 m/s (they swap!)</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(21);return false;">Conservation of Momentum</a></div>
-        </div>
-        <div class="formula-card" data-topic="Circular Motion" data-idx="23">
-            <div class="card-top">
-                <span class="card-topic" style="background:#d69e2e">Circular Motion</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="23" onclick="toggleFav(23,this)">*</button>
-            </div>
-            <div class="card-title">Centripetal Acceleration</div>
-            <div class="formula-wrap" data-plain="a_c = v^2 / r">
-                <div class="card-formula">$a_c = \frac{v^2}{r}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">a_c</td><td class="var-desc">centripetal acceleration</td><td class="var-unit">m/s^2</td></tr><tr><td class="var-sym">v</td><td class="var-desc">speed</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">r</td><td class="var-desc">radius</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Always points toward the CENTER. It changes direction, not speed. Not a 'new' force.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A car at 15 m/s on a 50 m radius curve:
-a_c = 225/50 = 4.5 m/s^2 toward center</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(24);return false;">Centripetal Force</a> &middot; <a href="#" onclick="goToCard(25);return false;">Period & Frequency</a></div>
-        </div>
-        <div class="formula-card" data-topic="Circular Motion" data-idx="24">
-            <div class="card-top">
-                <span class="card-topic" style="background:#d69e2e">Circular Motion</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="24" onclick="toggleFav(24,this)">*</button>
-            </div>
-            <div class="card-title">Centripetal Force</div>
-            <div class="formula-wrap" data-plain="F_c = m*v^2 / r">
-                <div class="card-formula">$F_c = \frac{mv^2}{r}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">F_c</td><td class="var-desc">centripetal force</td><td class="var-unit">N</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">v</td><td class="var-desc">speed</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">r</td><td class="var-desc">radius</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">F_c is NOT a new force. It's the net inward force provided by tension, friction, gravity, etc.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 0.5 kg ball on a 1 m string at 4 m/s:
-F_c = 0.5(16)/1 = 8 N (tension in string)</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(23);return false;">Centripetal Acceleration</a></div>
-        </div>
-        <div class="formula-card" data-topic="Circular Motion" data-idx="25">
-            <div class="card-top">
-                <span class="card-topic" style="background:#d69e2e">Circular Motion</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="25" onclick="toggleFav(25,this)">*</button>
-            </div>
-            <div class="card-title">Period & Frequency</div>
-            <div class="formula-wrap" data-plain="T = 2*pi*r/v    f = 1/T">
-                <div class="card-formula">$T = \frac{2\pi r}{v} \qquad f = \frac{1}{T}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">T</td><td class="var-desc">period (time for one revolution)</td><td class="var-unit">s</td></tr><tr><td class="var-sym">r</td><td class="var-desc">radius</td><td class="var-unit">m</td></tr><tr><td class="var-sym">v</td><td class="var-desc">speed</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">f</td><td class="var-desc">frequency</td><td class="var-unit">Hz</td></tr></tbody>
-            </table>
-            <div class="card-conditions">T and f are inverses. omega = 2*pi*f = 2*pi/T = v/r.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A satellite at 7000 m/s, r = 6.8e6 m:
-T = 2*pi*(6.8e6)/7000 ~ 6,105 s ~ 102 min</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(23);return false;">Centripetal Acceleration</a></div>
-        </div>
-        <div class="formula-card" data-topic="Gravitation" data-idx="26">
-            <div class="card-top">
-                <span class="card-topic" style="background:#3182ce">Gravitation</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="26" onclick="toggleFav(26,this)">*</button>
-            </div>
-            <div class="card-title">Newton's Law of Gravitation</div>
-            <div class="formula-wrap" data-plain="F = G*M*m / r^2">
-                <div class="card-formula">$F = \frac{GMm}{r^2}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">F</td><td class="var-desc">gravitational force</td><td class="var-unit">N</td></tr><tr><td class="var-sym">G</td><td class="var-desc">6.674e-11</td><td class="var-unit">N*m^2/kg^2</td></tr><tr><td class="var-sym">M,m</td><td class="var-desc">masses</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">r</td><td class="var-desc">distance between centers</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Point masses or spheres. r is center-to-center, NOT surface-to-surface. Always attractive.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">Earth (5.97e24 kg) and Moon (7.35e22 kg), r = 3.84e8 m:
-F = 6.674e-11 x 5.97e24 x 7.35e22 / (3.84e8)^2 ~ 1.98e20 N</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(27);return false;">Gravitational Field Strength</a> &middot; <a href="#" onclick="goToCard(28);return false;">Orbital Velocity</a></div>
-        </div>
-        <div class="formula-card" data-topic="Gravitation" data-idx="27">
-            <div class="card-top">
-                <span class="card-topic" style="background:#3182ce">Gravitation</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="27" onclick="toggleFav(27,this)">*</button>
-            </div>
-            <div class="card-title">Gravitational Field Strength</div>
-            <div class="formula-wrap" data-plain="g = G*M / r^2">
-                <div class="card-formula">$g = \frac{GM}{r^2}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">g</td><td class="var-desc">gravitational field strength</td><td class="var-unit">m/s^2</td></tr><tr><td class="var-sym">G</td><td class="var-desc">6.674e-11</td><td class="var-unit">N*m^2/kg^2</td></tr><tr><td class="var-sym">M</td><td class="var-desc">mass of planet</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">r</td><td class="var-desc">distance from center</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">This IS acceleration due to gravity. At surface: r = planet radius. g decreases with altitude.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">At 400 km above Earth (r = 6.77e6 m):
-g = 6.674e-11 x 5.97e24 / (6.77e6)^2 ~ 8.69 m/s^2 (not 9.8!)</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(26);return false;">Newton's Law of Gravitation</a> &middot; <a href="#" onclick="goToCard(28);return false;">Orbital Velocity</a></div>
-        </div>
-        <div class="formula-card" data-topic="Gravitation" data-idx="28">
-            <div class="card-top">
-                <span class="card-topic" style="background:#3182ce">Gravitation</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="28" onclick="toggleFav(28,this)">*</button>
-            </div>
-            <div class="card-title">Orbital Velocity</div>
-            <div class="formula-wrap" data-plain="v = sqrt(G*M / r)">
-                <div class="card-formula">$v = \sqrt{\frac{GM}{r}}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">v</td><td class="var-desc">orbital speed</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">G</td><td class="var-desc">6.674e-11</td><td class="var-unit">N*m^2/kg^2</td></tr><tr><td class="var-sym">M</td><td class="var-desc">mass of central body</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">r</td><td class="var-desc">orbital radius</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Circular orbit only. Set F_gravity = F_centripetal to derive. Higher orbit -> slower speed!</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">ISS at r = 6.77e6 m:
-v = sqrt(6.674e-11 x 5.97e24 / 6.77e6) ~ 7,672 m/s ~ 27,600 km/h</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(29);return false;">Escape Velocity</a> &middot; <a href="#" onclick="goToCard(27);return false;">Gravitational Field Strength</a></div>
-        </div>
-        <div class="formula-card" data-topic="Gravitation" data-idx="29">
-            <div class="card-top">
-                <span class="card-topic" style="background:#3182ce">Gravitation</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="29" onclick="toggleFav(29,this)">*</button>
-            </div>
-            <div class="card-title">Escape Velocity</div>
-            <div class="formula-wrap" data-plain="v_escape = sqrt(2*G*M / r)">
-                <div class="card-formula">$v_e = \sqrt{\frac{2GM}{r}}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">v_escape</td><td class="var-desc">escape velocity</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">G</td><td class="var-desc">6.674e-11</td><td class="var-unit">N*m^2/kg^2</td></tr><tr><td class="var-sym">M</td><td class="var-desc">mass of planet</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">r</td><td class="var-desc">radius of planet</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Minimum speed to escape gravity with NO further thrust. v_e = sqrt(2) x v_orbital.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">Earth: v_escape = sqrt(2 x 6.674e-11 x 5.97e24 / 6.37e6)
-= sqrt(1.25e8) ~ 11,186 m/s ~ 11.2 km/s</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(28);return false;">Orbital Velocity</a></div>
-        </div>
-        <div class="formula-card" data-topic="Waves" data-idx="30">
-            <div class="card-top">
-                <span class="card-topic" style="background:#00b5d8">Waves</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="30" onclick="toggleFav(30,this)">*</button>
-            </div>
-            <div class="card-title">Wave Speed</div>
-            <div class="formula-wrap" data-plain="v = f*lambda">
-                <div class="card-formula">$v = f\lambda$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">v</td><td class="var-desc">wave speed</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">f</td><td class="var-desc">frequency</td><td class="var-unit">Hz</td></tr><tr><td class="var-sym">lambda</td><td class="var-desc">wavelength</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Applies to ALL waves (sound, light, water). Speed depends on the MEDIUM, not the wave source.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 440 Hz sound wave in air (v = 343 m/s):
-lambda = 343/440 = 0.78 m</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(31);return false;">Wave Equation</a> &middot; <a href="#" onclick="goToCard(33);return false;">Standing Wave Frequencies</a></div>
-        </div>
-        <div class="formula-card" data-topic="Waves" data-idx="31">
-            <div class="card-top">
-                <span class="card-topic" style="background:#00b5d8">Waves</span>
-                <span class="diff-badge diff-hard">hard</span>
-                <button class="fav-btn" data-idx="31" onclick="toggleFav(31,this)">*</button>
-            </div>
-            <div class="card-title">Wave Equation</div>
-            <div class="formula-wrap" data-plain="y(x,t) = A*sin(kx - omega*t)">
-                <div class="card-formula">$y(x,t) = A\sin(kx - \omega t)$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">y</td><td class="var-desc">displacement</td><td class="var-unit">m</td></tr><tr><td class="var-sym">A</td><td class="var-desc">amplitude</td><td class="var-unit">m</td></tr><tr><td class="var-sym">k</td><td class="var-desc">2*pi/lambda (wave number)</td><td class="var-unit">rad/m</td></tr><tr><td class="var-sym">omega</td><td class="var-desc">2*pi*f (angular frequency)</td><td class="var-unit">rad/s</td></tr><tr><td class="var-sym">x</td><td class="var-desc">position</td><td class="var-unit">m</td></tr><tr><td class="var-sym">t</td><td class="var-desc">time</td><td class="var-unit">s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Traveling wave moving in +x direction. Use +omega*t for -x direction.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A = 0.05 m, f = 10 Hz, lambda = 2 m:
-k = pi, omega = 20*pi
-y = 0.05 sin(pi*x - 20*pi*t)</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(30);return false;">Wave Speed</a></div>
-        </div>
-        <div class="formula-card" data-topic="Waves" data-idx="32">
-            <div class="card-top">
-                <span class="card-topic" style="background:#00b5d8">Waves</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="32" onclick="toggleFav(32,this)">*</button>
-            </div>
-            <div class="card-title">Speed of Sound</div>
-            <div class="formula-wrap" data-plain="v = sqrt(B / rho)">
-                <div class="card-formula">$v = \sqrt{\frac{B}{\rho}}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">v</td><td class="var-desc">speed of sound</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">B</td><td class="var-desc">bulk modulus of medium</td><td class="var-unit">Pa</td></tr><tr><td class="var-sym">rho</td><td class="var-desc">density of medium</td><td class="var-unit">kg/m^3</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Depends on medium properties, NOT frequency or amplitude. Faster in solids > liquids > gases.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">Air at 20 C: v ~ 343 m/s
-Water: v ~ 1,480 m/s
-Steel: v ~ 5,960 m/s</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(30);return false;">Wave Speed</a></div>
-        </div>
-        <div class="formula-card" data-topic="Waves" data-idx="33">
-            <div class="card-top">
-                <span class="card-topic" style="background:#00b5d8">Waves</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="33" onclick="toggleFav(33,this)">*</button>
-            </div>
-            <div class="card-title">Standing Wave Frequencies</div>
-            <div class="formula-wrap" data-plain="f_n = n*v / (2*L)  [string fixed both ends]">
-                <div class="card-formula">$f_n = \frac{nv}{2L} \quad \text{[string fixed both ends]}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">f_n</td><td class="var-desc">nth harmonic frequency</td><td class="var-unit">Hz</td></tr><tr><td class="var-sym">n</td><td class="var-desc">harmonic number (1,2,3...)</td><td class="var-unit">-</td></tr><tr><td class="var-sym">v</td><td class="var-desc">wave speed on string</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">L</td><td class="var-desc">string length</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">n=1 is the fundamental. Only odd harmonics for pipes closed at one end: f_n = n*v/(4L), n=1,3,5...</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 0.65 m guitar string (v = 293 m/s):
-f1 = 1 x 293/(2x0.65) = 225 Hz (about B3)</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(30);return false;">Wave Speed</a> &middot; <a href="#" onclick="goToCard(31);return false;">Wave Equation</a></div>
-        </div>
-        <div class="formula-card" data-topic="Electricity" data-idx="34">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Electricity</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="34" onclick="toggleFav(34,this)">*</button>
-            </div>
-            <div class="card-title">Coulomb's Law</div>
-            <div class="formula-wrap" data-plain="F = k*|q1*q2| / r^2">
-                <div class="card-formula">$F = \frac{k|q_1 q_2|}{r^2}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">F</td><td class="var-desc">electrostatic force</td><td class="var-unit">N</td></tr><tr><td class="var-sym">k</td><td class="var-desc">8.99e9</td><td class="var-unit">N*m^2/C^2</td></tr><tr><td class="var-sym">q1,q2</td><td class="var-desc">charges</td><td class="var-unit">C</td></tr><tr><td class="var-sym">r</td><td class="var-desc">distance between charges</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Point charges or spheres. Like charges repel. Opposite attract. r is center-to-center.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">Two 1 uC charges, 0.1 m apart:
-F = 8.99e9 x 1e-6 x 1e-6 / 0.01 = 0.899 N (repulsive)</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(35);return false;">Electric Field</a></div>
-        </div>
-        <div class="formula-card" data-topic="Electricity" data-idx="35">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Electricity</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="35" onclick="toggleFav(35,this)">*</button>
-            </div>
-            <div class="card-title">Electric Field</div>
-            <div class="formula-wrap" data-plain="E = F/q = k*Q / r^2">
-                <div class="card-formula">$E = \frac{F}{q} = \frac{kQ}{r^2}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">E</td><td class="var-desc">electric field strength</td><td class="var-unit">N/C or V/m</td></tr><tr><td class="var-sym">F</td><td class="var-desc">force on test charge</td><td class="var-unit">N</td></tr><tr><td class="var-sym">q</td><td class="var-desc">test charge</td><td class="var-unit">C</td></tr><tr><td class="var-sym">Q</td><td class="var-desc">source charge</td><td class="var-unit">C</td></tr><tr><td class="var-sym">r</td><td class="var-desc">distance from source</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">E points AWAY from positive, TOWARD negative. Superposition: add vectors.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">E from a 5 uC charge at 0.2 m:
-E = 8.99e9 x 5e-6 / 0.04 = 1,123,750 N/C</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(34);return false;">Coulomb's Law</a></div>
-        </div>
-        <div class="formula-card" data-topic="Electricity" data-idx="36">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Electricity</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="36" onclick="toggleFav(36,this)">*</button>
-            </div>
-            <div class="card-title">Ohm's Law</div>
-            <div class="formula-wrap" data-plain="V = IR">
-                <div class="card-formula">$V = IR$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">V</td><td class="var-desc">voltage (potential difference)</td><td class="var-unit">V</td></tr><tr><td class="var-sym">I</td><td class="var-desc">current</td><td class="var-unit">A</td></tr><tr><td class="var-sym">R</td><td class="var-desc">resistance</td><td class="var-unit">Ohm</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Only for ohmic materials (constant R). Doesn't apply to diodes, LEDs, etc.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 9 V battery with 300 Ohm resistor:
-I = 9/300 = 0.03 A = 30 mA</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(37);return false;">Electrical Power</a> &middot; <a href="#" onclick="goToCard(38);return false;">Series Resistance</a></div>
-        </div>
-        <div class="formula-card" data-topic="Electricity" data-idx="37">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Electricity</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="37" onclick="toggleFav(37,this)">*</button>
-            </div>
-            <div class="card-title">Electrical Power</div>
-            <div class="formula-wrap" data-plain="P = IV = I^2*R = V^2/R">
-                <div class="card-formula">$P = IV = I^2R = \frac{V^2}{R}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">P</td><td class="var-desc">power</td><td class="var-unit">W</td></tr><tr><td class="var-sym">I</td><td class="var-desc">current</td><td class="var-unit">A</td></tr><tr><td class="var-sym">V</td><td class="var-desc">voltage</td><td class="var-unit">V</td></tr><tr><td class="var-sym">R</td><td class="var-desc">resistance</td><td class="var-unit">Ohm</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Three equivalent forms. Use I^2*R for series. Use V^2/R for parallel.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 60 W bulb at 120 V:
-I = P/V = 60/120 = 0.5 A
-R = V/I = 120/0.5 = 240 Ohm</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(36);return false;">Ohm's Law</a></div>
-        </div>
-        <div class="formula-card" data-topic="Electricity" data-idx="38">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Electricity</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="38" onclick="toggleFav(38,this)">*</button>
-            </div>
-            <div class="card-title">Series Resistance</div>
-            <div class="formula-wrap" data-plain="R_total = R1 + R2 + R3 + ...">
-                <div class="card-formula">$R_{total} = R_1 + R_2 + R_3 + \cdots$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">R_total</td><td class="var-desc">equivalent resistance</td><td class="var-unit">Ohm</td></tr><tr><td class="var-sym">R1,R2,...</td><td class="var-desc">individual resistances</td><td class="var-unit">Ohm</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Same current through ALL resistors. Voltages add. R_total > largest single R.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">10 Ohm, 20 Ohm, 30 Ohm in series:
-R_total = 10 + 20 + 30 = 60 Ohm</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(39);return false;">Parallel Resistance</a></div>
-        </div>
-        <div class="formula-card" data-topic="Electricity" data-idx="39">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Electricity</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="39" onclick="toggleFav(39,this)">*</button>
-            </div>
-            <div class="card-title">Parallel Resistance</div>
-            <div class="formula-wrap" data-plain="1/R_total = 1/R1 + 1/R2 + 1/R3 + ...">
-                <div class="card-formula">$\frac{1}{R_{total}} = \frac{1}{R_1} + \frac{1}{R_2} + \frac{1}{R_3} + \cdots$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">R_total</td><td class="var-desc">equivalent resistance</td><td class="var-unit">Ohm</td></tr><tr><td class="var-sym">R1,R2,...</td><td class="var-desc">individual resistances</td><td class="var-unit">Ohm</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Same voltage across ALL resistors. Currents add. R_total < smallest single R.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">10 Ohm and 20 Ohm in parallel:
-1/R = 1/10 + 1/20 = 3/20
-R_total = 6.67 Ohm</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(38);return false;">Series Resistance</a></div>
-        </div>
-        <div class="formula-card" data-topic="Electricity" data-idx="40">
-            <div class="card-top">
-                <span class="card-topic" style="background:#e53e3e">Electricity</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="40" onclick="toggleFav(40,this)">*</button>
-            </div>
-            <div class="card-title">Capacitor Energy</div>
-            <div class="formula-wrap" data-plain="U = 0.5*C*V^2 = Q^2/(2C) = 0.5*Q*V">
-                <div class="card-formula">$U = \frac{1}{2}CV^2 = \frac{Q^2}{2C} = \frac{1}{2}QV$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">U</td><td class="var-desc">stored energy</td><td class="var-unit">J</td></tr><tr><td class="var-sym">C</td><td class="var-desc">capacitance</td><td class="var-unit">F</td></tr><tr><td class="var-sym">V</td><td class="var-desc">voltage across capacitor</td><td class="var-unit">V</td></tr><tr><td class="var-sym">Q</td><td class="var-desc">charge on capacitor</td><td class="var-unit">C</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Energy is STORED in the electric field. Capacitor blocks DC but passes AC.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">A 100 uF capacitor at 12 V:
-U = 0.5(100e-6)(144) = 0.0072 J = 7.2 mJ</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(37);return false;">Electrical Power</a></div>
-        </div>
-        <div class="formula-card" data-topic="Magnetism" data-idx="41">
-            <div class="card-top">
-                <span class="card-topic" style="background:#6b46c1">Magnetism</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="41" onclick="toggleFav(41,this)">*</button>
-            </div>
-            <div class="card-title">Force on a Moving Charge</div>
-            <div class="formula-wrap" data-plain="F = q*v*B*sin(theta)">
-                <div class="card-formula">$F = qvB\sin\theta$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">F</td><td class="var-desc">magnetic force</td><td class="var-unit">N</td></tr><tr><td class="var-sym">q</td><td class="var-desc">charge</td><td class="var-unit">C</td></tr><tr><td class="var-sym">v</td><td class="var-desc">velocity</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">B</td><td class="var-desc">magnetic field</td><td class="var-unit">T</td></tr><tr><td class="var-sym">theta</td><td class="var-desc">angle between v and B</td><td class="var-unit">deg</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Use RIGHT-HAND RULE for positive charges. theta=90 max force. theta=0 zero force.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">Electron (1.6e-19 C) at 5e6 m/s, B = 0.01 T, theta = 90 deg:
-F = 1.6e-19 x 5e6 x 0.01 = 8e-15 N</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(42);return false;">Force on a Current-Carrying Wire</a></div>
-        </div>
-        <div class="formula-card" data-topic="Magnetism" data-idx="42">
-            <div class="card-top">
-                <span class="card-topic" style="background:#6b46c1">Magnetism</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="42" onclick="toggleFav(42,this)">*</button>
-            </div>
-            <div class="card-title">Force on a Current-Carrying Wire</div>
-            <div class="formula-wrap" data-plain="F = B*I*L*sin(theta)">
-                <div class="card-formula">$F = BIL\sin\theta$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">F</td><td class="var-desc">force on wire</td><td class="var-unit">N</td></tr><tr><td class="var-sym">B</td><td class="var-desc">magnetic field</td><td class="var-unit">T</td></tr><tr><td class="var-sym">I</td><td class="var-desc">current</td><td class="var-unit">A</td></tr><tr><td class="var-sym">L</td><td class="var-desc">length of wire in field</td><td class="var-unit">m</td></tr><tr><td class="var-sym">theta</td><td class="var-desc">angle between I and B</td><td class="var-unit">deg</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Derived from F = qvB. Use RHR: fingers along I, curl toward B, thumb = F.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">Wire: I = 5 A, L = 0.2 m, B = 0.3 T, theta = 90 deg:
-F = 0.3 x 5 x 0.2 = 0.3 N</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(41);return false;">Force on a Moving Charge</a></div>
-        </div>
-        <div class="formula-card" data-topic="Thermodynamics" data-idx="43">
-            <div class="card-top">
-                <span class="card-topic" style="background:#c05621">Thermodynamics</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="43" onclick="toggleFav(43,this)">*</button>
-            </div>
-            <div class="card-title">Ideal Gas Law</div>
-            <div class="formula-wrap" data-plain="PV = nRT">
-                <div class="card-formula">$PV = nRT$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">P</td><td class="var-desc">pressure</td><td class="var-unit">Pa</td></tr><tr><td class="var-sym">V</td><td class="var-desc">volume</td><td class="var-unit">m^3</td></tr><tr><td class="var-sym">n</td><td class="var-desc">moles</td><td class="var-unit">mol</td></tr><tr><td class="var-sym">R</td><td class="var-desc">8.314 J/(mol*K)</td><td class="var-unit">J/(mol*K)</td></tr><tr><td class="var-sym">T</td><td class="var-desc">absolute temperature</td><td class="var-unit">K</td></tr></tbody>
-            </table>
-            <div class="card-conditions">T MUST be in Kelvin (K = C + 273.15). Works best at low P, high T. 1 atm = 101,325 Pa.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">1 mol gas at STP (273 K, 101325 Pa):
-V = nRT/P = 1x8.314x273/101325 = 0.0224 m^3 = 22.4 L</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(44);return false;">First Law of Thermodynamics</a></div>
-        </div>
-        <div class="formula-card" data-topic="Thermodynamics" data-idx="44">
-            <div class="card-top">
-                <span class="card-topic" style="background:#c05621">Thermodynamics</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="44" onclick="toggleFav(44,this)">*</button>
-            </div>
-            <div class="card-title">First Law of Thermodynamics</div>
-            <div class="formula-wrap" data-plain="dU = Q - W">
-                <div class="card-formula">$\Delta U = Q - W$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">dU</td><td class="var-desc">change in internal energy</td><td class="var-unit">J</td></tr><tr><td class="var-sym">Q</td><td class="var-desc">heat added to system</td><td class="var-unit">J</td></tr><tr><td class="var-sym">W</td><td class="var-desc">work done BY system</td><td class="var-unit">J</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Signs matter! Q > 0 = heat in. W > 0 = system expands.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">Gas absorbs 500 J and expands doing 200 J:
-dU = 500 - 200 = 300 J (internal energy increases)</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(43);return false;">Ideal Gas Law</a></div>
-        </div>
-        <div class="formula-card" data-topic="Modern Physics" data-idx="45">
-            <div class="card-top">
-                <span class="card-topic" style="background:#2b6cb0">Modern Physics</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="45" onclick="toggleFav(45,this)">*</button>
-            </div>
-            <div class="card-title">Photon Energy</div>
-            <div class="formula-wrap" data-plain="E = hf = hc/lambda">
-                <div class="card-formula">$E = hf = \frac{hc}{\lambda}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">E</td><td class="var-desc">photon energy</td><td class="var-unit">J or eV</td></tr><tr><td class="var-sym">h</td><td class="var-desc">6.626e-34 J*s</td><td class="var-unit">J*s</td></tr><tr><td class="var-sym">f</td><td class="var-desc">frequency</td><td class="var-unit">Hz</td></tr><tr><td class="var-sym">c</td><td class="var-desc">3e8 m/s</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">lambda</td><td class="var-desc">wavelength</td><td class="var-unit">m</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Light is quantized. 1 eV = 1.6e-19 J. Higher f -> higher energy (blue > red).</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">UV light, lambda = 300 nm:
-E = 6.626e-34 x 3e8 / 300e-9 = 6.63e-19 J = 4.14 eV</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(46);return false;">de Broglie Wavelength</a></div>
-        </div>
-        <div class="formula-card" data-topic="Modern Physics" data-idx="46">
-            <div class="card-top">
-                <span class="card-topic" style="background:#2b6cb0">Modern Physics</span>
-                <span class="diff-badge diff-medium">medium</span>
-                <button class="fav-btn" data-idx="46" onclick="toggleFav(46,this)">*</button>
-            </div>
-            <div class="card-title">de Broglie Wavelength</div>
-            <div class="formula-wrap" data-plain="lambda = h/p = h/(m*v)">
-                <div class="card-formula">$\lambda = \frac{h}{p} = \frac{h}{mv}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">lambda</td><td class="var-desc">de Broglie wavelength</td><td class="var-unit">m</td></tr><tr><td class="var-sym">h</td><td class="var-desc">6.626e-34 J*s</td><td class="var-unit">J*s</td></tr><tr><td class="var-sym">p</td><td class="var-desc">momentum</td><td class="var-unit">kg*m/s</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">v</td><td class="var-desc">velocity</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">ALL matter has wave properties. Only noticeable for tiny masses (electrons).</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">Electron at 1e6 m/s:
-lambda = 6.626e-34 / (9.11e-31 x 1e6) = 7.27e-10 m = 0.727 nm</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(45);return false;">Photon Energy</a> &middot; <a href="#" onclick="goToCard(47);return false;">Mass-Energy Equivalence</a></div>
-        </div>
-        <div class="formula-card" data-topic="Modern Physics" data-idx="47">
-            <div class="card-top">
-                <span class="card-topic" style="background:#2b6cb0">Modern Physics</span>
-                <span class="diff-badge diff-easy">easy</span>
-                <button class="fav-btn" data-idx="47" onclick="toggleFav(47,this)">*</button>
-            </div>
-            <div class="card-title">Mass-Energy Equivalence</div>
-            <div class="formula-wrap" data-plain="E = mc^2">
-                <div class="card-formula">$E = mc^2$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">E</td><td class="var-desc">energy</td><td class="var-unit">J</td></tr><tr><td class="var-sym">m</td><td class="var-desc">mass</td><td class="var-unit">kg</td></tr><tr><td class="var-sym">c</td><td class="var-desc">3e8 m/s</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Mass and energy are interchangeable. A tiny mass -> enormous energy. c^2 ~ 9e16 J/kg.</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">1 kg of matter fully converted:
-E = 1 x (3e8)^2 = 9e16 J ~ 21.5 megatons of TNT</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(46);return false;">de Broglie Wavelength</a></div>
-        </div>
-        <div class="formula-card" data-topic="Modern Physics" data-idx="48">
-            <div class="card-top">
-                <span class="card-topic" style="background:#2b6cb0">Modern Physics</span>
-                <span class="diff-badge diff-hard">hard</span>
-                <button class="fav-btn" data-idx="48" onclick="toggleFav(48,this)">*</button>
-            </div>
-            <div class="card-title">Time Dilation</div>
-            <div class="formula-wrap" data-plain="t = t0 / sqrt(1 - v^2/c^2)">
-                <div class="card-formula">$t = \frac{t_0}{\sqrt{1 - \frac{v^2}{c^2}}}$</div>
-                <button class="copy-btn" onclick="copyFormula(this)">Copy</button>
-            </div>
-            <table class="var-table">
-                <thead><tr><th>Symbol</th><th>Meaning</th><th>Unit</th></tr></thead>
-                <tbody><tr><td class="var-sym">t</td><td class="var-desc">time observed by stationary frame</td><td class="var-unit">s</td></tr><tr><td class="var-sym">t0</td><td class="var-desc">proper time (moving frame)</td><td class="var-unit">s</td></tr><tr><td class="var-sym">v</td><td class="var-desc">velocity of moving frame</td><td class="var-unit">m/s</td></tr><tr><td class="var-sym">c</td><td class="var-desc">3e8 m/s</td><td class="var-unit">m/s</td></tr></tbody>
-            </table>
-            <div class="card-conditions">Moving clocks run SLOW. Only noticeable at v close to c. GPS satellites must correct for this!</div>
-            <details class="example-details">
-                <summary>Example</summary>
-                <pre class="example-pre">At v = 0.9c:
-t = t0 / sqrt(1 - 0.81) = t0 / 0.436
-For every 1 s on the ship, 2.29 s pass on Earth.</pre>
-            </details>
-            <div class="related-links">See also: <a href="#" onclick="goToCard(47);return false;">Mass-Energy Equivalence</a></div>
-        </div>
-            <div class="no-results" id="noResults" style="display:none;">
-                <span>🔍</span>
-                No formulas match your search.
-            </div>
-        </div>
+                <div class="law-card">
+                    <h3 data-i18n="law.fourier.name">Fourier's Law (Heat Conduction)</h3>
+                    <div class="formula">q = -k · ∇T</div>
+                    <p class="meaning" data-i18n="law.fourier.meaning">The time rate of heat transfer through a material is proportional to the negative gradient in the temperature.</p>
+                    <div class="variables">
+                        <span><b>q</b>: <span data-i18n="law.fourier.q">Local heat flux density (W/m²)</span></span>
+                        <span><b>k</b>: <span data-i18n="law.fourier.k">Thermal conductivity (W/m·K)</span></span>
+                        <span><b>∇T</b>: <span data-i18n="law.fourier.T">Temperature gradient (K/m)</span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Electricity & Magnetism -->
+        <section class="category-section">
+            <h2 class="category-title"><i class="fas fa-bolt"></i> Electricity & Magnetism</h2>
+            <div class="laws-grid">
+                <div class="law-card">
+                    <h3 data-i18n="law.ohm.name">Ohm's Law</h3>
+                    <div class="formula">V = I · R</div>
+                    <p class="meaning" data-i18n="law.ohm.meaning">The current through a conductor between two points is directly proportional to the voltage across the two points.</p>
+                    <div class="variables">
+                        <span><b>V</b>: <span data-i18n="law.ohm.V">Voltage (V)</span></span>
+                        <span><b>I</b>: <span data-i18n="law.ohm.I">Current (A)</span></span>
+                        <span><b>R</b>: <span data-i18n="law.ohm.R">Resistance (Ω)</span></span>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h3 data-i18n="law.coulomb.name">Coulomb's Law</h3>
+                    <div class="formula">F = k · (q₁q₂) / r²</div>
+                    <p class="meaning" data-i18n="law.coulomb.meaning">The force between two point charges is proportional to the product of the charges and inversely proportional to the square of the distance between them.</p>
+                    <div class="variables">
+                        <span><b>F</b>: <span data-i18n="law.coulomb.F">Electric force (N)</span></span>
+                        <span><b>q₁, q₂</b>: <span data-i18n="law.coulomb.q">Charges (C)</span></span>
+                        <span><b>k</b>: <span data-i18n="law.coulomb.k">Coulomb's constant</span></span>
+                        <span><b>r</b>: <span data-i18n="law.coulomb.r">Distance (m)</span></span>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h3 data-i18n="law.faraday.name">Faraday's Law</h3>
+                    <div class="formula">ε = -dΦ / dt</div>
+                    <p class="meaning" data-i18n="law.faraday.meaning">Any change in the magnetic environment of a coil of wire will cause a voltage (EMF) to be induced in the coil.</p>
+                    <div class="variables">
+                        <span><b>ε</b>: <span data-i18n="law.faraday.e">Electromotive force (V)</span></span>
+                        <span><b>Φ</b>: <span data-i18n="law.faraday.phi">Magnetic flux (Wb)</span></span>
+                        <span><b>t</b>: <span data-i18n="law.faraday.t">Time (s)</span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Optics & Waves -->
+        <section class="category-section">
+            <h2 class="category-title"><i class="fas fa-wave-square"></i> Optics & Waves</h2>
+            <div class="laws-grid">
+                <div class="law-card">
+                    <h3 data-i18n="law.snell.name">Snell's Law</h3>
+                    <div class="formula">n₁sinθ₁ = n₂sinθ₂</div>
+                    <p class="meaning" data-i18n="law.snell.meaning">Describes the relationship between the angles of incidence and refraction when light passes through the boundary between two different media.</p>
+                    <div class="variables">
+                        <span><b>n₁, n₂</b>: <span data-i18n="law.snell.n">Refractive indices</span></span>
+                        <span><b>θ₁, θ₂</b>: <span data-i18n="law.snell.theta">Angles of incidence/refraction</span></span>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h3 data-i18n="law.wave.name">Wave Speed Equation</h3>
+                    <div class="formula">v = f · λ</div>
+                    <p class="meaning" data-i18n="law.wave.meaning">The speed of a wave is equal to its frequency multiplied by its wavelength.</p>
+                    <div class="variables">
+                        <span><b>v</b>: <span data-i18n="law.wave.v">Wave speed (m/s)</span></span>
+                        <span><b>f</b>: <span data-i18n="law.wave.f">Frequency (Hz)</span></span>
+                        <span><b>λ</b>: <span data-i18n="law.wave.lambda">Wavelength (m)</span></span>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h3 data-i18n="law.reflection.name">Law of Reflection</h3>
+                    <div class="formula">θ_i = θ_r</div>
+                    <p class="meaning" data-i18n="law.reflection.meaning">The angle of incidence is equal to the angle of reflection when a wave reflects off a surface.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modern Physics -->
+        <section class="category-section" style="margin-bottom: 0;">
+            <h2 class="category-title"><i class="fas fa-atom"></i> <span data-i18n="laws.modern">Modern Physics</span></h2>
+            <div class="laws-grid">
+                <div class="law-card">
+                    <h3 data-i18n="law.einstein.name">Einstein's Mass-Energy Equivalence</h3>
+                    <div class="formula">E = mc²</div>
+                    <p class="meaning" data-i18n="law.einstein.meaning">Energy and mass are different forms of the same thing; a small amount of mass can be converted into a large amount of energy.</p>
+                    <div class="variables">
+                        <span><b>E</b>: <span data-i18n="law.einstein.E">Energy (J)</span></span>
+                        <span><b>m</b>: <span data-i18n="law.einstein.m">Mass (kg)</span></span>
+                        <span><b>c</b>: <span data-i18n="law.einstein.c">Speed of light (≈ 3·10⁸ m/s)</span></span>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h3 data-i18n="law.planck.name">Planck's Relation</h3>
+                    <div class="formula">E = h · f</div>
+                    <p class="meaning" data-i18n="law.planck.meaning">The energy of a photon is proportional to its frequency.</p>
+                    <div class="variables">
+                        <span><b>E</b>: <span data-i18n="law.planck.E">Photon energy (J)</span></span>
+                        <span><b>h</b>: <span data-i18n="law.planck.h">Planck constant</span></span>
+                        <span><b>f</b>: <span data-i18n="law.planck.f">Frequency (Hz)</span></span>
+                    </div>
+                </div>
+
+                <div class="law-card">
+                    <h3 data-i18n="law.debroglie.name">De Broglie Wavelength</h3>
+                    <div class="formula">λ = h / p</div>
+                    <p class="meaning" data-i18n="law.debroglie.meaning">Matter exhibits wave-like behavior; the wavelength is inversely proportional to the momentum.</p>
+                    <div class="variables">
+                        <span><b>λ</b>: <span data-i18n="law.debroglie.lambda">Wavelength (m)</span></span>
+                        <span><b>h</b>: <span data-i18n="law.debroglie.h">Planck constant</span></span>
+                        <span><b>p</b>: <span data-i18n="law.debroglie.p">Momentum (kg·m/s)</span></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"></script>
-    <script>
-    // Wait for KaTeX to be fully loaded, then render math
-    function initKatex() {
-        if (typeof renderMathInElement === 'function') {
-            renderMathInElement(document.body, {
-                delimiters: [
-                    {left: "$$", right: "$$", display: true},
-                    {left: "$", right: "$", display: false}
-                ],
-                throwOnError: false
-            });
-        } else {
-            setTimeout(initKatex, 100);
-        }
-    }
-    initKatex();
+    <footer>
+        <span data-i18n="laws.footer">&copy; 2026 PhysicsLab - High School Edition</span>
+    </footer>
 
-    // Also re-render after study mode copies formula HTML
-    function renderKatexIn(el) {
-        if (typeof renderMathInElement === 'function') {
-            renderMathInElement(el, {
-                delimiters: [
-                    {left: "$$", right: "$$", display: true},
-                    {left: "$", right: "$", display: false}
-                ],
-                throwOnError: false
-            });
-        }
-    }
+    <script>document.addEventListener('DOMContentLoaded', () => initLang());</script>
 
-    // -- State --
-    const cards = document.querySelectorAll('.formula-card');
-    const noResults = document.getElementById('noResults');
-    const searchCount = document.getElementById('searchCount');
-    const searchInput = document.getElementById('searchInput');
-    const filterBtns = document.querySelectorAll('.filter-btn[data-topic]');
-    let activeTopic = 'all';
-    let favs = JSON.parse(localStorage.getItem('physFavs') || '[]');
-
-    // Restore favorites
-    favs.forEach(function(idx) {
-        const btn = document.querySelector('.fav-btn[data-idx="' + idx + '"]');
-        if (btn) { btn.textContent = '\u2605'; btn.classList.add('active'); }
-    });
-
-    // -- Filtering --
-    function applyFilters() {
-        const query = searchInput.value.toLowerCase().trim();
-        let visible = 0;
-        cards.forEach(function(card) {
-            const topic = card.dataset.topic;
-            const idx = parseInt(card.dataset.idx);
-            const text = card.textContent.toLowerCase();
-            const matchesTopic = activeTopic === 'all' || topic === activeTopic ||
-                (activeTopic === '__favorites__' && favs.indexOf(idx) !== -1);
-            const matchesSearch = !query || text.indexOf(query) !== -1;
-            card.style.display = (matchesTopic && matchesSearch) ? '' : 'none';
-            if (matchesTopic && matchesSearch) visible++;
-        });
-        noResults.style.display = visible === 0 ? '' : 'none';
-        searchCount.textContent = visible + ' formula' + (visible !== 1 ? 's' : '');
-    }
-
-    filterBtns.forEach(function(btn) {
-        btn.addEventListener('click', function() {
-            filterBtns.forEach(function(b) { b.classList.remove('active'); });
-            this.classList.add('active');
-            activeTopic = this.dataset.topic;
-            applyFilters();
-        });
-    });
-    searchInput.addEventListener('input', applyFilters);
-
-    // -- Favorites --
-    function toggleFav(idx, btn) {
-        const i = favs.indexOf(idx);
-        if (i > -1) {
-            favs.splice(i, 1);
-            btn.textContent = '\u2606';
-            btn.classList.remove('active');
-        } else {
-            favs.push(idx);
-            btn.textContent = '\u2605';
-            btn.classList.add('active');
-        }
-        localStorage.setItem('physFavs', JSON.stringify(favs));
-        if (activeTopic === '__favorites__') applyFilters();
-    }
-
-    // -- Copy --
-    function copyFormula(btn) {
-        const plain = btn.closest('.formula-wrap').dataset.plain;
-        navigator.clipboard.writeText(plain).then(function() {
-            btn.textContent = 'Copied!';
-            btn.classList.add('copied');
-            setTimeout(function() {
-                btn.textContent = 'Copy';
-                btn.classList.remove('copied');
-            }, 1500);
-        });
-    }
-
-    // -- Go to card (related links) --
-    function goToCard(idx) {
-        const card = document.querySelector('.formula-card[data-idx="' + idx + '"]');
-        if (!card) return;
-        if (card.style.display === 'none') {
-            activeTopic = 'all';
-            filterBtns.forEach(function(b) { b.classList.remove('active'); });
-            document.querySelector('.filter-btn[data-topic="all"]').classList.add('active');
-            searchInput.value = '';
-            applyFilters();
-        }
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        card.classList.remove('highlight');
-        void card.offsetWidth;
-        card.classList.add('highlight');
-    }
-
-    // -- Study Mode --
-    let studyQueue = [], studyIdx = 0, studyMissed = [], studyGotCount = 0;
-
-    function startStudy() {
-        const topic = activeTopic === '__favorites__' ? 'all' : activeTopic;
-        studyQueue = [];
-        cards.forEach(function(card) {
-            const t = card.dataset.topic;
-            const idx = parseInt(card.dataset.idx);
-            const matchesTopic = topic === 'all' || t === topic;
-            const matchesFav = activeTopic !== '__favorites__' || favs.indexOf(idx) !== -1;
-            if (matchesTopic && matchesFav) {
-                studyQueue.push({
-                    topic: card.querySelector('.card-topic').textContent,
-                    topicColor: card.querySelector('.card-topic').style.background,
-                    title: card.querySelector('.card-title').textContent,
-                    formulaHTML: card.querySelector('.card-formula').innerHTML,
-                    cond: card.querySelector('.card-conditions').textContent
-                });
-            }
-        });
-        if (studyQueue.length === 0) { alert('No formulas to study in this selection.'); return; }
-        for (let i = studyQueue.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const tmp = studyQueue[i]; studyQueue[i] = studyQueue[j]; studyQueue[j] = tmp;
-        }
-        studyIdx = 0; studyMissed = []; studyGotCount = 0;
-        document.getElementById('studyContent').style.display = '';
-        document.getElementById('studyDone').style.display = 'none';
-        document.getElementById('studyOverlay').classList.add('active');
-        showStudyCard();
-    }
-
-    function showStudyCard() {
-        const c = studyQueue[studyIdx];
-        const topicEl = document.getElementById('studyTopic');
-        topicEl.textContent = c.topic;
-        topicEl.style.background = c.topicColor;
-        document.getElementById('studyTitle').textContent = c.title;
-        document.getElementById('studyFormula').innerHTML = c.formulaHTML;
-        document.getElementById('studyCond').textContent = c.cond;
-        document.getElementById('studyProgress').textContent = (studyIdx + 1) + ' / ' + studyQueue.length;
-        document.getElementById('studyScore').textContent = studyMissed.length + ' missed';
-        document.getElementById('studyCard').classList.remove('flipped');
-        document.getElementById('studyBtns').style.display = 'none';
-        renderKatexIn(document.getElementById('studyCard'));
-    }
-
-    function flipStudyCard() {
-        const sc = document.getElementById('studyCard');
-        sc.classList.toggle('flipped');
-        document.getElementById('studyBtns').style.display = sc.classList.contains('flipped') ? 'flex' : 'none';
-    }
-
-    function studyNext(missed) {
-        if (missed) studyMissed.push(studyQueue[studyIdx]);
-        else studyGotCount++;
-        studyIdx++;
-        if (studyIdx >= studyQueue.length) { showStudyDone(); }
-        else { showStudyCard(); }
-    }
-
-    function showStudyDone() {
-        document.getElementById('studyContent').style.display = 'none';
-        document.getElementById('studyDone').style.display = '';
-        const total = studyQueue.length;
-        const pct = Math.round((studyGotCount / total) * 100);
-        document.getElementById('studyDoneTitle').textContent =
-            pct >= 80 ? 'Great job!' : pct >= 50 ? 'Not bad!' : 'Keep studying!';
-        document.getElementById('studyDoneMsg').textContent =
-            'You got ' + studyGotCount + ' / ' + total + ' correct (' + pct + '%). ' +
-            (studyMissed.length > 0 ? studyMissed.length + ' formulas missed.' : 'Perfect score!');
-        document.querySelector('#studyDone .study-btn.got').style.display = studyMissed.length > 0 ? '' : 'none';
-    }
-
-    function reviewMissed() {
-        studyQueue = studyMissed.slice();
-        for (let i = studyQueue.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            const tmp = studyQueue[i]; studyQueue[i] = studyQueue[j]; studyQueue[j] = tmp;
-        }
-        studyIdx = 0; studyMissed = []; studyGotCount = 0;
-        document.getElementById('studyContent').style.display = '';
-        document.getElementById('studyDone').style.display = 'none';
-        showStudyCard();
-    }
-
-    function closeStudy() {
-        document.getElementById('studyOverlay').classList.remove('active');
-    }
-
-    // -- Keyboard Shortcuts --
-    document.addEventListener('keydown', function(e) {
-        const studyActive = document.getElementById('studyOverlay').classList.contains('active');
-        if (!studyActive && ((e.ctrlKey && e.key === 'k') || (e.key === '/' && document.activeElement.tagName !== 'INPUT'))) {
-            e.preventDefault(); searchInput.focus();
-        }
-        if (e.key === 'Escape') {
-            if (studyActive) { closeStudy(); }
-            else if (document.activeElement === searchInput) {
-                searchInput.value = ''; searchInput.blur(); applyFilters();
-            }
-        }
-        if (studyActive) {
-            const flipped = document.getElementById('studyCard').classList.contains('flipped');
-            if (e.key === ' ' && !flipped) { e.preventDefault(); flipStudyCard(); }
-            if (flipped) {
-                if (e.key === 'ArrowLeft' || e.key === '1') { studyNext(true); }
-                if (e.key === 'ArrowRight' || e.key === '2') { studyNext(false); }
-            }
-        }
-    });
-    </script>
 </body>
 </html>

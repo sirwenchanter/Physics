@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wave Superposition | Scientific Lab</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0047AB; /* Cobalt Blue */
-            --secondary: #89E37B; /* Granny Smith Apple */
-            --accent: #FFD700; /* Yellow */
+            --primary: #0047AB;
+            --secondary: #89E37B;
+            --accent: #FFD700;
             --bg: #f8fafc;
             --card: #ffffff;
             --text: #1e293b;
@@ -19,8 +22,19 @@
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 2rem; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 2rem;
+        }
 
         header {
             background: linear-gradient(135deg, var(--primary) 0%, #002d6b 100%);
@@ -38,7 +52,7 @@
             top: 1.5rem;
             left: 2rem;
             padding: 0.75rem 1.5rem;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
             text-decoration: none;
             border-radius: 99px;
@@ -46,13 +60,17 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s;
         }
-        .back-btn:hover { background: white; color: var(--primary); }
+
+        .back-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
 
         .container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 2rem auto;
             display: grid;
-            grid-template-columns: 1fr 350px;
+            grid-template-columns: 1fr 380px;
             gap: 2.5rem;
             padding: 0 2rem;
         }
@@ -64,14 +82,20 @@
             box-shadow: var(--shadow);
         }
 
-        .panel-group { display: flex; flex-direction: column; gap: 1rem; }
-        .wave-panel { 
+        .panel-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .wave-panel {
             background: #fafbfc;
             border-radius: 16px;
             padding: 1rem;
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
             position: relative;
         }
+
         .panel-label {
             position: absolute;
             top: 10px;
@@ -83,10 +107,15 @@
             background: white;
             padding: 4px 10px;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
-        canvas { width: 100%; height: 160px; display: block; border-radius: 8px; }
+        canvas {
+            width: 100%;
+            height: 160px;
+            display: block;
+            border-radius: 8px;
+        }
 
         section.math-bar {
             grid-column: 1 / span 2;
@@ -99,93 +128,187 @@
             color: white;
             box-shadow: 0 20px 25px -5px rgba(0, 71, 171, 0.3);
         }
-        .math-item { text-align: center; }
-        .math-expr { font-family: 'JetBrains Mono', monospace; font-size: 1.5rem; font-weight: 700; }
-        .math-label { font-size: 0.75rem; text-transform: uppercase; opacity: 0.7; letter-spacing: 1px; margin-bottom: 0.5rem; }
 
-        .control-group { margin-bottom: 2rem; }
-        h2 { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
-
-        .slider-box { margin-bottom: 1rem; }
-        .slider-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600; }
-        .slider-val { font-family: 'JetBrains Mono', monospace; color: var(--primary); }
-
-        input[type="range"] { appearance: none; -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: #e2e8f0; outline: none; }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: white; border: 3px solid var(--primary); cursor: pointer; transition: transform 0.2s;
+        .math-item {
+            text-align: center;
         }
 
-        .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 2rem; }
-        .btn { padding: 0.75rem; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; transition: all 0.3s; }
-        .btn-p { background: var(--primary); color: white; }
-        .btn-s { background: #f1f5f9; color: var(--muted); }
+        .math-expr {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .math-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            opacity: 0.7;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .control-group {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .slider-box {
+            margin-bottom: 12px;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .slider-val {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--primary);
+            cursor: pointer;
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .btn {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-p {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-s {
+            background: #f1f5f9;
+            color: var(--muted);
+        }
 
         @media (max-width: 1000px) {
-            .container { grid-template-columns: 1fr; }
-            section.math-bar { grid-template-columns: 1fr; grid-column: 1; }
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            section.math-bar {
+                grid-template-columns: 1fr;
+                grid-column: 1;
+            }
         }
     </style>
 </head>
+
 <body>
     <header>
         <a href="index.html" class="back-btn">← Home</a>
         <h1>Wave Superposition Lab</h1>
-        <p>Interactive exploration of constructive and destructive interference</p>
+        <p>Independent multi-variable wave interaction and interference</p>
     </header>
 
     <div class="container">
         <main class="card panel-group">
             <div class="wave-panel">
-                <div class="panel-label" style="color: #e53e3e">Wave 1 Displacement</div>
+                <div class="panel-label" style="color: #e53e3e">Wave 1 Displacement (y₁)</div>
                 <canvas id="c1"></canvas>
             </div>
             <div class="wave-panel">
-                <div class="panel-label" style="color: #2f9e7e">Wave 2 Displacement</div>
+                <div class="panel-label" style="color: #2f9e7e">Wave 2 Displacement (y₂)</div>
                 <canvas id="c2"></canvas>
             </div>
             <div class="wave-panel" style="background: #f8fafc; border: 2px solid var(--secondary);">
-                <div class="panel-label" style="color: var(--primary)">Resultant Wave (Sum)</div>
+                <div class="panel-label" style="color: var(--primary)">Resultant Wave (y₁ + y₂)</div>
                 <canvas id="cSum"></canvas>
             </div>
         </main>
 
         <aside class="card">
             <h2>Parameters</h2>
+
             <div class="control-group">
-                <h3 style="font-size: 0.8rem; margin-bottom: 1rem; color: #e53e3e;">WAVE 1</h3>
+                <h3 style="font-size: 0.85rem; margin-bottom: 1rem; color: #e53e3e;">WAVE 1</h3>
                 <div class="slider-box">
                     <div class="slider-header"><span>Amplitude</span><span class="slider-val" id="a1v">1.0</span></div>
                     <input type="range" id="a1" min="0" max="2" step="0.1" value="1">
                 </div>
                 <div class="slider-box">
-                    <div class="slider-header"><span>Frequency</span><span class="slider-val" id="f1v">1.0 Hz</span></div>
+                    <div class="slider-header"><span>Frequency</span><span class="slider-val" id="f1v">1.0 Hz</span>
+                    </div>
                     <input type="range" id="f1" min="0.1" max="5" step="0.1" value="1">
+                </div>
+                <div class="slider-box">
+                    <div class="slider-header"><span>Phase</span><span class="slider-val" id="p1v">0.0π</span></div>
+                    <input type="range" id="p1" min="0" max="2" step="0.05" value="0">
+                </div>
+                <div class="slider-box">
+                    <div class="slider-header"><span>Y-Offset</span><span class="slider-val" id="o1v">0.0</span></div>
+                    <input type="range" id="o1" min="-2" max="2" step="0.1" value="0">
                 </div>
             </div>
 
-            <div class="control-group">
-                <h3 style="font-size: 0.8rem; margin-bottom: 1rem; color: #2f9e7e;">WAVE 2</h3>
+            <div class="control-group" style="border-bottom: none;">
+                <h3 style="font-size: 0.85rem; margin-bottom: 1rem; color: #2f9e7e;">WAVE 2</h3>
                 <div class="slider-box">
                     <div class="slider-header"><span>Amplitude</span><span class="slider-val" id="a2v">1.0</span></div>
                     <input type="range" id="a2" min="0" max="2" step="0.1" value="1">
                 </div>
                 <div class="slider-box">
+                    <div class="slider-header"><span>Frequency</span><span class="slider-val" id="f2v">1.0 Hz</span>
+                    </div>
+                    <input type="range" id="f2" min="0.1" max="5" step="0.1" value="1">
+                </div>
+                <div class="slider-box">
                     <div class="slider-header"><span>Phase</span><span class="slider-val" id="p2v">0.0π</span></div>
                     <input type="range" id="p2" min="0" max="2" step="0.05" value="0">
+                </div>
+                <div class="slider-box">
+                    <div class="slider-header"><span>Y-Offset</span><span class="slider-val" id="o2v">0.0</span></div>
+                    <input type="range" id="o2" min="-2" max="2" step="0.1" value="0">
                 </div>
             </div>
 
             <div class="btn-row">
                 <button class="btn btn-p" id="pause">PAUSE</button>
                 <button class="btn btn-s" id="reset">RESET</button>
-            </div>
-
-            <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
-                <h2 style="font-size: 0.8rem; opacity: 0.6;">Learning Hub</h2>
-                <div class="btn-row">
-                    <a href="laws.html" class="btn btn-s" style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-book" style="margin-right: 5px; color: var(--primary)"></i> Laws</a>
-                    <a href="quizzes.html" class="btn btn-s" style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-graduation-cap" style="margin-right: 5px; color: var(--secondary)"></i> Quiz</a>
-                </div>
             </div>
         </aside>
 
@@ -199,7 +322,7 @@
                 <div class="math-expr" id="m2">0.000</div>
             </div>
             <div class="math-item">
-                <div class="math-label">Interference (y₁ + y₂)</div>
+                <div class="math-label">Superposition (y₁ + y₂)</div>
                 <div class="math-expr" id="ms" style="color: var(--secondary)">0.000</div>
             </div>
         </section>
@@ -210,7 +333,12 @@
         const ctxs = canvases.map(c => c.getContext('2d'));
         const mEls = [document.getElementById('m1'), document.getElementById('m2'), document.getElementById('ms')];
 
-        let state = { a1:1, f1:1, a2:1, p2:0, time:0, playing:true };
+        // Advanced State: Fully independent controls
+        let state = {
+            a1: 1, f1: 1, p1: 0, o1: 0,
+            a2: 1, f2: 1, p2: 0, o2: 0,
+            time: 0, playing: true
+        };
 
         function resize() {
             canvases.forEach(c => {
@@ -221,108 +349,119 @@
         window.addEventListener('resize', resize);
         resize();
 
+        // Wave 1 Bindings
         document.getElementById('a1').addEventListener('input', e => { state.a1 = parseFloat(e.target.value); document.getElementById('a1v').textContent = state.a1.toFixed(1); });
         document.getElementById('f1').addEventListener('input', e => { state.f1 = parseFloat(e.target.value); document.getElementById('f1v').textContent = state.f1.toFixed(1) + ' Hz'; });
-        document.getElementById('a2').addEventListener('input', e => { state.a2 = parseFloat(e.target.value); document.getElementById('a2v').textContent = state.a2.toFixed(1); });
-        document.getElementById('p2').addEventListener('input', e => { state.p2 = parseFloat(e.target.value); document.getElementById('p2v').textContent = state.p2.toFixed(2) + 'π'; });
+        document.getElementById('p1').addEventListener('input', e => { state.p1 = parseFloat(e.target.value); document.getElementById('p1v').textContent = state.p1.toFixed(2) + 'π'; });
+        document.getElementById('o1').addEventListener('input', e => { state.o1 = parseFloat(e.target.value); document.getElementById('o1v').textContent = state.o1.toFixed(1); });
 
-        document.getElementById('pause').addEventListener('click', e => { 
+        // Wave 2 Bindings
+        document.getElementById('a2').addEventListener('input', e => { state.a2 = parseFloat(e.target.value); document.getElementById('a2v').textContent = state.a2.toFixed(1); });
+        document.getElementById('f2').addEventListener('input', e => { state.f2 = parseFloat(e.target.value); document.getElementById('f2v').textContent = state.f2.toFixed(1) + ' Hz'; });
+        document.getElementById('p2').addEventListener('input', e => { state.p2 = parseFloat(e.target.value); document.getElementById('p2v').textContent = state.p2.toFixed(2) + 'π'; });
+        document.getElementById('o2').addEventListener('input', e => { state.o2 = parseFloat(e.target.value); document.getElementById('o2v').textContent = state.o2.toFixed(1); });
+
+        // Buttons
+        document.getElementById('pause').addEventListener('click', e => {
             state.playing = !state.playing;
             e.target.textContent = state.playing ? 'PAUSE' : 'RESUME';
         });
         document.getElementById('reset').addEventListener('click', () => { state.time = 0; });
 
-        function getY(x, a, f, p, t) {
-            return a * Math.sin(0.05 * x - 2 * Math.PI * f * t + p * Math.PI);
+        // Physics Wave Equation (Constant Velocity)
+        // By using (x / 200 - t), we force the wave speed to be 200 pixels per second.
+        // This ensures the superimposed shape doesn't warp or morph over time.
+        function getY(x, a, f, p, o, t) {
+            return a * Math.sin(2 * Math.PI * f * (x / 200 - t) + p * Math.PI) + o;
         }
 
         function loop(t) {
-            if(state.playing) state.time += 0.016;
+            if (state.playing) state.time += 0.016; // Approx 60fps time step
 
-            ctxs.forEach(ctx => ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height));
+            ctxs.forEach(ctx => ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height));
 
             const colors = ['#e53e3e', '#2f9e7e', '#0047AB'];
+            // Scale factor: 20px per 1.0 amplitude unit so a max sum of 4 doesn't clip
+            const visualScale = 20;
+
+            // Evaluate all three waves across the canvas
             [0, 1, 2].forEach(i => {
                 const ctx = ctxs[i];
-                ctx.strokeStyle = colors[i];
                 ctx.lineWidth = i === 2 ? 4 : 2;
+
+                // Draw zero-line for reference
+                ctx.strokeStyle = 'rgba(0,0,0,0.05)';
                 ctx.beginPath();
-                for(let x=0; x<ctx.canvas.width; x++) {
+                ctx.moveTo(0, ctx.canvas.height / 2);
+                ctx.lineTo(ctx.canvas.width, ctx.canvas.height / 2);
+                ctx.stroke();
+
+                ctx.strokeStyle = colors[i];
+                ctx.beginPath();
+
+                for (let x = 0; x < ctx.canvas.width; x++) {
+                    // Calculate individual waves
+                    let y1 = getY(x, state.a1, state.f1, state.p1, state.o1, state.time);
+                    let y2 = getY(x, state.a2, state.f2, state.p2, state.o2, state.time);
+
                     let y;
-                    if(i === 0) y = getY(x, state.a1, state.f1, 0, state.time);
-                    else if(i === 1) y = getY(x, state.a2, state.f1, state.p2, state.time);
-                    else y = getY(x, state.a1, state.f1, 0, state.time) + getY(x, state.a2, state.f1, state.p2, state.time);
-                    
-                    const cy = ctx.canvas.height/2 - y * 30;
-                    if(x === 0) ctx.moveTo(x, cy); else ctx.lineTo(x, cy);
+                    if (i === 0) y = y1;
+                    else if (i === 1) y = y2;
+                    else y = y1 + y2; // Strict mathematical superposition
+
+                    const cy = ctx.canvas.height / 2 - y * visualScale;
+                    if (x === 0) ctx.moveTo(x, cy); else ctx.lineTo(x, cy);
                 }
                 ctx.stroke();
 
-                // Point irl display (evaluation at x = width/2)
+                // Telemetry Point (evaluation at exact horizontal center)
                 const evalX = ctx.canvas.width / 2;
+
+                let val1 = getY(evalX, state.a1, state.f1, state.p1, state.o1, state.time);
+                let val2 = getY(evalX, state.a2, state.f2, state.p2, state.o2, state.time);
+
                 let val;
-                if(i === 0) val = getY(evalX, state.a1, state.f1, 0, state.time);
-                else if(i === 1) val = getY(evalX, state.a2, state.f1, state.p2, state.time);
-                else val = getY(evalX, state.a1, state.f1, 0, state.time) + getY(evalX, state.a2, state.f1, state.p2, state.time);
-                
+                if (i === 0) val = val1;
+                else if (i === 1) val = val2;
+                else val = val1 + val2;
+
                 mEls[i].textContent = val.toFixed(3);
 
-                // Draw evaluation point
+                // Draw evaluation point (dot)
                 ctx.fillStyle = colors[i];
                 ctx.beginPath();
-                ctx.arc(evalX, ctx.canvas.height/2 - val * 30, 6, 0, Math.PI*2);
+                ctx.arc(evalX, ctx.canvas.height / 2 - val * visualScale, 6, 0, Math.PI * 2);
                 ctx.fill();
 
                 // Draw Displacement Vector
-                drawVector(ctx, evalX, ctx.canvas.height/2, evalX, ctx.canvas.height/2 - val * 30, colors[i], i === 2 ? 'yr' : 'y' + (i+1));
-                
-                // Legend for result canvas
-                if(i === 2) {
-                    drawLegend(ctx, [
-                        { color: colors[0], text: 'y1 : Wave 1' },
-                        { color: colors[1], text: 'y2 : Wave 2' },
-                        { color: colors[2], text: 'yr : Resultant' }
-                    ]);
-                }
+                drawVector(ctx, evalX, ctx.canvas.height / 2, evalX, ctx.canvas.height / 2 - val * visualScale, colors[i], i === 2 ? 'yr' : 'y' + (i + 1));
             });
 
             requestAnimationFrame(loop);
         }
 
+        // Helper to draw arrows
         function drawVector(ctx, x1, y1, x2, y2, color, label) {
-            if(Math.abs(y2-y1) < 5) return;
+            if (Math.abs(y2 - y1) < 5) return;
             ctx.strokeStyle = color;
             ctx.fillStyle = color;
             ctx.lineWidth = 2;
             ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
-            const angle = Math.atan2(y2-y1, x2-x1);
+
+            const angle = Math.atan2(y2 - y1, x2 - x1);
             const head = 8;
             ctx.beginPath();
             ctx.moveTo(x2, y2);
-            ctx.lineTo(x2 - head*Math.cos(angle-0.4), y2 - head*Math.sin(angle-0.4));
-            ctx.lineTo(x2 - head*Math.cos(angle+0.4), y2 - head*Math.sin(angle+0.4));
+            ctx.lineTo(x2 - head * Math.cos(angle - 0.4), y2 - head * Math.sin(angle - 0.4));
+            ctx.lineTo(x2 - head * Math.cos(angle + 0.4), y2 - head * Math.sin(angle + 0.4));
             ctx.fill();
-            ctx.font = 'bold 10px JetBrains Mono';
-            ctx.fillText(label, x2 + 8, y2 + (y2 > y1 ? 5 : -5));
+
+            ctx.font = 'bold 11px JetBrains Mono';
+            ctx.fillText(label, x2 + 10, y2 + (y2 > y1 ? 5 : -5));
         }
 
-        function drawLegend(ctx, items) {
-            const x = 20;
-            let y = 25;
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
-            ctx.roundRect(x - 10, y - 15, 120, items.length * 20 + 10, 8);
-            ctx.fill();
-            
-            items.forEach(item => {
-                ctx.fillStyle = item.color;
-                ctx.beginPath(); ctx.arc(x, y, 4, 0, Math.PI * 2); ctx.fill();
-                ctx.fillStyle = 'white';
-                ctx.font = '600 10px Outfit';
-                ctx.fillText(item.text, x + 12, y + 4);
-                y += 20;
-            });
-        }
         requestAnimationFrame(loop);
     </script>
 </body>
+
 </html>

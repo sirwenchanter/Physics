@@ -1,0 +1,132 @@
+{
+  "version": 1,
+  "connections": [
+    {
+      "from": "fmnviw82vx9cy",
+      "to": "fmnviw82viw0a",
+      "type": "related"
+    },
+    {
+      "from": "fmnviw82vnfui",
+      "to": "fmnviw82viw0a",
+      "type": "related"
+    },
+    {
+      "from": "fmnviw82vvuy2",
+      "to": "fmnviw82viw0a",
+      "type": "related"
+    },
+    {
+      "from": "fmnviw82vyjrx",
+      "to": "fmnviw82viw0a",
+      "type": "related"
+    },
+    {
+      "from": "fmnviw82viw0a",
+      "to": "fmnviw82vevx2",
+      "type": "related"
+    },
+    {
+      "from": "fmnviw82viw0a",
+      "to": "fmnvjsdehk1ar",
+      "type": "related"
+    },
+    {
+      "from": "fmnviw82vk2f4",
+      "to": "fmnviw82viw0a",
+      "type": "imports"
+    }
+  ],
+  "meta": {
+    "simulation-5.html": {
+      "id": "fmnvjsdehk1ar",
+      "type": "component",
+      "notes": "Make it more synoptic - vut I like the style of it",
+      "progress": 80,
+      "status": "not-started",
+      "tags": [],
+      "x": -369.82,
+      "y": 170.8
+    },
+    "codemap-info (1).json": {
+      "id": "fmnvq4peolflj",
+      "type": "config",
+      "notes": "",
+      "progress": 0,
+      "status": "not-started",
+      "tags": [],
+      "x": 284.31,
+      "y": -425.68
+    },
+    "simulation-2.html": {
+      "id": "fmnviw82vnfui",
+      "type": "component",
+      "notes": "Speed parametr are slightly of the box - and make parametr bit more logical",
+      "progress": 69,
+      "status": "in-progress",
+      "tags": [],
+      "x": -357.22,
+      "y": -185.18
+    },
+    "script.js": {
+      "id": "fmnviw82viw0a",
+      "type": "component",
+      "notes": "clear usless lines of codes ",
+      "progress": 50,
+      "status": "in-progress",
+      "tags": [],
+      "x": -12.91,
+      "y": -131.1
+    },
+    "simulation-1.html": {
+      "id": "fmnviw82vx9cy",
+      "type": "component",
+      "notes": "Now, it is done",
+      "progress": 100,
+      "status": "complete",
+      "tags": [],
+      "x": -359.73,
+      "y": -303.7
+    },
+    "edit.py": {
+      "id": "fmnviw82vk2f4",
+      "type": "python",
+      "notes": "make it from three colors main cobalt blue, secondary Granny Smith apple (lighty more saturated), some yellow or orange. It has to look profesional!",
+      "progress": 100,
+      "status": "review",
+      "tags": [],
+      "x": 284.88,
+      "y": -277.09
+    },
+    "simulation-3.html": {
+      "id": "fmnviw82vvuy2",
+      "type": "component",
+      "notes": "Too little parametr and boring",
+      "progress": 33,
+      "status": "in-progress",
+      "tags": [],
+      "x": -359.87,
+      "y": -69.57
+    },
+    "simulation-4.html": {
+      "id": "fmnviw82vyjrx",
+      "type": "component",
+      "notes": "pretty much completed however add some option to view some y1+y2=y3 irl",
+      "progress": 95,
+      "status": "in-progress",
+      "tags": [],
+      "x": -361.09,
+      "y": 51.1
+    },
+    "index.html": {
+      "id": "fmnviw82vevx2",
+      "type": "component",
+      "notes": "threre are simulation that doesnt even exist and tehre should be better graphics + text",
+      "progress": 37,
+      "status": "in-progress",
+      "tags": [],
+      "x": 266.98,
+      "y": -134.86
+    }
+  }
+}

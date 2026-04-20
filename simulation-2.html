@@ -1,930 +1,1001 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Projectile Motion Simulator</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projectile Motion Simulator</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --primary: #0047AB;
+            /* Cobalt Blue */
+            --secondary: #89E37B;
+            /* Granny Smith Apple */
+            --accent: #FFD700;
+            /* Yellow */
+            --text-color: #1e293b;
+            --text-light: #64748b;
+            --border-radius: 16px;
+            --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
 
-:root {
-    --bg-color: #f8fafc;
-    --card-bg: #ffffff;
-    --primary: #0047AB; /* Cobalt Blue */
-    --secondary: #89E37B; /* Granny Smith Apple */
-    --accent: #FFD700; /* Yellow */
-    --text-color: #1e293b;
-    --text-light: #64748b;
-    --border-radius: 16px;
-    --box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-body {
-    font-family: 'Space Grotesk', sans-serif;
-    background: var(--bg-color);
-    color: var(--text-color);
-    min-height: 100vh;
-    overflow-x: hidden;
-}
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(0, 71, 171, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 20%, rgba(137, 227, 123, 0.05) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
 
-body::before {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background:
-        radial-gradient(ellipse at 20% 50%, rgba(0, 71, 171, 0.05) 0%, transparent 50%),
-        radial-gradient(ellipse at 80% 20%, rgba(137, 227, 123, 0.05) 0%, transparent 50%);
-    pointer-events: none;
-    z-index: 0;
-}
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            border-radius: 999px;
+            box-shadow: var(--box-shadow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            z-index: 10;
+        }
 
-.back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 24px;
-    background: var(--primary);
-    color: white;
-    text-decoration: none;
-    font-weight: 700;
-    font-size: 0.9rem;
-    border-radius: 999px;
-    box-shadow: var(--box-shadow);
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    z-index: 10;
-}
-.back-link:hover {
-    transform: translateX(-4px) scale(1.05);
-    background: #003a8c;
-}
+        .back-link:hover {
+            transform: translateX(-4px) scale(1.05);
+            background: #003a8c;
+        }
 
-.page-header {
-    padding: 2rem;
-    position: relative;
-    z-index: 1;
-}
+        .page-header {
+            padding: 2rem;
+            position: relative;
+            z-index: 1;
+        }
 
-.page-title {
-    font-size: 2.5rem;
-    font-weight: 800;
-    color: var(--primary);
-    margin-top: 1rem;
-    letter-spacing: -1px;
-}
-.page-title span { color: var(--secondary); }
-.page-subtitle {
-    font-size: 1.1rem;
-    color: var(--text-light);
-    margin-top: 0.5rem;
-}
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-top: 1rem;
+            letter-spacing: -1px;
+        }
 
-.main-layout {
-    display: grid;
-    grid-template-columns: 320px 1fr 300px;
-    gap: 2rem;
-    padding: 0 2rem 2rem;
-    position: relative;
-    z-index: 1;
-    max-width: 1600px;
-    margin: 0 auto;
-}
+        .page-title span {
+            color: var(--secondary);
+        }
 
-@media (max-width: 1200px) {
-    .main-layout { grid-template-columns: 1fr; padding: 1rem; }
-}
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
 
-.card {
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(0,0,0,0.05);
-    border-radius: var(--border-radius);
-    box-shadow: var(--box-shadow);
-    padding: 1.5rem;
-}
+        .main-layout {
+            display: grid;
+            grid-template-columns: 320px 1fr 300px;
+            gap: 2rem;
+            padding: 0 2rem 2rem;
+            position: relative;
+            z-index: 1;
+            max-width: 1600px;
+            margin: 0 auto;
+        }
 
-.card-title {
-    font-size: 0.85rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--primary);
-    margin-bottom: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
+        @media (max-width: 1200px) {
+            .main-layout {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+        }
 
-.param-group { margin-bottom: 1.5rem; }
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 1.5rem;
+        }
 
-.param-label {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 8px;
-}
-.param-name { font-size: 0.9rem; font-weight: 600; color: var(--text-color); }
-.param-value {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    font-weight: 700;
-    color: var(--primary);
-    background: rgba(0, 71, 171, 0.1);
-    padding: 4px 10px;
-    border-radius: 8px;
-}
+        .card-title {
+            font-size: 0.85rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
-input[type="range"] {
-    -webkit-appearance: none;
-    appearance: none;
-    width: 100%;
-    height: 8px;
-    border-radius: 4px;
-    background: #e2e8f0;
-    outline: none;
-}
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    background: white;
-    border: 4px solid var(--primary);
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    cursor: grab;
-    transition: transform 0.2s;
-}
-input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.1); }
+        .param-group {
+            margin-bottom: 1.5rem;
+        }
 
-.presets-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-top: 1.5rem;
-}
-.preset-btn {
-    padding: 6px 12px;
-    font-size: 0.75rem;
-    font-weight: 700;
-    color: var(--primary);
-    background: white;
-    border: 2px solid var(--primary);
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.preset-btn:hover {
-    background: var(--primary);
-    color: white;
-}
+        .param-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 8px;
+        }
 
-.canvas-wrapper {
-    background: #0f172a;
-    border-radius: var(--border-radius);
-    overflow: hidden;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
-}
-.canvas-wrapper canvas {
-    display: block;
-    width: 100%;
-    min-height: 600px;
-}
+        .param-name {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text-color);
+        }
 
-.action-row {
-    display: flex;
-    gap: 1rem;
-    margin-top: 1.5rem;
-}
-.action-btn {
-    flex: 1;
-    padding: 1rem;
-    font-weight: 700;
-    border: none;
-    border-radius: 12px;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    transition: all 0.3s;
-}
-.btn-launch {
-    background: var(--secondary);
-    color: #064e3b;
-    box-shadow: 0 10px 15px -3px rgba(137, 227, 123, 0.4);
-}
-.btn-launch:hover { transform: translateY(-3px); box-shadow: 0 20px 25px -5px rgba(137, 227, 123, 0.5); }
+        .param-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(0, 71, 171, 0.1);
+            padding: 4px 10px;
+            border-radius: 8px;
+        }
 
-.btn-reset { background: #e2e8f0; color: #475569; }
-.btn-trail.active { background: var(--primary); color: white; }
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #e2e8f0;
+            outline: none;
+        }
 
-.result-item {
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #f1f5f9;
-}
-.result-label { font-size: 0.75rem; color: var(--text-light); text-transform: uppercase; font-weight: 800; margin-bottom: 4px; }
-.result-value { font-size: 1.25rem; font-weight: 800; color: var(--primary); }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid var(--primary);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            cursor: grab;
+            transition: transform 0.2s;
+        }
 
-.speed-row {
-    display: flex;
-    flex-wrap: wrap; /* Fix overflow / out of box */
-    align-items: center;
-    gap: 6px;
-    margin-top: 1rem;
-}
-.speed-btn {
-    padding: 6px 8px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    border: 1px solid #e2e8f0;
-    border-radius: 6px;
-    cursor: pointer;
-    background: white;
-    color: var(--text-light);
-    transition: all 0.2s;
-}
-.speed-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
-</style>
+        input[type="range"]::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+        }
+
+        .presets-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .preset-btn {
+            padding: 6px 12px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .preset-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .canvas-wrapper {
+            background: #0f172a;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .canvas-wrapper canvas {
+            display: block;
+            width: 100%;
+            min-height: 600px;
+        }
+
+        .action-row {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-launch {
+            background: var(--secondary);
+            color: #064e3b;
+            box-shadow: 0 10px 15px -3px rgba(137, 227, 123, 0.4);
+        }
+
+        .btn-launch:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 25px -5px rgba(137, 227, 123, 0.5);
+        }
+
+        .btn-reset {
+            background: #e2e8f0;
+            color: #475569;
+        }
+
+        .btn-trail.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .result-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .result-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            font-weight: 800;
+            margin-bottom: 4px;
+        }
+
+        .result-value {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .speed-row {
+            display: flex;
+            flex-wrap: wrap;
+            /* Fix overflow / out of box */
+            align-items: center;
+            gap: 6px;
+            margin-top: 1rem;
+        }
+
+        .speed-btn {
+            padding: 6px 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            background: white;
+            color: var(--text-light);
+            transition: all 0.2s;
+        }
+
+        .speed-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+    </style>
 </head>
+
 <body>
 
-<header class="page-header">
-    <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
-    <h1 class="page-title">Projectile <span>Motion</span></h1>
-    <p class="page-subtitle">Explore how velocity, angle, gravity, and height shape a ball's trajectory</p>
-</header>
+    <header class="page-header">
+        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Home</a>
+        <h1 class="page-title">Projectile <span>Motion</span></h1>
+        <p class="page-subtitle">Explore how velocity, angle, gravity, and height shape a ball's trajectory</p>
+    </header>
 
-<div class="main-layout">
-    <div>
-        <div class="card">
-            <div class="card-title"><i class="fas fa-sliders-h"></i> Parameters</div>
-            <div class="param-group">
-                <div class="param-label">
-                    <span class="param-name">Initial Velocity</span>
-                    <span class="param-value" id="val-v">25 m/s</span>
+    <div class="main-layout">
+        <div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-sliders-h"></i> Parameters</div>
+                <div class="param-group">
+                    <div class="param-label">
+                        <span class="param-name">Initial Velocity</span>
+                        <span class="param-value" id="val-v">25 m/s</span>
+                    </div>
+                    <input type="range" id="slider-v" min="1" max="80" step="0.5" value="25">
                 </div>
-                <input type="range" id="slider-v" min="1" max="80" step="0.5" value="25">
-            </div>
-            <div class="param-group">
-                <div class="param-label">
-                    <span class="param-name">Launch Angle</span>
-                    <span class="param-value" id="val-angle">45°</span>
+                <div class="param-group">
+                    <div class="param-label">
+                        <span class="param-name">Launch Angle</span>
+                        <span class="param-value" id="val-angle">45°</span>
+                    </div>
+                    <input type="range" id="slider-angle" min="0" max="90" step="0.5" value="45">
                 </div>
-                <input type="range" id="slider-angle" min="0" max="90" step="0.5" value="45">
-            </div>
-            <div class="param-group">
-                <div class="param-label">
-                    <span class="param-name">Gravity</span>
-                    <span class="param-value" id="val-g">9.81 m/s²</span>
+                <div class="param-group">
+                    <div class="param-label">
+                        <span class="param-name">Gravity</span>
+                        <span class="param-value" id="val-g">9.81 m/s²</span>
+                    </div>
+                    <input type="range" id="slider-g" min="0.5" max="25" step="0.01" value="9.81">
                 </div>
-                <input type="range" id="slider-g" min="0.5" max="25" step="0.01" value="9.81">
-            </div>
-            <div class="param-group">
-                <div class="param-label">
-                    <span class="param-name">Initial Height</span>
-                    <span class="param-value" id="val-h">0 m</span>
+                <div class="param-group">
+                    <div class="param-label">
+                        <span class="param-name">Initial Height</span>
+                        <span class="param-value" id="val-h">0 m</span>
+                    </div>
+                    <input type="range" id="slider-h" min="0" max="50" step="0.5" value="0">
                 </div>
-                <input type="range" id="slider-h" min="0" max="50" step="0.5" value="0">
+                <div class="presets-row">
+                    <button class="preset-btn" data-v="25" data-angle="45" data-g="9.81" data-h="0">Standard</button>
+                    <button class="preset-btn" data-v="15" data-angle="60" data-g="9.81" data-h="10">High Toss</button>
+                    <button class="preset-btn" data-v="50" data-angle="15" data-g="9.81" data-h="0">Fast Low</button>
+                    <button class="preset-btn" data-v="20" data-angle="45" data-g="1.62" data-h="0">Moon</button>
+                    <button class="preset-btn" data-v="20" data-angle="45" data-g="3.72" data-h="0">Mars</button>
+                    <button class="preset-btn" data-v="30" data-angle="75" data-g="9.81" data-h="20">Cliff Drop</button>
+                </div>
             </div>
-            <div class="presets-row">
-                <button class="preset-btn" data-v="25" data-angle="45" data-g="9.81" data-h="0">Standard</button>
-                <button class="preset-btn" data-v="15" data-angle="60" data-g="9.81" data-h="10">High Toss</button>
-                <button class="preset-btn" data-v="50" data-angle="15" data-g="9.81" data-h="0">Fast Low</button>
-                <button class="preset-btn" data-v="20" data-angle="45" data-g="1.62" data-h="0">Moon</button>
-                <button class="preset-btn" data-v="20" data-angle="45" data-g="3.72" data-h="0">Mars</button>
-                <button class="preset-btn" data-v="30" data-angle="75" data-g="9.81" data-h="20">Cliff Drop</button>
+            <div class="card" style="margin-top: 16px;">
+                <div class="status-bar">
+                    <span class="status-dot ready" id="status-dot"></span>
+                    <span class="status-text" id="status-text">Ready to launch</span>
+                    <span class="time-display" id="time-display">t = 0.00 s</span>
+                </div>
+                <div class="speed-row">
+                    <span class="speed-label">Speed:</span>
+                    <button class="speed-btn" data-speed="0.25">0.25x</button>
+                    <button class="speed-btn" data-speed="0.5">0.5x</button>
+                    <button class="speed-btn active" data-speed="1">1x</button>
+                    <button class="speed-btn" data-speed="2">2x</button>
+                    <button class="speed-btn" data-speed="4">4x</button>
+                </div>
             </div>
         </div>
-        <div class="card" style="margin-top: 16px;">
-            <div class="status-bar">
-                <span class="status-dot ready" id="status-dot"></span>
-                <span class="status-text" id="status-text">Ready to launch</span>
-                <span class="time-display" id="time-display">t = 0.00 s</span>
+
+        <div>
+            <div class="canvas-wrapper">
+                <canvas id="simCanvas"></canvas>
             </div>
-            <div class="speed-row">
-                <span class="speed-label">Speed:</span>
-                <button class="speed-btn" data-speed="0.25">0.25x</button>
-                <button class="speed-btn" data-speed="0.5">0.5x</button>
-                <button class="speed-btn active" data-speed="1">1x</button>
-                <button class="speed-btn" data-speed="2">2x</button>
-                <button class="speed-btn" data-speed="4">4x</button>
+            <div class="action-row">
+                <button class="action-btn btn-launch" id="btn-launch"><i class="fas fa-play"></i> Launch</button>
+                <button class="action-btn btn-reset" id="btn-reset"><i class="fas fa-undo"></i> Reset</button>
+                <button class="action-btn btn-trail active" id="btn-trail"><i class="fas fa-route"></i> Trail</button>
+            </div>
+            <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
+                <h2
+                    style="font-size: 0.8rem; opacity: 0.6; color: var(--primary); text-transform: uppercase; font-weight: 800; letter-spacing: 1px; margin-bottom: 1rem;">
+                    Learning Hub</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
+                    <a href="laws.html" class="btn btn-s"
+                        style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; padding: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i
+                            class="fas fa-book" style="margin-right: 5px; color: var(--primary)"></i> Laws</a>
+                    <a href="quizzes.html" class="btn btn-s"
+                        style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; padding: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i
+                            class="fas fa-graduation-cap" style="margin-right: 5px; color: var(--secondary)"></i>
+                        Quiz</a>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <div class="card">
+                <div class="card-title"><i class="fas fa-chart-bar"></i> Results</div>
+                <div class="result-item">
+                    <div class="result-label">Max Height</div>
+                    <div class="result-value" id="res-maxh">--<span class="result-unit">m</span></div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Horizontal Range</div>
+                    <div class="result-value" id="res-range">--<span class="result-unit">m</span></div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Time of Flight</div>
+                    <div class="result-value" id="res-time">--<span class="result-unit">s</span></div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Impact Speed</div>
+                    <div class="result-value" id="res-impact">--<span class="result-unit">m/s</span></div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Impact Angle</div>
+                    <div class="result-value" id="res-impact-angle">--<span class="result-unit">° below
+                            horizontal</span></div>
+                </div>
+                <div class="result-item">
+                    <div class="result-label">Vx (constant)</div>
+                    <div class="result-value" id="res-vx">--<span class="result-unit">m/s</span></div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div>
-        <div class="canvas-wrapper">
-            <canvas id="simCanvas"></canvas>
-        </div>
-        <div class="action-row">
-            <button class="action-btn btn-launch" id="btn-launch"><i class="fas fa-play"></i> Launch</button>
-            <button class="action-btn btn-reset" id="btn-reset"><i class="fas fa-undo"></i> Reset</button>
-            <button class="action-btn btn-trail active" id="btn-trail"><i class="fas fa-route"></i> Trail</button>
-        </div>
-        <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
-            <h2 style="font-size: 0.8rem; opacity: 0.6; color: var(--primary); text-transform: uppercase; font-weight: 800; letter-spacing: 1px; margin-bottom: 1rem;">Learning Hub</h2>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem;">
-                <a href="laws.html" class="btn btn-s" style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; padding: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fas fa-book" style="margin-right: 5px; color: var(--primary)"></i> Laws</a>
-                <a href="quizzes.html" class="btn btn-s" style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; padding: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fas fa-graduation-cap" style="margin-right: 5px; color: var(--secondary)"></i> Quiz</a>
-            </div>
-        </div>
-    </div>
+    <script>
+        var canvas = document.getElementById("simCanvas");
+        var ctx = canvas.getContext("2d");
 
-    <div>
-        <div class="card">
-            <div class="card-title"><i class="fas fa-chart-bar"></i> Results</div>
-            <div class="result-item">
-                <div class="result-label">Max Height</div>
-                <div class="result-value" id="res-maxh">--<span class="result-unit">m</span></div>
-            </div>
-            <div class="result-item">
-                <div class="result-label">Horizontal Range</div>
-                <div class="result-value" id="res-range">--<span class="result-unit">m</span></div>
-            </div>
-            <div class="result-item">
-                <div class="result-label">Time of Flight</div>
-                <div class="result-value" id="res-time">--<span class="result-unit">s</span></div>
-            </div>
-            <div class="result-item">
-                <div class="result-label">Impact Speed</div>
-                <div class="result-value" id="res-impact">--<span class="result-unit">m/s</span></div>
-            </div>
-            <div class="result-item">
-                <div class="result-label">Impact Angle</div>
-                <div class="result-value" id="res-impact-angle">--<span class="result-unit">° below horizontal</span></div>
-            </div>
-            <div class="result-item">
-                <div class="result-label">Vx (constant)</div>
-                <div class="result-value" id="res-vx">--<span class="result-unit">m/s</span></div>
-            </div>
-        </div>
-        <div class="equations-card">
-            <div class="eq-title">Kinematic Equations</div>
-            <div class="eq-line">x(t) = v₀·cos(θ)·t</div>
-            <div class="eq-line">y(t) = h₀ + v₀·sin(θ)·t - ½gt²</div>
-            <div class="eq-line">Vy(t) = v₀·sin(θ) - g·t</div>
-            <div class="eq-line">|V(t)| = √(Vx² + Vy²)</div>
-        </div>
-    </div>
-</div>
+        function resizeCanvas() {
+            var wrapper = canvas.parentElement;
+            var rect = wrapper.getBoundingClientRect();
+            canvas.width = rect.width * window.devicePixelRatio;
+            canvas.height = Math.max(500, rect.height) * window.devicePixelRatio;
+            canvas.style.height = Math.max(500, rect.height) + "px";
+            ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
+        }
+        resizeCanvas();
+        window.addEventListener("resize", function () { resizeCanvas(); drawFrame(); });
 
-<script>
-var canvas = document.getElementById("simCanvas");
-var ctx = canvas.getContext("2d");
+        var sliderV = document.getElementById("slider-v");
+        var sliderAngle = document.getElementById("slider-angle");
+        var sliderG = document.getElementById("slider-g");
+        var sliderH = document.getElementById("slider-h");
+        var valV = document.getElementById("val-v");
+        var valAngle = document.getElementById("val-angle");
+        var valG = document.getElementById("val-g");
+        var valH = document.getElementById("val-h");
+        var btnLaunch = document.getElementById("btn-launch");
+        var btnReset = document.getElementById("btn-reset");
+        var btnTrail = document.getElementById("btn-trail");
+        var statusDot = document.getElementById("status-dot");
+        var statusText = document.getElementById("status-text");
+        var timeDisplay = document.getElementById("time-display");
+        var resMaxH = document.getElementById("res-maxh");
+        var resRange = document.getElementById("res-range");
+        var resTime = document.getElementById("res-time");
+        var resImpact = document.getElementById("res-impact");
+        var resImpactAngle = document.getElementById("res-impact-angle");
+        var resVx = document.getElementById("res-vx");
 
-function resizeCanvas() {
-    var wrapper = canvas.parentElement;
-    var rect = wrapper.getBoundingClientRect();
-    canvas.width = rect.width * window.devicePixelRatio;
-    canvas.height = Math.max(500, rect.height) * window.devicePixelRatio;
-    canvas.style.height = Math.max(500, rect.height) + "px";
-    ctx.setTransform(window.devicePixelRatio, 0, 0, window.devicePixelRatio, 0, 0);
-}
-resizeCanvas();
-window.addEventListener("resize", function() { resizeCanvas(); drawFrame(); });
+        var params = { v: 25, angle: 45, g: 9.81, h: 0 };
+        var simState = "ready";
+        var simTime = 0;
+        var playbackSpeed = 1;
+        var showTrail = true;
+        var trailPoints = [];
+        var animFrameId = null;
+        var lastTimestamp = null;
+        var trajData = null;
 
-var sliderV = document.getElementById("slider-v");
-var sliderAngle = document.getElementById("slider-angle");
-var sliderG = document.getElementById("slider-g");
-var sliderH = document.getElementById("slider-h");
-var valV = document.getElementById("val-v");
-var valAngle = document.getElementById("val-angle");
-var valG = document.getElementById("val-g");
-var valH = document.getElementById("val-h");
-var btnLaunch = document.getElementById("btn-launch");
-var btnReset = document.getElementById("btn-reset");
-var btnTrail = document.getElementById("btn-trail");
-var statusDot = document.getElementById("status-dot");
-var statusText = document.getElementById("status-text");
-var timeDisplay = document.getElementById("time-display");
-var resMaxH = document.getElementById("res-maxh");
-var resRange = document.getElementById("res-range");
-var resTime = document.getElementById("res-time");
-var resImpact = document.getElementById("res-impact");
-var resImpactAngle = document.getElementById("res-impact-angle");
-var resVx = document.getElementById("res-vx");
+        function updateSliderBg(slider) {
+            var pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
+            slider.style.background = "linear-gradient(90deg, #1a365d " + pct + "%, rgba(26,54,93,0.12) " + pct + "%)";
+        }
 
-var params = { v: 25, angle: 45, g: 9.81, h: 0 };
-var simState = "ready";
-var simTime = 0;
-var playbackSpeed = 1;
-var showTrail = true;
-var trailPoints = [];
-var animFrameId = null;
-var lastTimestamp = null;
-var trajData = null;
+        function readParams() {
+            params.v = parseFloat(sliderV.value);
+            params.angle = parseFloat(sliderAngle.value);
+            params.g = parseFloat(sliderG.value);
+            params.h = parseFloat(sliderH.value);
+            valV.textContent = params.v.toFixed(1) + " m/s";
+            valAngle.textContent = params.angle.toFixed(1) + "°";
+            valG.textContent = params.g.toFixed(2) + " m/s²";
+            valH.textContent = params.h.toFixed(1) + " m";
+            updateSliderBg(sliderV);
+            updateSliderBg(sliderAngle);
+            updateSliderBg(sliderG);
+            updateSliderBg(sliderH);
+            computeTrajectoryData();
+            if (simState === "ready") drawFrame();
+        }
 
-function updateSliderBg(slider) {
-    var pct = ((slider.value - slider.min) / (slider.max - slider.min)) * 100;
-    slider.style.background = "linear-gradient(90deg, #1a365d " + pct + "%, rgba(26,54,93,0.12) " + pct + "%)";
-}
+        sliderV.addEventListener("input", function () { if (simState !== "flying") readParams(); });
+        sliderAngle.addEventListener("input", function () { if (simState !== "flying") readParams(); });
+        sliderG.addEventListener("input", function () { if (simState !== "flying") readParams(); });
+        sliderH.addEventListener("input", function () { if (simState !== "flying") readParams(); });
 
-function readParams() {
-    params.v = parseFloat(sliderV.value);
-    params.angle = parseFloat(sliderAngle.value);
-    params.g = parseFloat(sliderG.value);
-    params.h = parseFloat(sliderH.value);
-    valV.textContent = params.v.toFixed(1) + " m/s";
-    valAngle.textContent = params.angle.toFixed(1) + "°";
-    valG.textContent = params.g.toFixed(2) + " m/s²";
-    valH.textContent = params.h.toFixed(1) + " m";
-    updateSliderBg(sliderV);
-    updateSliderBg(sliderAngle);
-    updateSliderBg(sliderG);
-    updateSliderBg(sliderH);
-    computeTrajectoryData();
-    if (simState === "ready") drawFrame();
-}
+        document.querySelectorAll(".preset-btn").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                if (simState === "flying") return;
+                sliderV.value = btn.dataset.v;
+                sliderAngle.value = btn.dataset.angle;
+                sliderG.value = btn.dataset.g;
+                sliderH.value = btn.dataset.h;
+                resetSim();
+                readParams();
+            });
+        });
 
-sliderV.addEventListener("input", function() { if (simState !== "flying") readParams(); });
-sliderAngle.addEventListener("input", function() { if (simState !== "flying") readParams(); });
-sliderG.addEventListener("input", function() { if (simState !== "flying") readParams(); });
-sliderH.addEventListener("input", function() { if (simState !== "flying") readParams(); });
+        document.querySelectorAll(".speed-btn").forEach(function (btn) {
+            btn.addEventListener("click", function () {
+                document.querySelectorAll(".speed-btn").forEach(function (b) { b.classList.remove("active"); });
+                btn.classList.add("active");
+                playbackSpeed = parseFloat(btn.dataset.speed);
+            });
+        });
 
-document.querySelectorAll(".preset-btn").forEach(function(btn) {
-    btn.addEventListener("click", function() {
-        if (simState === "flying") return;
-        sliderV.value = btn.dataset.v;
-        sliderAngle.value = btn.dataset.angle;
-        sliderG.value = btn.dataset.g;
-        sliderH.value = btn.dataset.h;
-        resetSim();
+        btnTrail.addEventListener("click", function () {
+            showTrail = !showTrail;
+            btnTrail.classList.toggle("active", showTrail);
+            drawFrame();
+        });
+
+        function computeTrajectoryData() {
+            var v0 = params.v;
+            var theta = params.angle * Math.PI / 180;
+            var g = params.g;
+            var h0 = params.h;
+            var vx = v0 * Math.cos(theta);
+            var vy0 = v0 * Math.sin(theta);
+            var maxH = h0 + (vy0 * vy0) / (2 * g);
+            var discriminant = vy0 * vy0 + 2 * g * h0;
+            var tFlight = (vy0 + Math.sqrt(Math.max(0, discriminant))) / g;
+            var range = vx * tFlight;
+            var vyImpact = vy0 - g * tFlight;
+            var impactSpeed = Math.sqrt(vx * vx + vyImpact * vyImpact);
+            var impactAngleDeg = Math.atan2(Math.abs(vyImpact), vx) * 180 / Math.PI;
+            trajData = {
+                vx: vx, vy0: vy0, maxH: maxH, tFlight: tFlight, range: range,
+                impactSpeed: impactSpeed, impactAngleDeg: impactAngleDeg,
+                thetaRad: theta, tMaxH: vy0 / g
+            };
+        }
+
+        function getPosition(t) {
+            var d = trajData;
+            var x = d.vx * t;
+            var y = params.h + d.vy0 * t - 0.5 * params.g * t * t;
+            var vy = d.vy0 - params.g * t;
+            var speed = Math.sqrt(d.vx * d.vx + vy * vy);
+            var angle = Math.atan2(vy, d.vx);
+            return { x: x, y: Math.max(0, y), vy: vy, speed: speed, angle: angle };
+        }
+
+        function getMapping() {
+            if (!trajData) return { scale: 1, offsetX: 60, groundY: 450, cw: 800, ch: 500, physW: 10, physH: 5 };
+            var cw = canvas.width / window.devicePixelRatio;
+            var ch = canvas.height / window.devicePixelRatio;
+            var padLeft = 65, padRight = 40, padTop = 50, padBottom = 60;
+            var physW = Math.max(trajData.range * 1.1, 10);
+            var physH = Math.max(trajData.maxH * 1.2, 5);
+            var availW = cw - padLeft - padRight;
+            var availH = ch - padTop - padBottom;
+            var scale = Math.min(availW / physW, availH / physH);
+            var usedW = physW * scale;
+            var usedH = physH * scale;
+            var offsetX = padLeft + (availW - usedW) / 2;
+            var groundY = ch - padBottom;
+            return { scale: scale, offsetX: offsetX, groundY: groundY, cw: cw, ch: ch, physW: physW, physH: physH };
+        }
+
+        function toCanvas2(px, py, m) {
+            return { cx: m.offsetX + px * m.scale, cy: m.groundY - py * m.scale };
+        }
+
+        function drawFrame() {
+            var cw = canvas.width / window.devicePixelRatio;
+            var ch = canvas.height / window.devicePixelRatio;
+            var m = getMapping();
+            var bgGrad = ctx.createLinearGradient(0, 0, 0, ch);
+            bgGrad.addColorStop(0, "#0f1b2d");
+            bgGrad.addColorStop(1, "#162236");
+            ctx.fillStyle = bgGrad;
+            ctx.fillRect(0, 0, cw, ch);
+            drawGrid(m, cw, ch);
+            drawGround(m, cw, ch);
+            if (trajData && (simState === "ready" || simState === "landed")) drawFullTrajectory(m, simState === "landed");
+            if (showTrail && trailPoints.length > 1) drawTrail(m);
+            if (params.h > 0) drawPlatform(m);
+            if (simState === "ready") drawLaunchVector(m);
+            var pos = simState === "ready" ? { x: 0, y: params.h } : getPosition(Math.min(simTime, trajData.tFlight));
+            drawBall(pos, m);
+            if (simState === "ready") drawAngleArc(m);
+            if (trajData && (simState === "landed" || (simState === "flying" && simTime >= trajData.tMaxH))) drawMaxHeightLine(m);
+            if (simState === "landed") drawLandingMarker(m);
+            drawAxisLabels(m, cw, ch);
+        }
+
+        function niceSpacing(rawSpacing) {
+            var magnitude = Math.pow(10, Math.floor(Math.log10(rawSpacing)));
+            var residual = rawSpacing / magnitude;
+            if (residual < 2) return 2 * magnitude;
+            if (residual < 5) return 5 * magnitude;
+            return 10 * magnitude;
+        }
+
+        function drawGrid(m, cw, ch) {
+            ctx.strokeStyle = "rgba(255,255,255,0.04)";
+            ctx.lineWidth = 1;
+            var spacing = niceSpacing(60 / m.scale);
+            var maxPhysX = (cw - m.offsetX) / m.scale + spacing;
+            for (var px = 0; px <= maxPhysX; px += spacing) {
+                var p = toCanvas2(px, 0, m);
+                if (p.cx < 0 || p.cx > cw) continue;
+                ctx.beginPath(); ctx.moveTo(p.cx, 0); ctx.lineTo(p.cx, ch); ctx.stroke();
+            }
+            var maxPhysY = m.groundY / m.scale + spacing;
+            for (var py = 0; py <= maxPhysY; py += spacing) {
+                var p = toCanvas2(0, py, m);
+                if (p.cy < 0 || p.cy > ch) continue;
+                ctx.beginPath(); ctx.moveTo(0, p.cy); ctx.lineTo(cw, p.cy); ctx.stroke();
+            }
+        }
+
+        function drawGround(m, cw, ch) {
+            var gy = m.groundY;
+            var groundGrad = ctx.createLinearGradient(0, gy, 0, ch);
+            groundGrad.addColorStop(0, "rgba(34,80,50,0.35)");
+            groundGrad.addColorStop(1, "rgba(20,50,30,0.15)");
+            ctx.fillStyle = groundGrad;
+            ctx.fillRect(0, gy, cw, ch - gy);
+            ctx.strokeStyle = "rgba(72,187,120,0.5)";
+            ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(cw, gy); ctx.stroke();
+            ctx.fillStyle = "rgba(72,187,120,0.15)";
+            for (var i = 0; i < cw; i += 12) {
+                var h = 3 + Math.random() * 5;
+                ctx.fillRect(i, gy - h, 1.5, h);
+            }
+        }
+
+        function drawPlatform(m) {
+            var base = toCanvas2(0, 0, m);
+            var top = toCanvas2(0, params.h, m);
+            var pw = 14;
+            var grad = ctx.createLinearGradient(base.cx - pw / 2, base.cy, base.cx + pw / 2, top.cy);
+            grad.addColorStop(0, "rgba(99,130,170,0.6)");
+            grad.addColorStop(1, "rgba(130,160,200,0.4)");
+            ctx.fillStyle = grad;
+            ctx.fillRect(base.cx - pw / 2, top.cy, pw, base.cy - top.cy);
+            ctx.fillStyle = "rgba(160,190,220,0.7)";
+            ctx.fillRect(base.cx - pw / 2 - 4, top.cy - 3, pw + 8, 6);
+            ctx.fillStyle = "rgba(255,255,255,0.5)";
+            ctx.font = '500 11px "JetBrains Mono", monospace';
+            ctx.textAlign = "right";
+            ctx.fillText(params.h.toFixed(1) + " m", base.cx - pw / 2 - 8, (base.cy + top.cy) / 2 + 4);
+            ctx.strokeStyle = "rgba(255,255,255,0.2)";
+            ctx.lineWidth = 1;
+            ctx.setLineDash([3, 3]);
+            ctx.beginPath(); ctx.moveTo(base.cx - pw / 2 - 2, base.cy); ctx.lineTo(base.cx - pw / 2 - 2, top.cy); ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function drawFullTrajectory(m, bright) {
+            if (!trajData) return;
+            var steps = 200;
+            var dt = trajData.tFlight / steps;
+            ctx.beginPath();
+            for (var i = 0; i <= steps; i++) {
+                var p = getPosition(i * dt);
+                var c = toCanvas2(p.x, p.y, m);
+                if (i === 0) ctx.moveTo(c.cx, c.cy); else ctx.lineTo(c.cx, c.cy);
+            }
+            ctx.strokeStyle = bright ? "rgba(229,62,62,0.35)" : "rgba(255,255,255,0.08)";
+            ctx.lineWidth = bright ? 2 : 1.5;
+            if (!bright) ctx.setLineDash([6, 4]);
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function drawTrail(m) {
+            for (var i = 1; i < trailPoints.length; i++) {
+                var alpha = (i / trailPoints.length) * 0.8;
+                var p0 = toCanvas2(trailPoints[i - 1].x, trailPoints[i - 1].y, m);
+                var p1 = toCanvas2(trailPoints[i].x, trailPoints[i].y, m);
+                ctx.beginPath(); ctx.moveTo(p0.cx, p0.cy); ctx.lineTo(p1.cx, p1.cy);
+                ctx.strokeStyle = "rgba(229,62,62," + alpha + ")";
+                ctx.lineWidth = 3; ctx.stroke();
+            }
+            ctx.beginPath();
+            for (var i = 0; i < trailPoints.length; i++) {
+                var p = toCanvas2(trailPoints[i].x, trailPoints[i].y, m);
+                if (i === 0) ctx.moveTo(p.cx, p.cy); else ctx.lineTo(p.cx, p.cy);
+            }
+            ctx.strokeStyle = "rgba(255,120,100,0.9)";
+            ctx.lineWidth = 1.5; ctx.stroke();
+        }
+
+        function drawLaunchVector(m) {
+            var origin = toCanvas2(0, params.h, m);
+            var arrowLen = Math.min(80, params.v * 1.5);
+            var theta = params.angle * Math.PI / 180;
+            var endX = origin.cx + arrowLen * Math.cos(theta);
+            var endY = origin.cy - arrowLen * Math.sin(theta);
+            ctx.strokeStyle = "rgba(72,187,120,0.8)";
+            ctx.lineWidth = 2.5;
+            ctx.beginPath(); ctx.moveTo(origin.cx, origin.cy); ctx.lineTo(endX, endY); ctx.stroke();
+            var headLen = 10, headAngle = 0.4;
+            ctx.fillStyle = "rgba(72,187,120,0.8)";
+            ctx.beginPath();
+            ctx.moveTo(endX, endY);
+            ctx.lineTo(endX - headLen * Math.cos(theta - headAngle), endY + headLen * Math.sin(theta - headAngle));
+            ctx.lineTo(endX - headLen * Math.cos(theta + headAngle), endY + headLen * Math.sin(theta + headAngle));
+            ctx.closePath(); ctx.fill();
+            ctx.fillStyle = "rgba(72,187,120,0.9)";
+            ctx.font = '600 12px "Space Grotesk", sans-serif';
+            ctx.textAlign = "left";
+            ctx.fillText("v₀ = " + params.v.toFixed(1) + " m/s", endX + 8 * Math.cos(theta), endY - 8 * Math.sin(theta));
+        }
+
+        function drawAngleArc(m) {
+            if (params.angle < 1) return;
+            var origin = toCanvas2(0, params.h, m);
+            var radius = 35;
+            var theta = params.angle * Math.PI / 180;
+            ctx.strokeStyle = "rgba(255,200,60,0.6)";
+            ctx.lineWidth = 1.5;
+            ctx.beginPath(); ctx.arc(origin.cx, origin.cy, radius, -theta, 0); ctx.stroke();
+            var midAngle = theta / 2;
+            var labelR = radius + 14;
+            ctx.fillStyle = "rgba(255,200,60,0.8)";
+            ctx.font = '500 11px "JetBrains Mono", monospace';
+            ctx.textAlign = "left";
+            ctx.fillText(params.angle.toFixed(1) + "°", origin.cx + labelR * Math.cos(midAngle), origin.cy - labelR * Math.sin(midAngle) + 4);
+        }
+
+        function drawBall(pos, m) {
+            var c = toCanvas2(pos.x, pos.y, m);
+            var ballRadius = 8;
+
+            // Vectors during flight
+            if (simState === "flying") {
+                var vScale = 1.5;
+                var fScale = 10;
+                var vx = trajData.vx;
+                var vy = trajData.vy0 - params.g * simTime;
+
+                // Horizontal Component (Blue)
+                drawVector(c.cx, c.cy, c.cx + vx * vScale, c.cy, '#0047AB', 'vx');
+                // Vertical Component (Yellow)
+                drawVector(c.cx, c.cy, c.cx, c.cy - vy * vScale, '#FFD700', 'vy');
+                // Resultant Velocity (Green)
+                drawVector(c.cx, c.cy, c.cx + vx * vScale, c.cy - vy * vScale, '#89E37B', 'v');
+                // Gravity Force (Cobalt)
+                drawVector(c.cx, c.cy, c.cx, c.cy + params.g * fScale, '#3182ce', 'Fg');
+            }
+
+            // Legend
+            drawLegend([
+                { color: '#89E37B', text: 'v : Velocity' },
+                { color: '#0047AB', text: 'vx: Horiz. Velocity' },
+                { color: '#FFD700', text: 'vy: Vert. Velocity' },
+                { color: '#3182ce', text: 'Fg: Gravity Force' }
+            ]);
+
+            var glowGrad = ctx.createRadialGradient(c.cx, c.cy, ballRadius, c.cx, c.cy, ballRadius * 4);
+            glowGrad.addColorStop(0, "rgba(229,62,62,0.25)");
+            glowGrad.addColorStop(1, "rgba(229,62,62,0)");
+            ctx.fillStyle = glowGrad;
+            ctx.beginPath(); ctx.arc(c.cx, c.cy, ballRadius * 4, 0, Math.PI * 2); ctx.fill();
+            var ballGrad = ctx.createRadialGradient(c.cx - 2, c.cy - 2, 1, c.cx, c.cy, ballRadius);
+            ballGrad.addColorStop(0, "#ff8a80");
+            ballGrad.addColorStop(0.6, "#e53e3e");
+            ballGrad.addColorStop(1, "#c53030");
+            ctx.fillStyle = ballGrad;
+            ctx.beginPath(); ctx.arc(c.cx, c.cy, ballRadius, 0, Math.PI * 2); ctx.fill();
+            ctx.fillStyle = "rgba(255,255,255,0.35)";
+            ctx.beginPath(); ctx.arc(c.cx - 2.5, c.cy - 2.5, ballRadius * 0.35, 0, Math.PI * 2); ctx.fill();
+            if (pos.y > 0.1) {
+                var shadowY = m.groundY;
+                var shadowScale = Math.max(0.3, 1 - pos.y / (trajData ? trajData.maxH * 1.5 : 100));
+                ctx.fillStyle = "rgba(0,0,0," + (0.2 * shadowScale) + ")";
+                ctx.beginPath(); ctx.ellipse(c.cx, shadowY, ballRadius * shadowScale * 1.5, 3 * shadowScale, 0, 0, Math.PI * 2); ctx.fill();
+            }
+        }
+
+        function drawVector(x1, y1, x2, y2, color, label) {
+            if (Math.sqrt((x2 - x1) ** 2 + (y2 - y1) ** 2) < 5) return;
+            ctx.strokeStyle = color;
+            ctx.fillStyle = color;
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+
+            const angle = Math.atan2(y2 - y1, x2 - x1);
+            const head = 8;
+            ctx.beginPath();
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - head * Math.cos(angle - 0.4), y2 - head * Math.sin(angle - 0.4));
+            ctx.lineTo(x2 - head * Math.cos(angle + 0.4), y2 - head * Math.sin(angle + 0.4));
+            ctx.fill();
+
+            ctx.font = 'bold 11px JetBrains Mono';
+            ctx.fillText(label, x2 + 5, y2 + 5);
+        }
+
+        function drawLegend(items) {
+            const cw = canvas.width / window.devicePixelRatio;
+            const x = cw - 170;
+            let y = 30;
+            ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
+            ctx.roundRect(x - 10, y - 20, 160, items.length * 25 + 15, 12);
+            ctx.fill();
+
+            items.forEach(item => {
+                ctx.fillStyle = item.color;
+                ctx.beginPath();
+                ctx.arc(x, y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.fillStyle = 'white';
+                ctx.font = '600 11px Outfit';
+                ctx.fillText(item.text, x + 15, y + 4);
+                y += 25;
+            });
+        }
+
+        function drawMaxHeightLine(m) {
+            if (!trajData) return;
+            var c = toCanvas2(0, trajData.maxH, m);
+            ctx.strokeStyle = "rgba(255,200,60,0.3)";
+            ctx.lineWidth = 1;
+            ctx.setLineDash([5, 5]);
+            ctx.beginPath(); ctx.moveTo(0, c.cy); ctx.lineTo(m.cw, c.cy); ctx.stroke();
+            ctx.setLineDash([]);
+            ctx.fillStyle = "rgba(255,200,60,0.7)";
+            ctx.font = '500 10px "JetBrains Mono", monospace';
+            ctx.textAlign = "right";
+            ctx.fillText("H_max = " + trajData.maxH.toFixed(1) + " m", m.cw - 10, c.cy - 5);
+        }
+
+        function drawLandingMarker(m) {
+            if (!trajData) return;
+            var c = toCanvas2(trajData.range, 0, m);
+            ctx.strokeStyle = "rgba(229,62,62,0.6)";
+            ctx.lineWidth = 2;
+            var s = 8;
+            ctx.beginPath();
+            ctx.moveTo(c.cx - s, c.cy - s); ctx.lineTo(c.cx + s, c.cy + s);
+            ctx.moveTo(c.cx + s, c.cy - s); ctx.lineTo(c.cx - s, c.cy + s);
+            ctx.stroke();
+            ctx.fillStyle = "rgba(229,62,62,0.8)";
+            ctx.font = '500 11px "JetBrains Mono", monospace';
+            ctx.textAlign = "center";
+            ctx.fillText("R = " + trajData.range.toFixed(1) + " m", c.cx, c.cy + 22);
+        }
+
+        function formatNum(n) {
+            if (n >= 1000) return (n / 1000).toFixed(1) + "k";
+            if (n >= 1) return n.toFixed(n % 1 === 0 ? 0 : 1);
+            return n.toFixed(2);
+        }
+
+        function drawAxisLabels(m, cw, ch) {
+            ctx.fillStyle = "rgba(255,255,255,0.35)";
+            ctx.font = '500 11px "Space Grotesk", sans-serif';
+            ctx.textAlign = "center";
+            ctx.fillText("Horizontal Distance (m)", cw / 2, ch - 12);
+            ctx.save();
+            ctx.translate(14, ch / 2 - 30);
+            ctx.rotate(-Math.PI / 2);
+            ctx.fillText("Height (m)", 0, 0);
+            ctx.restore();
+            var spacing = niceSpacing(60 / m.scale);
+            ctx.font = '400 9px "JetBrains Mono", monospace';
+            ctx.fillStyle = "rgba(255,255,255,0.25)";
+            ctx.textAlign = "center";
+            var maxPhysX = (cw - m.offsetX) / m.scale + spacing;
+            for (var px = 0; px <= maxPhysX; px += spacing) {
+                if (px === 0) continue;
+                var c = toCanvas2(px, 0, m);
+                if (c.cx < 50 || c.cx > cw - 20) continue;
+                ctx.fillText(formatNum(px), c.cx, m.groundY + 16);
+                ctx.strokeStyle = "rgba(255,255,255,0.15)";
+                ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(c.cx, m.groundY); ctx.lineTo(c.cx, m.groundY + 5); ctx.stroke();
+            }
+            ctx.textAlign = "right";
+            var maxPhysY = m.groundY / m.scale + spacing;
+            for (var py = spacing; py <= maxPhysY; py += spacing) {
+                var c = toCanvas2(0, py, m);
+                if (c.cy < 20 || c.cy > m.groundY - 10) continue;
+                ctx.fillText(formatNum(py), m.offsetX - 8, c.cy + 3);
+                ctx.strokeStyle = "rgba(255,255,255,0.15)";
+                ctx.lineWidth = 1;
+                ctx.beginPath(); ctx.moveTo(m.offsetX - 3, c.cy); ctx.lineTo(m.offsetX, c.cy); ctx.stroke();
+            }
+            ctx.fillText("0", m.offsetX - 8, m.groundY + 16);
+        }
+
+        function updateResults() {
+            if (!trajData) return;
+            resMaxH.innerHTML = trajData.maxH.toFixed(2) + '<span class="result-unit">m</span>';
+            resRange.innerHTML = trajData.range.toFixed(2) + '<span class="result-unit">m</span>';
+            resTime.innerHTML = trajData.tFlight.toFixed(2) + '<span class="result-unit">s</span>';
+            resImpact.innerHTML = trajData.impactSpeed.toFixed(2) + '<span class="result-unit">m/s</span>';
+            resImpactAngle.innerHTML = trajData.impactAngleDeg.toFixed(1) + '<span class="result-unit">° below horizontal</span>';
+            resVx.innerHTML = trajData.vx.toFixed(2) + '<span class="result-unit">m/s</span>';
+        }
+
+        function setStatus(state) {
+            simState = state;
+            statusDot.className = "status-dot " + (state === "ready" ? "ready" : state === "flying" ? "flying" : "landed");
+            var labels = { ready: "Ready to launch", flying: "In flight...", landed: "Landed" };
+            statusText.textContent = labels[state];
+            btnLaunch.disabled = state === "flying";
+        }
+
+        function launch() {
+            if (simState === "flying") return;
+            resetSim();
+            computeTrajectoryData();
+            updateResults();
+            setStatus("flying");
+            simTime = 0;
+            lastTimestamp = null;
+            trailPoints = [];
+            animFrameId = requestAnimationFrame(animate);
+        }
+
+        function resetSim() {
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+            animFrameId = null;
+            simTime = 0;
+            lastTimestamp = null;
+            trailPoints = [];
+            setStatus("ready");
+            timeDisplay.textContent = "t = 0.00 s";
+            computeTrajectoryData();
+            drawFrame();
+        }
+
+        function animate(timestamp) {
+            if (simState !== "flying") return;
+            if (lastTimestamp === null) lastTimestamp = timestamp;
+            var deltaMs = timestamp - lastTimestamp;
+            lastTimestamp = timestamp;
+            simTime += (deltaMs / 1000) * playbackSpeed;
+            if (simTime >= trajData.tFlight) {
+                simTime = trajData.tFlight;
+                setStatus("landed");
+                var finalPos = getPosition(trajData.tFlight);
+                trailPoints.push({ x: finalPos.x, y: finalPos.y });
+                timeDisplay.textContent = "t = " + trajData.tFlight.toFixed(2) + " s";
+                drawFrame();
+                return;
+            }
+            var pos = getPosition(simTime);
+            if (trailPoints.length === 0 || simTime - (trailPoints.length * 0.01) >= 0.005) {
+                trailPoints.push({ x: pos.x, y: pos.y });
+            }
+            timeDisplay.textContent = "t = " + simTime.toFixed(2) + " s";
+            drawFrame();
+            animFrameId = requestAnimationFrame(animate);
+        }
+
+        btnLaunch.addEventListener("click", launch);
+        btnReset.addEventListener("click", resetSim);
+        document.addEventListener("keydown", function (e) {
+            if (e.code === "Space" && e.target.tagName !== "INPUT") {
+                e.preventDefault();
+                if (simState === "flying") resetSim(); else launch();
+            }
+        });
+
         readParams();
-    });
-});
-
-document.querySelectorAll(".speed-btn").forEach(function(btn) {
-    btn.addEventListener("click", function() {
-        document.querySelectorAll(".speed-btn").forEach(function(b) { b.classList.remove("active"); });
-        btn.classList.add("active");
-        playbackSpeed = parseFloat(btn.dataset.speed);
-    });
-});
-
-btnTrail.addEventListener("click", function() {
-    showTrail = !showTrail;
-    btnTrail.classList.toggle("active", showTrail);
-    drawFrame();
-});
-
-function computeTrajectoryData() {
-    var v0 = params.v;
-    var theta = params.angle * Math.PI / 180;
-    var g = params.g;
-    var h0 = params.h;
-    var vx = v0 * Math.cos(theta);
-    var vy0 = v0 * Math.sin(theta);
-    var maxH = h0 + (vy0 * vy0) / (2 * g);
-    var discriminant = vy0 * vy0 + 2 * g * h0;
-    var tFlight = (vy0 + Math.sqrt(Math.max(0, discriminant))) / g;
-    var range = vx * tFlight;
-    var vyImpact = vy0 - g * tFlight;
-    var impactSpeed = Math.sqrt(vx * vx + vyImpact * vyImpact);
-    var impactAngleDeg = Math.atan2(Math.abs(vyImpact), vx) * 180 / Math.PI;
-    trajData = {
-        vx: vx, vy0: vy0, maxH: maxH, tFlight: tFlight, range: range,
-        impactSpeed: impactSpeed, impactAngleDeg: impactAngleDeg,
-        thetaRad: theta, tMaxH: vy0 / g
-    };
-}
-
-function getPosition(t) {
-    var d = trajData;
-    var x = d.vx * t;
-    var y = params.h + d.vy0 * t - 0.5 * params.g * t * t;
-    var vy = d.vy0 - params.g * t;
-    var speed = Math.sqrt(d.vx * d.vx + vy * vy);
-    var angle = Math.atan2(vy, d.vx);
-    return { x: x, y: Math.max(0, y), vy: vy, speed: speed, angle: angle };
-}
-
-function getMapping() {
-    if (!trajData) return { scale: 1, offsetX: 60, groundY: 450, cw: 800, ch: 500, physW: 10, physH: 5 };
-    var cw = canvas.width / window.devicePixelRatio;
-    var ch = canvas.height / window.devicePixelRatio;
-    var padLeft = 65, padRight = 40, padTop = 50, padBottom = 60;
-    var physW = Math.max(trajData.range * 1.1, 10);
-    var physH = Math.max(trajData.maxH * 1.2, 5);
-    var availW = cw - padLeft - padRight;
-    var availH = ch - padTop - padBottom;
-    var scale = Math.min(availW / physW, availH / physH);
-    var usedW = physW * scale;
-    var usedH = physH * scale;
-    var offsetX = padLeft + (availW - usedW) / 2;
-    var groundY = ch - padBottom;
-    return { scale: scale, offsetX: offsetX, groundY: groundY, cw: cw, ch: ch, physW: physW, physH: physH };
-}
-
-function toCanvas2(px, py, m) {
-    return { cx: m.offsetX + px * m.scale, cy: m.groundY - py * m.scale };
-}
-
-function drawFrame() {
-    var cw = canvas.width / window.devicePixelRatio;
-    var ch = canvas.height / window.devicePixelRatio;
-    var m = getMapping();
-    var bgGrad = ctx.createLinearGradient(0, 0, 0, ch);
-    bgGrad.addColorStop(0, "#0f1b2d");
-    bgGrad.addColorStop(1, "#162236");
-    ctx.fillStyle = bgGrad;
-    ctx.fillRect(0, 0, cw, ch);
-    drawGrid(m, cw, ch);
-    drawGround(m, cw, ch);
-    if (trajData && (simState === "ready" || simState === "landed")) drawFullTrajectory(m, simState === "landed");
-    if (showTrail && trailPoints.length > 1) drawTrail(m);
-    if (params.h > 0) drawPlatform(m);
-    if (simState === "ready") drawLaunchVector(m);
-    var pos = simState === "ready" ? { x: 0, y: params.h } : getPosition(Math.min(simTime, trajData.tFlight));
-    drawBall(pos, m);
-    if (simState === "ready") drawAngleArc(m);
-    if (trajData && (simState === "landed" || (simState === "flying" && simTime >= trajData.tMaxH))) drawMaxHeightLine(m);
-    if (simState === "landed") drawLandingMarker(m);
-    drawAxisLabels(m, cw, ch);
-}
-
-function niceSpacing(rawSpacing) {
-    var magnitude = Math.pow(10, Math.floor(Math.log10(rawSpacing)));
-    var residual = rawSpacing / magnitude;
-    if (residual < 2) return 2 * magnitude;
-    if (residual < 5) return 5 * magnitude;
-    return 10 * magnitude;
-}
-
-function drawGrid(m, cw, ch) {
-    ctx.strokeStyle = "rgba(255,255,255,0.04)";
-    ctx.lineWidth = 1;
-    var spacing = niceSpacing(60 / m.scale);
-    var maxPhysX = (cw - m.offsetX) / m.scale + spacing;
-    for (var px = 0; px <= maxPhysX; px += spacing) {
-        var p = toCanvas2(px, 0, m);
-        if (p.cx < 0 || p.cx > cw) continue;
-        ctx.beginPath(); ctx.moveTo(p.cx, 0); ctx.lineTo(p.cx, ch); ctx.stroke();
-    }
-    var maxPhysY = m.groundY / m.scale + spacing;
-    for (var py = 0; py <= maxPhysY; py += spacing) {
-        var p = toCanvas2(0, py, m);
-        if (p.cy < 0 || p.cy > ch) continue;
-        ctx.beginPath(); ctx.moveTo(0, p.cy); ctx.lineTo(cw, p.cy); ctx.stroke();
-    }
-}
-
-function drawGround(m, cw, ch) {
-    var gy = m.groundY;
-    var groundGrad = ctx.createLinearGradient(0, gy, 0, ch);
-    groundGrad.addColorStop(0, "rgba(34,80,50,0.35)");
-    groundGrad.addColorStop(1, "rgba(20,50,30,0.15)");
-    ctx.fillStyle = groundGrad;
-    ctx.fillRect(0, gy, cw, ch - gy);
-    ctx.strokeStyle = "rgba(72,187,120,0.5)";
-    ctx.lineWidth = 2;
-    ctx.beginPath(); ctx.moveTo(0, gy); ctx.lineTo(cw, gy); ctx.stroke();
-    ctx.fillStyle = "rgba(72,187,120,0.15)";
-    for (var i = 0; i < cw; i += 12) {
-        var h = 3 + Math.random() * 5;
-        ctx.fillRect(i, gy - h, 1.5, h);
-    }
-}
-
-function drawPlatform(m) {
-    var base = toCanvas2(0, 0, m);
-    var top = toCanvas2(0, params.h, m);
-    var pw = 14;
-    var grad = ctx.createLinearGradient(base.cx - pw / 2, base.cy, base.cx + pw / 2, top.cy);
-    grad.addColorStop(0, "rgba(99,130,170,0.6)");
-    grad.addColorStop(1, "rgba(130,160,200,0.4)");
-    ctx.fillStyle = grad;
-    ctx.fillRect(base.cx - pw / 2, top.cy, pw, base.cy - top.cy);
-    ctx.fillStyle = "rgba(160,190,220,0.7)";
-    ctx.fillRect(base.cx - pw / 2 - 4, top.cy - 3, pw + 8, 6);
-    ctx.fillStyle = "rgba(255,255,255,0.5)";
-    ctx.font = '500 11px "JetBrains Mono", monospace';
-    ctx.textAlign = "right";
-    ctx.fillText(params.h.toFixed(1) + " m", base.cx - pw / 2 - 8, (base.cy + top.cy) / 2 + 4);
-    ctx.strokeStyle = "rgba(255,255,255,0.2)";
-    ctx.lineWidth = 1;
-    ctx.setLineDash([3, 3]);
-    ctx.beginPath(); ctx.moveTo(base.cx - pw / 2 - 2, base.cy); ctx.lineTo(base.cx - pw / 2 - 2, top.cy); ctx.stroke();
-    ctx.setLineDash([]);
-}
-
-function drawFullTrajectory(m, bright) {
-    if (!trajData) return;
-    var steps = 200;
-    var dt = trajData.tFlight / steps;
-    ctx.beginPath();
-    for (var i = 0; i <= steps; i++) {
-        var p = getPosition(i * dt);
-        var c = toCanvas2(p.x, p.y, m);
-        if (i === 0) ctx.moveTo(c.cx, c.cy); else ctx.lineTo(c.cx, c.cy);
-    }
-    ctx.strokeStyle = bright ? "rgba(229,62,62,0.35)" : "rgba(255,255,255,0.08)";
-    ctx.lineWidth = bright ? 2 : 1.5;
-    if (!bright) ctx.setLineDash([6, 4]);
-    ctx.stroke();
-    ctx.setLineDash([]);
-}
-
-function drawTrail(m) {
-    for (var i = 1; i < trailPoints.length; i++) {
-        var alpha = (i / trailPoints.length) * 0.8;
-        var p0 = toCanvas2(trailPoints[i - 1].x, trailPoints[i - 1].y, m);
-        var p1 = toCanvas2(trailPoints[i].x, trailPoints[i].y, m);
-        ctx.beginPath(); ctx.moveTo(p0.cx, p0.cy); ctx.lineTo(p1.cx, p1.cy);
-        ctx.strokeStyle = "rgba(229,62,62," + alpha + ")";
-        ctx.lineWidth = 3; ctx.stroke();
-    }
-    ctx.beginPath();
-    for (var i = 0; i < trailPoints.length; i++) {
-        var p = toCanvas2(trailPoints[i].x, trailPoints[i].y, m);
-        if (i === 0) ctx.moveTo(p.cx, p.cy); else ctx.lineTo(p.cx, p.cy);
-    }
-    ctx.strokeStyle = "rgba(255,120,100,0.9)";
-    ctx.lineWidth = 1.5; ctx.stroke();
-}
-
-function drawLaunchVector(m) {
-    var origin = toCanvas2(0, params.h, m);
-    var arrowLen = Math.min(80, params.v * 1.5);
-    var theta = params.angle * Math.PI / 180;
-    var endX = origin.cx + arrowLen * Math.cos(theta);
-    var endY = origin.cy - arrowLen * Math.sin(theta);
-    ctx.strokeStyle = "rgba(72,187,120,0.8)";
-    ctx.lineWidth = 2.5;
-    ctx.beginPath(); ctx.moveTo(origin.cx, origin.cy); ctx.lineTo(endX, endY); ctx.stroke();
-    var headLen = 10, headAngle = 0.4;
-    ctx.fillStyle = "rgba(72,187,120,0.8)";
-    ctx.beginPath();
-    ctx.moveTo(endX, endY);
-    ctx.lineTo(endX - headLen * Math.cos(theta - headAngle), endY + headLen * Math.sin(theta - headAngle));
-    ctx.lineTo(endX - headLen * Math.cos(theta + headAngle), endY + headLen * Math.sin(theta + headAngle));
-    ctx.closePath(); ctx.fill();
-    ctx.fillStyle = "rgba(72,187,120,0.9)";
-    ctx.font = '600 12px "Space Grotesk", sans-serif';
-    ctx.textAlign = "left";
-    ctx.fillText("v₀ = " + params.v.toFixed(1) + " m/s", endX + 8 * Math.cos(theta), endY - 8 * Math.sin(theta));
-}
-
-function drawAngleArc(m) {
-    if (params.angle < 1) return;
-    var origin = toCanvas2(0, params.h, m);
-    var radius = 35;
-    var theta = params.angle * Math.PI / 180;
-    ctx.strokeStyle = "rgba(255,200,60,0.6)";
-    ctx.lineWidth = 1.5;
-    ctx.beginPath(); ctx.arc(origin.cx, origin.cy, radius, -theta, 0); ctx.stroke();
-    var midAngle = theta / 2;
-    var labelR = radius + 14;
-    ctx.fillStyle = "rgba(255,200,60,0.8)";
-    ctx.font = '500 11px "JetBrains Mono", monospace';
-    ctx.textAlign = "left";
-    ctx.fillText(params.angle.toFixed(1) + "°", origin.cx + labelR * Math.cos(midAngle), origin.cy - labelR * Math.sin(midAngle) + 4);
-}
-
-function drawBall(pos, m) {
-    var c = toCanvas2(pos.x, pos.y, m);
-    var ballRadius = 8;
-
-    // Vectors during flight
-    if(simState === "flying") {
-        var vScale = 1.5;
-        var fScale = 10;
-        var vx = trajData.vx;
-        var vy = trajData.vy0 - params.g * simTime;
-        
-        // Horizontal Component (Blue)
-        drawVector(c.cx, c.cy, c.cx + vx * vScale, c.cy, '#0047AB', 'vx');
-        // Vertical Component (Yellow)
-        drawVector(c.cx, c.cy, c.cx, c.cy - vy * vScale, '#FFD700', 'vy');
-        // Resultant Velocity (Green)
-        drawVector(c.cx, c.cy, c.cx + vx * vScale, c.cy - vy * vScale, '#89E37B', 'v');
-        // Gravity Force (Cobalt)
-        drawVector(c.cx, c.cy, c.cx, c.cy + params.g * fScale, '#3182ce', 'Fg');
-    }
-
-    // Legend
-    drawLegend([
-        { color: '#89E37B', text: 'v : Velocity' },
-        { color: '#0047AB', text: 'vx: Horiz. Velocity' },
-        { color: '#FFD700', text: 'vy: Vert. Velocity' },
-        { color: '#3182ce', text: 'Fg: Gravity Force' }
-    ]);
-
-    var glowGrad = ctx.createRadialGradient(c.cx, c.cy, ballRadius, c.cx, c.cy, ballRadius * 4);
-    glowGrad.addColorStop(0, "rgba(229,62,62,0.25)");
-    glowGrad.addColorStop(1, "rgba(229,62,62,0)");
-    ctx.fillStyle = glowGrad;
-    ctx.beginPath(); ctx.arc(c.cx, c.cy, ballRadius * 4, 0, Math.PI * 2); ctx.fill();
-    var ballGrad = ctx.createRadialGradient(c.cx - 2, c.cy - 2, 1, c.cx, c.cy, ballRadius);
-    ballGrad.addColorStop(0, "#ff8a80");
-    ballGrad.addColorStop(0.6, "#e53e3e");
-    ballGrad.addColorStop(1, "#c53030");
-    ctx.fillStyle = ballGrad;
-    ctx.beginPath(); ctx.arc(c.cx, c.cy, ballRadius, 0, Math.PI * 2); ctx.fill();
-    ctx.fillStyle = "rgba(255,255,255,0.35)";
-    ctx.beginPath(); ctx.arc(c.cx - 2.5, c.cy - 2.5, ballRadius * 0.35, 0, Math.PI * 2); ctx.fill();
-    if (pos.y > 0.1) {
-        var shadowY = m.groundY;
-        var shadowScale = Math.max(0.3, 1 - pos.y / (trajData ? trajData.maxH * 1.5 : 100));
-        ctx.fillStyle = "rgba(0,0,0," + (0.2 * shadowScale) + ")";
-        ctx.beginPath(); ctx.ellipse(c.cx, shadowY, ballRadius * shadowScale * 1.5, 3 * shadowScale, 0, 0, Math.PI * 2); ctx.fill();
-    }
-}
-
-function drawVector(x1, y1, x2, y2, color, label) {
-    if(Math.sqrt((x2-x1)**2 + (y2-y1)**2) < 5) return;
-    ctx.strokeStyle = color;
-    ctx.fillStyle = color;
-    ctx.lineWidth = 2.5;
-    ctx.beginPath();
-    ctx.moveTo(x1, y1);
-    ctx.lineTo(x2, y2);
-    ctx.stroke();
-
-    const angle = Math.atan2(y2 - y1, x2 - x1);
-    const head = 8;
-    ctx.beginPath();
-    ctx.moveTo(x2, y2);
-    ctx.lineTo(x2 - head * Math.cos(angle - 0.4), y2 - head * Math.sin(angle - 0.4));
-    ctx.lineTo(x2 - head * Math.cos(angle + 0.4), y2 - head * Math.sin(angle + 0.4));
-    ctx.fill();
-
-    ctx.font = 'bold 11px JetBrains Mono';
-    ctx.fillText(label, x2 + 5, y2 + 5);
-}
-
-function drawLegend(items) {
-    const cw = canvas.width / window.devicePixelRatio;
-    const x = cw - 170;
-    let y = 30;
-    ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
-    ctx.roundRect(x - 10, y - 20, 160, items.length * 25 + 15, 12);
-    ctx.fill();
-    
-    items.forEach(item => {
-        ctx.fillStyle = item.color;
-        ctx.beginPath();
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.fillStyle = 'white';
-        ctx.font = '600 11px Outfit';
-        ctx.fillText(item.text, x + 15, y + 4);
-        y += 25;
-    });
-}
-
-function drawMaxHeightLine(m) {
-    if (!trajData) return;
-    var c = toCanvas2(0, trajData.maxH, m);
-    ctx.strokeStyle = "rgba(255,200,60,0.3)";
-    ctx.lineWidth = 1;
-    ctx.setLineDash([5, 5]);
-    ctx.beginPath(); ctx.moveTo(0, c.cy); ctx.lineTo(m.cw, c.cy); ctx.stroke();
-    ctx.setLineDash([]);
-    ctx.fillStyle = "rgba(255,200,60,0.7)";
-    ctx.font = '500 10px "JetBrains Mono", monospace';
-    ctx.textAlign = "right";
-    ctx.fillText("H_max = " + trajData.maxH.toFixed(1) + " m", m.cw - 10, c.cy - 5);
-}
-
-function drawLandingMarker(m) {
-    if (!trajData) return;
-    var c = toCanvas2(trajData.range, 0, m);
-    ctx.strokeStyle = "rgba(229,62,62,0.6)";
-    ctx.lineWidth = 2;
-    var s = 8;
-    ctx.beginPath();
-    ctx.moveTo(c.cx - s, c.cy - s); ctx.lineTo(c.cx + s, c.cy + s);
-    ctx.moveTo(c.cx + s, c.cy - s); ctx.lineTo(c.cx - s, c.cy + s);
-    ctx.stroke();
-    ctx.fillStyle = "rgba(229,62,62,0.8)";
-    ctx.font = '500 11px "JetBrains Mono", monospace';
-    ctx.textAlign = "center";
-    ctx.fillText("R = " + trajData.range.toFixed(1) + " m", c.cx, c.cy + 22);
-}
-
-function formatNum(n) {
-    if (n >= 1000) return (n / 1000).toFixed(1) + "k";
-    if (n >= 1) return n.toFixed(n % 1 === 0 ? 0 : 1);
-    return n.toFixed(2);
-}
-
-function drawAxisLabels(m, cw, ch) {
-    ctx.fillStyle = "rgba(255,255,255,0.35)";
-    ctx.font = '500 11px "Space Grotesk", sans-serif';
-    ctx.textAlign = "center";
-    ctx.fillText("Horizontal Distance (m)", cw / 2, ch - 12);
-    ctx.save();
-    ctx.translate(14, ch / 2 - 30);
-    ctx.rotate(-Math.PI / 2);
-    ctx.fillText("Height (m)", 0, 0);
-    ctx.restore();
-    var spacing = niceSpacing(60 / m.scale);
-    ctx.font = '400 9px "JetBrains Mono", monospace';
-    ctx.fillStyle = "rgba(255,255,255,0.25)";
-    ctx.textAlign = "center";
-    var maxPhysX = (cw - m.offsetX) / m.scale + spacing;
-    for (var px = 0; px <= maxPhysX; px += spacing) {
-        if (px === 0) continue;
-        var c = toCanvas2(px, 0, m);
-        if (c.cx < 50 || c.cx > cw - 20) continue;
-        ctx.fillText(formatNum(px), c.cx, m.groundY + 16);
-        ctx.strokeStyle = "rgba(255,255,255,0.15)";
-        ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(c.cx, m.groundY); ctx.lineTo(c.cx, m.groundY + 5); ctx.stroke();
-    }
-    ctx.textAlign = "right";
-    var maxPhysY = m.groundY / m.scale + spacing;
-    for (var py = spacing; py <= maxPhysY; py += spacing) {
-        var c = toCanvas2(0, py, m);
-        if (c.cy < 20 || c.cy > m.groundY - 10) continue;
-        ctx.fillText(formatNum(py), m.offsetX - 8, c.cy + 3);
-        ctx.strokeStyle = "rgba(255,255,255,0.15)";
-        ctx.lineWidth = 1;
-        ctx.beginPath(); ctx.moveTo(m.offsetX - 3, c.cy); ctx.lineTo(m.offsetX, c.cy); ctx.stroke();
-    }
-    ctx.fillText("0", m.offsetX - 8, m.groundY + 16);
-}
-
-function updateResults() {
-    if (!trajData) return;
-    resMaxH.innerHTML = trajData.maxH.toFixed(2) + '<span class="result-unit">m</span>';
-    resRange.innerHTML = trajData.range.toFixed(2) + '<span class="result-unit">m</span>';
-    resTime.innerHTML = trajData.tFlight.toFixed(2) + '<span class="result-unit">s</span>';
-    resImpact.innerHTML = trajData.impactSpeed.toFixed(2) + '<span class="result-unit">m/s</span>';
-    resImpactAngle.innerHTML = trajData.impactAngleDeg.toFixed(1) + '<span class="result-unit">° below horizontal</span>';
-    resVx.innerHTML = trajData.vx.toFixed(2) + '<span class="result-unit">m/s</span>';
-}
-
-function setStatus(state) {
-    simState = state;
-    statusDot.className = "status-dot " + (state === "ready" ? "ready" : state === "flying" ? "flying" : "landed");
-    var labels = { ready: "Ready to launch", flying: "In flight...", landed: "Landed" };
-    statusText.textContent = labels[state];
-    btnLaunch.disabled = state === "flying";
-}
-
-function launch() {
-    if (simState === "flying") return;
-    resetSim();
-    computeTrajectoryData();
-    updateResults();
-    setStatus("flying");
-    simTime = 0;
-    lastTimestamp = null;
-    trailPoints = [];
-    animFrameId = requestAnimationFrame(animate);
-}
-
-function resetSim() {
-    if (animFrameId) cancelAnimationFrame(animFrameId);
-    animFrameId = null;
-    simTime = 0;
-    lastTimestamp = null;
-    trailPoints = [];
-    setStatus("ready");
-    timeDisplay.textContent = "t = 0.00 s";
-    computeTrajectoryData();
-    drawFrame();
-}
-
-function animate(timestamp) {
-    if (simState !== "flying") return;
-    if (lastTimestamp === null) lastTimestamp = timestamp;
-    var deltaMs = timestamp - lastTimestamp;
-    lastTimestamp = timestamp;
-    simTime += (deltaMs / 1000) * playbackSpeed;
-    if (simTime >= trajData.tFlight) {
-        simTime = trajData.tFlight;
-        setStatus("landed");
-        var finalPos = getPosition(trajData.tFlight);
-        trailPoints.push({ x: finalPos.x, y: finalPos.y });
-        timeDisplay.textContent = "t = " + trajData.tFlight.toFixed(2) + " s";
         drawFrame();
-        return;
-    }
-    var pos = getPosition(simTime);
-    if (trailPoints.length === 0 || simTime - (trailPoints.length * 0.01) >= 0.005) {
-        trailPoints.push({ x: pos.x, y: pos.y });
-    }
-    timeDisplay.textContent = "t = " + simTime.toFixed(2) + " s";
-    drawFrame();
-    animFrameId = requestAnimationFrame(animate);
-}
-
-btnLaunch.addEventListener("click", launch);
-btnReset.addEventListener("click", resetSim);
-document.addEventListener("keydown", function(e) {
-    if (e.code === "Space" && e.target.tagName !== "INPUT") {
-        e.preventDefault();
-        if (simState === "flying") resetSim(); else launch();
-    }
-});
-
-readParams();
-drawFrame();
-</script>
+    </script>
 </body>
+
 </html>

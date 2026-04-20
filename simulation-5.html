@@ -1,16 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spring Oscillator Lab | Scientific Lab</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0047AB; /* Cobalt Blue */
-            --secondary: #89E37B; /* Granny Smith Apple */
-            --accent: #FFD700; /* Yellow */
+            --primary: #0047AB;
+            /* Cobalt Blue */
+            --secondary: #89E37B;
+            /* Granny Smith Apple */
+            --accent: #FFD700;
+            /* Yellow */
             --bg: #f8fafc;
             --card: #ffffff;
             --text: #1e293b;
@@ -19,8 +25,19 @@
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 2rem; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 2rem;
+        }
 
         header {
             background: linear-gradient(135deg, var(--primary) 0%, #002d6b 100%);
@@ -38,7 +55,7 @@
             top: 1.5rem;
             left: 2rem;
             padding: 0.75rem 1.5rem;
-            background: rgba(255,255,255,0.1);
+            background: rgba(255, 255, 255, 0.1);
             color: white;
             text-decoration: none;
             border-radius: 99px;
@@ -46,7 +63,11 @@
             backdrop-filter: blur(10px);
             transition: all 0.3s;
         }
-        .back-btn:hover { background: white; color: var(--primary); }
+
+        .back-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
 
         .dashboard {
             max-width: 1300px;
@@ -65,8 +86,22 @@
             border-bottom: 4px solid var(--secondary);
             text-align: center;
         }
-        .stat-label { font-size: 0.7rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
-        .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; font-weight: 700; color: var(--primary); }
+
+        .stat-label {
+            font-size: 0.7rem;
+            font-weight: 800;
+            color: var(--muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
 
         .main-container {
             max-width: 1300px;
@@ -77,42 +112,152 @@
             padding: 0 2rem;
         }
 
-        .card { background: var(--card); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); }
-
-        .sim-area { background: #0f172a; border-radius: 16px; position: relative; overflow: hidden; height: 350px; }
-        canvas#springCanvas { width: 100%; height: 100%; }
-
-        .control-group { margin-bottom: 1.5rem; }
-        h2 { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
-
-        .slider-box { margin-bottom: 1rem; }
-        .slider-header { display: flex; justify-content: space-between; margin-bottom: 6px; font-size: 0.85rem; font-weight: 600; }
-        .slider-val { font-family: 'JetBrains Mono', monospace; color: var(--primary); }
-
-        input[type="range"] { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: #e2e8f0; outline: none; }
-        input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: white; border: 3px solid var(--primary); cursor: pointer;
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
         }
 
-        .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 2rem; }
-        .btn { padding: 0.75rem; border: none; border-radius: 10px; font-weight: 800; cursor: pointer; transition: all 0.3s; }
-        .btn-p { background: var(--secondary); color: #064e3b; }
-        .btn-s { background: #f1f5f9; color: var(--muted); }
+        .sim-area {
+            background: #0f172a;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            height: 350px;
+        }
 
-        .energy-track { height: 12px; background: #e2e8f0; border-radius: 6px; overflow: hidden; display: flex; margin-top: 1rem; }
-        .energy-ke { background: var(--primary); height: 100%; transition: width 0.1s; }
-        .energy-pe { background: var(--secondary); height: 100%; transition: width 0.1s; }
+        canvas#springCanvas {
+            width: 100%;
+            height: 100%;
+        }
 
-        .graph-area { grid-column: 1 / span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
-        .graph-card canvas { width: 100%; height: 200px; }
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .slider-box {
+            margin-bottom: 1rem;
+        }
+
+        .slider-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .slider-val {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--primary);
+        }
+
+        input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #e2e8f0;
+            outline: none;
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            border: 3px solid var(--primary);
+            cursor: pointer;
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .btn {
+            padding: 0.75rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-p {
+            background: var(--secondary);
+            color: #064e3b;
+        }
+
+        .btn-s {
+            background: #f1f5f9;
+            color: var(--muted);
+        }
+
+        .energy-track {
+            height: 12px;
+            background: #e2e8f0;
+            border-radius: 6px;
+            overflow: hidden;
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .energy-ke {
+            background: var(--primary);
+            height: 100%;
+            transition: width 0.1s;
+        }
+
+        .energy-pe {
+            background: var(--secondary);
+            height: 100%;
+            transition: width 0.1s;
+        }
+
+        .graph-area {
+            grid-column: 1 / span 2;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .graph-card canvas {
+            width: 100%;
+            height: 200px;
+        }
 
         @media (max-width: 1000px) {
-            .main-container { grid-template-columns: 1fr; }
-            .dashboard { grid-template-columns: repeat(2, 1fr); }
-            .graph-area { grid-template-columns: 1fr; }
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .dashboard {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .graph-area {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <header>
         <a href="index.html" class="back-btn">← Home</a>
@@ -121,10 +266,22 @@
     </header>
 
     <div class="dashboard">
-        <div class="stat-card"><div class="stat-label">Displacement</div><div class="stat-value" id="s-x">0.00 m</div></div>
-        <div class="stat-card"><div class="stat-label">Velocity</div><div class="stat-value" id="s-v">0.00 m/s</div></div>
-        <div class="stat-card"><div class="stat-label">Potential E</div><div class="stat-value" id="s-pe">0.00 J</div></div>
-        <div class="stat-card"><div class="stat-label">Kinetic E</div><div class="stat-value" id="s-ke">0.00 J</div></div>
+        <div class="stat-card">
+            <div class="stat-label">Displacement</div>
+            <div class="stat-value" id="s-x">0.00 m</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Velocity</div>
+            <div class="stat-value" id="s-v">0.00 m/s</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Potential E</div>
+            <div class="stat-value" id="s-pe">0.00 J</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-label">Kinetic E</div>
+            <div class="stat-value" id="s-ke">0.00 J</div>
+        </div>
     </div>
 
     <div class="main-container">
@@ -134,7 +291,8 @@
                 <div class="energy-ke" id="bar-ke" style="width: 50%"></div>
                 <div class="energy-pe" id="bar-pe" style="width: 50%"></div>
             </div>
-            <div style="display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 800; margin-top: 0.5rem;">
+            <div
+                style="display: flex; justify-content: space-between; font-size: 0.7rem; font-weight: 800; margin-top: 0.5rem;">
                 <span style="color: var(--primary)">KINETIC ENERGY</span>
                 <span style="color: var(--secondary)">POTENTIAL ENERGY</span>
             </div>
@@ -143,7 +301,8 @@
         <aside class="card">
             <h2>Parameters</h2>
             <div class="slider-box">
-                <div class="slider-header"><span>Spring Constant (k)</span><span class="slider-val" id="kv">20 N/m</span></div>
+                <div class="slider-header"><span>Spring Constant (k)</span><span class="slider-val" id="kv">20
+                        N/m</span></div>
                 <input type="range" id="sk" min="5" max="100" value="20">
             </div>
             <div class="slider-box">
@@ -162,25 +321,35 @@
             <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
                 <h2 style="font-size: 0.8rem; opacity: 0.6;">Learning Hub</h2>
                 <div class="btn-row">
-                    <a href="laws.html" class="btn btn-s" style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-book" style="margin-right: 5px; color: var(--primary)"></i> Laws</a>
-                    <a href="quizzes.html" class="btn btn-s" style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-graduation-cap" style="margin-right: 5px; color: var(--secondary)"></i> Quiz</a>
+                    <a href="laws.html" class="btn btn-s"
+                        style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center;"><i
+                            class="fas fa-book" style="margin-right: 5px; color: var(--primary)"></i> Laws</a>
+                    <a href="quizzes.html" class="btn btn-s"
+                        style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center;"><i
+                            class="fas fa-graduation-cap" style="margin-right: 5px; color: var(--secondary)"></i>
+                        Quiz</a>
                 </div>
             </div>
         </aside>
 
         <section class="graph-area">
-            <div class="card graph-card"><h2>Position vs Time</h2><canvas id="gx"></canvas></div>
-            <div class="card graph-card"><h2>Phase Space (v vs x)</h2><canvas id="gp"></canvas></div>
+            <div class="card graph-card">
+                <h2>Position vs Time</h2><canvas id="gx"></canvas>
+            </div>
+            <div class="card graph-card">
+                <h2>Phase Space (v vs x)</h2><canvas id="gp"></canvas>
+            </div>
         </section>
     </div>
 
-    <script>
+<script>
         const canvas = document.getElementById('springCanvas');
         const ctx = canvas.getContext('2d');
         const gx = document.getElementById('gx');
         const gp = document.getElementById('gp');
 
-        let state = { k:20, m:1, b:0, x:1.5, v:0, time:0, active:true, history:[] };
+        // State: x is displacement, v is velocity
+        let state = { k: 20, m: 1, b: 0, x: 1.5, v: 0, time: 0, active: true, history: [] };
 
         function resize() {
             canvas.width = canvas.offsetWidth;
@@ -191,57 +360,66 @@
         window.addEventListener('resize', resize);
         resize();
 
+        // UI Listeners
         document.getElementById('sk').addEventListener('input', e => { state.k = parseFloat(e.target.value); document.getElementById('kv').textContent = state.k + ' N/m'; });
         document.getElementById('sm').addEventListener('input', e => { state.m = parseFloat(e.target.value); document.getElementById('mv').textContent = state.m.toFixed(1) + ' kg'; });
         document.getElementById('sb').addEventListener('input', e => { state.b = parseFloat(e.target.value); document.getElementById('bv').textContent = state.b.toFixed(2); });
         document.getElementById('play').addEventListener('click', e => { state.active = !state.active; e.target.textContent = state.active ? 'PAUSE' : 'RESUME'; });
-        document.getElementById('reset').addEventListener('click', () => { state.x = 1.5; state.v = 0; state.history = []; });
+        document.getElementById('reset').addEventListener('click', () => { state.x = 1.5; state.v = 0; state.history = []; state.time = 0; });
 
         function loop() {
-            if(state.active) {
-                // RK2 Integration for better stability
-                const dt = 0.016;
+            if (state.active) {
+                /* VELOCITY VERLET INTEGRATION 
+                   Ensures total energy E = 1/2kx² + 1/2mv² is conserved.
+                */
+                const dt = 0.016; 
+                
+                // Acceleration function: a = (F_spring + F_damping) / m
                 const getA = (x, v) => (-state.k * x - state.b * v) / state.m;
-                
-                const k1x = state.v;
-                const k1v = getA(state.x, state.v);
-                
-                const k2x = state.v + k1v * dt;
-                const k2v = getA(state.x + k1x * dt, state.v + k1v * dt);
-                
-                state.x += (k1x + k2x) / 2 * dt;
-                state.v += (k1v + k2v) / 2 * dt;
-                
+
+                // 1. Initial acceleration
+                const a1 = getA(state.x, state.v);
+
+                // 2. Update position: x(t+dt) = x(t) + v(t)dt + 0.5*a(t)dt²
+                state.x += state.v * dt + 0.5 * a1 * dt * dt;
+
+                // 3. Mid-step velocity
+                const vMid = state.v + 0.5 * a1 * dt;
+
+                // 4. New acceleration at new position
+                const a2 = getA(state.x, vMid);
+
+                // 5. Update final velocity: v(t+dt) = v_mid + 0.5*a(t+dt)dt
+                state.v = vMid + 0.5 * a2 * dt;
+
                 state.time += dt;
-                state.history.push({x: state.x, v: state.v, t: state.time});
-                if(state.history.length > 600) state.history.shift();
+                state.history.push({ x: state.x, v: state.v, t: state.time });
+                if (state.history.length > 600) state.history.shift();
             }
 
-            // Draw Sim
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            const midY = canvas.height/2;
-            const midX = canvas.width/2;
-            const xPos = midX + state.x * 60;
+            // --- DRAWING SIMULATION ---
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const midY = canvas.height / 2;
+            const midX = canvas.width / 2;
+            const xPos = midX + state.x * 60; // Scale displacement for screen
 
             // Guidelines
             ctx.strokeStyle = 'rgba(255,255,255,0.05)';
             ctx.beginPath(); ctx.moveTo(midX, 0); ctx.lineTo(midX, canvas.height); ctx.stroke();
 
-            // Spring
-            ctx.strokeStyle = '#64748b';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(0, midY);
+            // Spring Drawing
+            ctx.strokeStyle = '#64748b'; ctx.lineWidth = 2;
+            ctx.beginPath(); ctx.moveTo(0, midY);
             let coils = 20;
-            for(let i=0; i<=coils; i++) {
-                const px = (i/coils) * xPos;
-                const py = midY + (i === 0 || i === coils ? 0 : (i%2 === 0 ? 30 : -30));
+            for (let i = 0; i <= coils; i++) {
+                const px = (i / coils) * xPos;
+                const py = midY + (i === 0 || i === coils ? 0 : (i % 2 === 0 ? 30 : -30));
                 ctx.lineTo(px, py);
             }
             ctx.stroke();
 
             // Block
-            const grad = ctx.createLinearGradient(xPos-25, midY-25, xPos+25, midY+25);
+            const grad = ctx.createLinearGradient(xPos - 25, midY - 25, xPos + 25, midY + 25);
             grad.addColorStop(0, '#0047AB'); grad.addColorStop(1, '#002d6b');
             ctx.fillStyle = grad;
             ctx.fillRect(xPos - 30, midY - 30, 60, 60);
@@ -251,94 +429,75 @@
             // Vectors
             const vScale = 30;
             const fScale = 2;
-            // Velocity (Green)
             drawVector(ctx, xPos, midY, xPos + state.v * vScale, midY, '#89E37B', 'v');
-            // Spring Force (Blue)
-            const fs = -state.k * state.x;
-            drawVector(ctx, xPos, midY - 15, xPos + fs * fScale, midY - 15, '#0047AB', 'Fs');
-            // Damping Force (Yellow)
-            const fd = -state.b * state.v;
-            drawVector(ctx, xPos, midY + 15, xPos + fd * fScale, midY + 15, '#FFD700', 'Fd');
+            drawVector(ctx, xPos, midY - 15, xPos + (-state.k * state.x) * fScale, midY - 15, '#0047AB', 'Fs');
 
-            // Legend
-            drawLegend([
-                { color: '#89E37B', text: 'v : Velocity' },
-                { color: '#0047AB', text: 'Fs: Spring Force' },
-                { color: '#FFD700', text: 'Fd: Damping Force' }
-            ]);
-
-            // Stats
+            // --- STATS & ENERGY BAR ---
             const pe = 0.5 * state.k * state.x * state.x;
             const ke = 0.5 * state.m * state.v * state.v;
-            const te = Math.max(pe + ke, 0.1);
+            const totalE = pe + ke;
+            
+            // To keep the bar stable, we use the total energy as the denominator
+            const displayTotal = totalE < 0.1 ? 0.1 : totalE;
+
             document.getElementById('s-x').textContent = state.x.toFixed(2) + ' m';
             document.getElementById('s-v').textContent = state.v.toFixed(2) + ' m/s';
             document.getElementById('s-pe').textContent = pe.toFixed(2) + ' J';
             document.getElementById('s-ke').textContent = ke.toFixed(2) + ' J';
-            
-            document.getElementById('bar-ke').style.width = (ke/te * 100) + '%';
-            document.getElementById('bar-pe').style.width = (pe/te * 100) + '%';
+
+            document.getElementById('bar-ke').style.width = (ke / displayTotal * 100) + '%';
+            document.getElementById('bar-pe').style.width = (pe / displayTotal * 100) + '%';
 
             drawGraphs();
             requestAnimationFrame(loop);
         }
 
         function drawVector(ctx, x1, y1, x2, y2, color, label) {
-            if(Math.abs(x2-x1) < 5) return;
-            ctx.strokeStyle = color;
-            ctx.fillStyle = color;
-            ctx.lineWidth = 3;
+            if (Math.abs(x2 - x1) < 5) return;
+            ctx.strokeStyle = color; ctx.fillStyle = color; ctx.lineWidth = 3;
             ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
-            const angle = Math.atan2(y2-y1, x2-x1);
+            const angle = Math.atan2(y2 - y1, x2 - x1);
             const head = 10;
-            ctx.beginPath();
-            ctx.moveTo(x2,y2);
-            ctx.lineTo(x2 - head*Math.cos(angle-0.4), y2 - head*Math.sin(angle-0.4));
-            ctx.lineTo(x2 - head*Math.cos(angle+0.4), y2 - head*Math.sin(angle+0.4));
+            ctx.beginPath(); ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - head * Math.cos(angle - 0.4), y2 - head * Math.sin(angle - 0.4));
+            ctx.lineTo(x2 - head * Math.cos(angle + 0.4), y2 - head * Math.sin(angle + 0.4));
             ctx.fill();
             ctx.font = 'bold 12px JetBrains Mono';
-            ctx.fillText(label, x2 + (x2>x1?5:-25), y2 - 10);
+            ctx.fillText(label, x2 + (x2 > x1 ? 5 : -25), y2 - 10);
         }
 
         function drawLegend(items) {
-            const x = 20;
-            let y = 30;
+            const x = 20; let y = 30;
             ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
             ctx.roundRect(x - 10, y - 20, 160, items.length * 25 + 15, 12);
             ctx.fill();
-            
             items.forEach(item => {
-                ctx.fillStyle = item.color;
-                ctx.beginPath();
-                ctx.arc(x, y, 5, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = 'white';
-                ctx.font = '600 11px Outfit';
-                ctx.fillText(item.text, x + 15, y + 4);
+                ctx.fillStyle = item.color; ctx.beginPath(); ctx.arc(x, y, 5, 0, Math.PI * 2); ctx.fill();
+                ctx.fillStyle = 'white'; ctx.font = '600 11px Outfit'; ctx.fillText(item.text, x + 15, y + 4);
                 y += 25;
             });
         }
 
         function drawGraphs() {
             const ctxX = gx.getContext('2d');
-            ctxX.clearRect(0,0,gx.width,gx.height);
+            ctxX.clearRect(0, 0, gx.width, gx.height);
             ctxX.strokeStyle = '#0047AB'; ctxX.lineWidth = 2;
             ctxX.beginPath();
             state.history.forEach((pts, i) => {
-                const x = (i/600) * gx.width;
-                const y = gx.height/2 - pts.x * 40;
-                if(i===0) ctxX.moveTo(x,y); else ctxX.lineTo(x,y);
+                const x = (i / 600) * gx.width;
+                const y = gx.height / 2 - pts.x * 40;
+                if (i === 0) ctxX.moveTo(x, y); else ctxX.lineTo(x, y);
             });
             ctxX.stroke();
 
             const ctxP = gp.getContext('2d');
-            ctxP.clearRect(0,0,gp.width,gp.height);
+            ctxP.clearRect(0, 0, gp.width, gp.height);
             ctxP.strokeStyle = '#89E37B'; ctxP.lineWidth = 2;
             ctxP.beginPath();
             state.history.forEach((pts, i) => {
-                const x = gp.width/2 + pts.x * 50;
-                const y = gp.height/2 - pts.v * 15;
-                if(i===0) ctxP.moveTo(x,y); else ctxP.lineTo(x,y);
+                const x = gp.width / 2 + pts.x * 50;
+                const y = gp.height / 2 - pts.v * 15;
+                if (i === 0) ctxP.moveTo(x, y); else ctxP.lineTo(x, y);
             });
             ctxP.stroke();
         }
@@ -346,4 +505,5 @@
         loop();
     </script>
 </body>
+
 </html>

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Physics Lab</title>
+    <script src="lang.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -201,39 +202,40 @@
     <header>
         <div class="decoration dec-1"></div>
         <div class="decoration dec-2"></div>
-        <h1>Physics Lab</h1>
-        <p>A premium interactive physics playground for scientific exploration.</p>
+        <h1 data-i18n="index.title">Physics Lab</h1>
+        <p data-i18n="index.subtitle">A premium interactive physics playground for scientific exploration.</p>
     </header>
 
     <div class="container" style="margin-top: 5rem;">
-        <h2 class="section-title">🎓 Learning Hub</h2>
+        <h2 class="section-title" data-i18n="index.learningHub">🎓 Learning Hub</h2>
         <div style="background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 24px; padding: 4rem; text-align: center; box-shadow: var(--shadow);">
-            <h3 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem;">Knowledge Center</h3>
-            <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 3rem;">Master the laws of nature and challenge your scientific intuition with our integrated learning modules.</p>
+            <h3 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem;" data-i18n="index.knowledgeCenter">Knowledge Center</h3>
+            <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 3rem;" data-i18n="index.kcDesc">Master the laws of nature and challenge your scientific intuition with our integrated learning modules.</p>
             <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
                 <a href="laws.html" style="text-decoration: none; padding: 1.5rem 3rem; background: var(--primary); color: white; border: none; border-radius: 16px; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <i class="fas fa-book"></i> Laws & Meanings
+                    <i class="fas fa-book"></i> <span data-i18n="index.laws">Laws &amp; Meanings</span>
                 </a>
                 <a href="quizzes.html" style="text-decoration: none; padding: 1.5rem 3rem; background: var(--secondary); color: #064e3b; border: none; border-radius: 16px; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
-                    <i class="fas fa-graduation-cap"></i> Tests & Quizzes
+                    <i class="fas fa-graduation-cap"></i> <span data-i18n="index.quizzes">Tests &amp; Quizzes</span>
                 </a>
             </div>
-            <p style="margin-top: 3rem; font-size: 0.8rem; font-weight: 800; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; opacity: 0.5;">Development phase: Alpha 2.0</p>
+            <p style="margin-top: 3rem; font-size: 0.8rem; font-weight: 800; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; opacity: 0.5;" data-i18n="index.alpha">Development phase: Alpha 2.0</p>
         </div>
     </div>
 
 
     <div class="container">
-        <h2 class="section-title">🔬 Simulations</h2>
+        <h2 class="section-title" data-i18n="index.simulations">🔬 Simulations</h2>
         <div id="sim-grid" class="sim-grid">
             <!-- Populated via script.js -->
         </div>
     </div>
 
     <footer>
-        &copy; Copyright - Žula Z Žulacrew
+        <span data-i18n="index.footer">&copy; Copyright - Žula Z Žulacrew</span>
     </footer>
 
     <script src="script.js"></script>
+    <script>document.addEventListener('DOMContentLoaded', () => initLang());</script>
 </body>
 </html>

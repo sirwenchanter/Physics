@@ -36,27 +36,26 @@ const simulations = [
     }
 ];
 
-document.addEventListener('DOMContentLoaded', () => {
-    const grid = document.getElementById('sim-grid');
-    if (!grid) return;
+function renderSimulations() {
+    const simGrid = document.getElementById('sim-grid');
+    if (!simGrid) return;
+
+    simGrid.innerHTML = '';
 
     simulations.forEach(sim => {
         const card = document.createElement('a');
         card.href = sim.file;
         card.className = 'sim-card';
 
-        let tagHtml = '';
-        if (sim.tag) {
-            tagHtml = `<span class="badge">${sim.tag}</span>`;
-        }
-
         card.innerHTML = `
-            ${tagHtml}
+            <span class="badge">${sim.tag}</span>
             <h3>${sim.title}</h3>
             <p>${sim.description}</p>
-            <div class="btn-more">Launch Simulator <i class="fas fa-arrow-right"></i></div>
+            <div class="btn-more">Launch Simulation →</div>
         `;
 
-        grid.appendChild(card);
+        simGrid.appendChild(card);
     });
-});
+}
+
+document.addEventListener('DOMContentLoaded', renderSimulations); 

@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced Free Fall | Scientific Lab</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary: #0047AB; /* Cobalt Blue */
-            --secondary: #89E37B; /* Granny Smith Apple */
-            --accent: #FFD700; /* Yellow */
+            --primary: #0047AB;
+            --secondary: #89E37B;
+            --accent: #FFD700;
             --bg: #f8fafc;
             --card: #ffffff;
             --text: #1e293b;
@@ -19,8 +22,19 @@
             --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
-        body { background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 2rem; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding-bottom: 2rem;
+        }
 
         header {
             background: linear-gradient(135deg, var(--primary) 0%, #002d6b 100%);
@@ -30,25 +44,11 @@
             border-bottom-left-radius: 40px;
             border-bottom-right-radius: 40px;
             box-shadow: var(--shadow);
+            position: relative;
         }
-
-        .back-btn {
-            position: absolute;
-            top: 1.5rem;
-            left: 2rem;
-            padding: 0.75rem 1.5rem;
-            background: rgba(255,255,255,0.1);
-            color: white;
-            text-decoration: none;
-            border-radius: 99px;
-            font-weight: 600;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s;
-        }
-        .back-btn:hover { background: white; color: var(--primary); }
 
         .container {
-            max-width: 1300px;
+            max-width: 1400px;
             margin: 2rem auto;
             display: grid;
             grid-template-columns: 350px 1fr 320px;
@@ -59,56 +59,112 @@
         .card {
             background: var(--card);
             border-radius: var(--radius);
-            padding: 2rem;
+            padding: 1.5rem;
             box-shadow: var(--shadow);
-            border: 1px solid rgba(0,0,0,0.05);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        h2 { font-size: 1.25rem; font-weight: 800; color: var(--primary); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; }
-        
-        .control-group { margin-bottom: 1.5rem; }
-        .control-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
-        .control-label { font-size: 0.9rem; font-weight: 600; color: var(--muted); }
-        .control-value { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--primary); background: rgba(0,71,171,0.05); padding: 2px 8px; border-radius: 6px; }
+        h2 {
+            font-size: 1rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .control-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .control-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.4rem;
+        }
+
+        .control-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        .control-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--primary);
+            background: rgba(0, 71, 171, 0.05);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
 
         input[type="range"] {
             -webkit-appearance: none;
             appearance: none;
             width: 100%;
-            height: 8px;
+            height: 6px;
             border-radius: 4px;
             background: #e2e8f0;
             outline: none;
         }
+
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 20px; height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             background: white;
             border: 3px solid var(--primary);
             cursor: pointer;
-            transition: transform 0.2s;
         }
-        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+
+        .preset-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-preset {
+            padding: 0.5rem;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-preset:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
 
         .object-picker {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-            margin-top: 1rem;
+            gap: 0.4rem;
         }
+
         .obj-btn {
-            padding: 0.75rem;
+            padding: 0.6rem;
             border: 2px solid #e2e8f0;
             background: white;
-            border-radius: 12px;
-            font-size: 0.8rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
             font-weight: 700;
             cursor: pointer;
-            transition: all 0.2s;
             text-align: center;
         }
-        .obj-btn.active { border-color: var(--secondary); background: rgba(137,227,123,0.1); color: #064e3b; }
+
+        .obj-btn.active {
+            border-color: var(--secondary);
+            background: rgba(137, 227, 123, 0.1);
+            color: #064e3b;
+        }
 
         .btn-action {
             width: 100%;
@@ -118,20 +174,56 @@
             font-weight: 800;
             font-size: 1rem;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
-        .btn-drop { background: var(--secondary); color: #064e3b; box-shadow: 0 4px 14px rgba(137,227,123,0.4); }
-        .btn-drop:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(137,227,123,0.5); }
-        .btn-reset { background: #f1f5f9; color: var(--muted); }
 
-        .canvas-area { background: #0f172a; border-radius: var(--radius); position: relative; overflow: hidden; }
-        canvas#sim-canvas { width: 100%; height: 600px; display: block; }
+        .btn-drop {
+            background: var(--secondary);
+            color: #064e3b;
+            box-shadow: 0 4px 14px rgba(137, 227, 123, 0.4);
+        }
 
-        .stats-list { list-style: none; }
-        .stat-item { padding: 1rem 0; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; }
-        .stat-label { font-size: 0.8rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }
-        .stat-value { font-family: 'JetBrains Mono', monospace; font-weight: 700; color: var(--primary); }
+        .btn-reset {
+            background: #f1f5f9;
+            color: var(--muted);
+        }
+
+        .canvas-area {
+            background: #0f172a;
+            border-radius: var(--radius);
+            position: relative;
+            overflow: hidden;
+        }
+
+        canvas#sim-canvas {
+            width: 100%;
+            height: 650px;
+            display: block;
+        }
+
+        .stats-list {
+            list-style: none;
+        }
+
+        .stat-item {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #f1f5f9;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .stat-value {
+            font-family: 'JetBrains Mono', monospace;
+            font-weight: 700;
+            color: var(--primary);
+        }
 
         .graph-section {
             grid-column: 1 / span 3;
@@ -139,31 +231,62 @@
             grid-template-columns: 1fr 1fr;
             gap: 2rem;
         }
-        .graph-card canvas { width: 100%; height: 250px; }
+
+        .graph-card canvas {
+            width: 100%;
+            height: 220px;
+            background: #0f172a;
+            border-radius: 12px;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 1.5rem;
+            left: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 99px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: var(--primary);
+        }
 
         @media (max-width: 1100px) {
-            .container { grid-template-columns: 1fr; }
-            .graph-section { grid-template-columns: 1fr; }
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .graph-section {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
+
 <body>
     <header>
         <a href="index.html" class="back-btn">← Home</a>
-        <h1>Scientific Free Fall</h1>
-        <p>Advanced kinematics with air resistance and terminal velocity physics</p>
+        <h1>Planetary Free Fall Lab</h1>
+        <p>Verlet Integration • Multivariable Aerodynamics</p>
     </header>
 
     <div class="container">
         <aside class="card">
-            <h2>Parameters</h2>
-            <div class="control-group">
-                <div class="control-header">
-                    <span class="control-label">Initial Height</span>
-                    <span class="control-value" id="val-height">50 m</span>
-                </div>
-                <input type="range" id="slider-height" min="5" max="1000" value="50">
+            <h2>Celestial Presets</h2>
+            <div class="preset-grid">
+                <button class="btn-preset" onclick="setPlanet(9.81, 'Earth')">Earth (9.8)</button>
+                <button class="btn-preset" onclick="setPlanet(1.62, 'Moon')">Moon (1.6)</button>
+                <button class="btn-preset" onclick="setPlanet(3.72, 'Mars')">Mars (3.7)</button>
+                <button class="btn-preset" onclick="setPlanet(24.79, 'Jupiter')">Jupiter (24.8)</button>
             </div>
+
             <div class="control-group">
                 <div class="control-header">
                     <span class="control-label">Gravity</span>
@@ -171,34 +294,48 @@
                 </div>
                 <input type="range" id="slider-gravity" min="0.1" max="50" step="0.01" value="9.81">
             </div>
+
+            <hr style="margin: 1.5rem 0; opacity: 0.1;">
+
+            <h2>Object Properties</h2>
             <div class="control-group">
                 <div class="control-header">
-                    <span class="control-label">Initial Velocity</span>
-                    <span class="control-value" id="val-v0">0 m/s</span>
+                    <span class="control-label">Ball Mass</span>
+                    <span class="control-value" id="val-mass">1.0 kg</span>
                 </div>
-                <input type="range" id="slider-v0" min="-50" max="50" step="1" value="0">
+                <input type="range" id="slider-mass" min="0.1" max="50" step="0.1" value="1.0">
             </div>
+
             <div class="control-group">
-                <span class="control-label">Object Type (Drag)</span>
+                <div class="control-header">
+                    <span class="control-label">Ball Radius</span>
+                    <span class="control-value" id="val-radius">20 cm</span>
+                </div>
+                <input type="range" id="slider-radius" min="5" max="100" step="1" value="20">
+            </div>
+
+            <div class="control-group">
+                <span class="control-label">Environment (Drag)</span>
                 <div class="object-picker" id="obj-picker">
                     <button class="obj-btn active" data-vt="1000">Vacuum</button>
-                    <button class="obj-btn" data-vt="80">Stone</button>
-                    <button class="obj-btn" data-vt="30">Parachute</button>
-                    <button class="obj-btn" data-vt="5">Feather</button>
-                    <button class="obj-btn" data-vt="150">Lead Ball</button>
-                    <button class="obj-btn" data-vt="0.5">Air Bubble</button>
+                    <button class="obj-btn" data-vt="80">Air</button>
+                    <button class="obj-btn" data-vt="15">Water</button>
                 </div>
             </div>
+
+            <hr style="margin: 1.5rem 0; opacity: 0.1;">
+
+            <h2>Launch Settings</h2>
+            <div class="control-group">
+                <div class="control-header">
+                    <span class="control-label">Height</span>
+                    <span class="control-value" id="val-height">50 m</span>
+                </div>
+                <input type="range" id="slider-height" min="5" max="1000" value="50">
+            </div>
+
             <button class="btn-action btn-drop" id="btn-drop">INITIALIZE DROP</button>
             <button class="btn-action btn-reset" id="btn-reset">RESET</button>
-
-            <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
-                <h2 style="font-size: 0.8rem; opacity: 0.6;">Learning Hub</h2>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 1rem;">
-                    <a href="laws.html" class="btn btn-s" style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; padding: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fas fa-book" style="margin-right: 5px; color: var(--primary)"></i> Laws</a>
-                    <a href="quizzes.html" class="btn btn-s" style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; padding: 0.75rem; cursor: pointer; display: flex; align-items: center; justify-content: center;"><i class="fas fa-graduation-cap" style="margin-right: 5px; color: var(--secondary)"></i> Quiz</a>
-                </div>
-            </div>
         </aside>
 
         <main class="canvas-area">
@@ -206,27 +343,34 @@
         </main>
 
         <aside class="card">
-            <h2>Real-time Stats</h2>
+            <h2>Live Telemetry</h2>
             <ul class="stats-list">
-                <li class="stat-item"><span class="stat-label">Elapsed Time</span><span class="stat-value" id="stat-time">0.00 s</span></li>
-                <li class="stat-item"><span class="stat-label">Velocity</span><span class="stat-value" id="stat-vel">0.00 m/s</span></li>
-                <li class="stat-item"><span class="stat-label">Alt (m)</span><span class="stat-value" id="stat-height">50.00 m</span></li>
-                <li class="stat-item"><span class="stat-label">Acc (m/s²)</span><span class="stat-value" id="stat-acc">9.81 m/s²</span></li>
+                <li class="stat-item"><span class="stat-label">Elapsed Time</span><span class="stat-value"
+                        id="stat-time">0.00 s</span></li>
+                <li class="stat-item"><span class="stat-label">Velocity</span><span class="stat-value"
+                        id="stat-vel">0.00 m/s</span></li>
+                <li class="stat-item"><span class="stat-label">Altitude</span><span class="stat-value"
+                        id="stat-height">50.00 m</span></li>
+                <li class="stat-item"><span class="stat-label">Net Accel</span><span class="stat-value"
+                        id="stat-acc">9.81 m/s²</span></li>
             </ul>
+
             <h2 style="margin-top: 2rem;">Impact Analysis</h2>
             <ul class="stats-list">
-                <li class="stat-item"><span class="stat-label">Impact Speed</span><span class="stat-value" id="impact-vel">--</span></li>
-                <li class="stat-item"><span class="stat-label">Total Duration</span><span class="stat-value" id="impact-time">--</span></li>
+                <li class="stat-item"><span class="stat-label">Impact Speed</span><span class="stat-value"
+                        id="impact-vel">--</span></li>
+                <li class="stat-item"><span class="stat-label">Duration</span><span class="stat-value"
+                        id="impact-time">--</span></li>
             </ul>
         </aside>
 
         <section class="graph-section">
             <div class="card graph-card">
-                <h2>Height vs Time</h2>
+                <h2>Height Tracking (m)</h2>
                 <canvas id="graph-h"></canvas>
             </div>
             <div class="card graph-card">
-                <h2>Velocity vs Time</h2>
+                <h2>Velocity Tracking (m/s)</h2>
                 <canvas id="graph-v"></canvas>
             </div>
         </section>
@@ -235,17 +379,20 @@
     <script>
         const canvas = document.getElementById('sim-canvas');
         const ctx = canvas.getContext('2d');
-        const sliders = {
+
+        const controls = {
             h: document.getElementById('slider-height'),
             g: document.getElementById('slider-gravity'),
-            v0: document.getElementById('slider-v0')
+            m: document.getElementById('slider-mass'),
+            r: document.getElementById('slider-radius')
         };
         const vals = {
             h: document.getElementById('val-height'),
             g: document.getElementById('val-gravity'),
-            v0: document.getElementById('val-v0')
+            m: document.getElementById('val-mass'),
+            r: document.getElementById('val-radius')
         };
-        const stats = {
+        const statEls = {
             t: document.getElementById('stat-time'),
             v: document.getElementById('stat-vel'),
             h: document.getElementById('stat-height'),
@@ -260,215 +407,202 @@
             a: 9.81,
             h0: 50,
             g: 9.81,
-            v0: 0,
-            vt: 1000, // Terminal velocity
-            points: []
+            mass: 1.0,
+            radius: 20,
+            vt_base: 1000, // Environment terminal velocity base
+            points: [],
+            groundHeight: 40
         };
+
+        // --- INITIALIZATION & EVENTS ---
+        function setPlanet(g, name) {
+            if (sim.active) return;
+            controls.g.value = g;
+            sim.g = g;
+            vals.g.textContent = g + " m/s²";
+            render();
+        }
 
         function resize() {
             canvas.width = canvas.offsetWidth;
             canvas.height = canvas.offsetHeight;
             render();
+            drawGraphs();
         }
         window.addEventListener('resize', resize);
         resize();
 
-        Object.keys(sliders).forEach(key => {
-            sliders[key].addEventListener('input', (e) => {
-                if(sim.active) return;
+        Object.keys(controls).forEach(key => {
+            controls[key].addEventListener('input', (e) => {
+                if (sim.active) return;
                 const val = parseFloat(e.target.value);
-                sim[key === 'h' ? 'h0' : key] = val;
-                if(key === 'h') sim.h = val;
-                if(key === 'v0') sim.v = val;
-                vals[key].textContent = val + (key === 'g' ? ' m/s²' : ' m' + (key==='v0'? '/s' : ''));
+                if (key === 'h') { sim.h0 = val; sim.h = val; vals.h.textContent = val + " m"; }
+                if (key === 'g') { sim.g = val; vals.g.textContent = val + " m/s²"; }
+                if (key === 'm') { sim.mass = val; vals.m.textContent = val.toFixed(1) + " kg"; }
+                if (key === 'r') { sim.radius = val; vals.r.textContent = val + " cm"; }
                 render();
+                drawGraphs();
             });
         });
 
         document.getElementById('obj-picker').addEventListener('click', (e) => {
-            if(e.target.classList.contains('obj-btn')) {
+            if (e.target.classList.contains('obj-btn')) {
                 document.querySelectorAll('.obj-btn').forEach(b => b.classList.remove('active'));
                 e.target.classList.add('active');
-                sim.vt = parseFloat(e.target.dataset.vt);
+                sim.vt_base = parseFloat(e.target.dataset.vt);
             }
         });
 
-        function render() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            
-            // Draw Ground
-            ctx.fillStyle = '#1e293b';
-            ctx.fillRect(0, canvas.height - 40, canvas.width, 40);
-            ctx.strokeStyle = '#89E37B';
-            ctx.lineWidth = 4;
-            ctx.beginPath();
-            ctx.moveTo(0, canvas.height - 40);
-            ctx.lineTo(canvas.width, canvas.height - 40);
-            ctx.stroke();
-
-            // Draw Scale
-            ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-            ctx.lineWidth = 1;
-            ctx.font = '10px monospace';
-            ctx.fillStyle = 'rgba(255,255,255,0.3)';
-            for(let i=0; i<=10; i++) {
-                let y = canvas.height - 40 - (i/10)*(canvas.height - 100);
-                ctx.beginPath(); ctx.moveTo(40, y); ctx.lineTo(canvas.width, y); ctx.stroke();
-                ctx.fillText((i * sim.h0/10).toFixed(0) + 'm', 10, y + 4);
-            }
-
-            // Draw Ball
-            const ballY = canvas.height - 40 - (sim.h / sim.h0) * (canvas.height - 100);
-            const midX = canvas.width/2;
-
-            // Vectors
-            if(sim.v !== 0) {
-                const vScale = 2;
-                const fScale = 15;
-                // Velocity (Green)
-                drawVector(midX, ballY, midX, ballY + sim.v * vScale, '#89E37B', 'v');
-                // Gravity (Yellow)
-                drawVector(midX - 25, ballY, midX - 25, ballY + sim.g * fScale, '#FFD700', 'Fg');
-                // Drag (Blue)
-                const drag = (sim.g / (sim.vt * sim.vt)) * sim.v * Math.abs(sim.v);
-                drawVector(midX + 25, ballY, midX + 25, ballY - drag * fScale, '#0047AB', 'Fd');
-            }
-
-            // Legend
-            drawLegend([
-                { color: '#89E37B', text: 'v : Velocity' },
-                { color: '#FFD700', text: 'Fg: Gravity Force' },
-                { color: '#0047AB', text: 'Fd: Drag Force' }
-            ]);
-
-            const grad = ctx.createRadialGradient(midX - 5, ballY - 5, 2, midX, ballY, 20);
-            grad.addColorStop(0, '#ffffff');
-            grad.addColorStop(0.5, '#0047AB');
-            grad.addColorStop(1, '#002d6b');
-            ctx.fillStyle = grad;
-            ctx.beginPath();
-            ctx.arc(midX, ballY, 20, 0, Math.PI*2);
-            ctx.fill();
-
-            // Stats
-            stats.t.textContent = sim.time.toFixed(2) + ' s';
-            stats.v.textContent = sim.v.toFixed(2) + ' m/s';
-            stats.h.textContent = Math.max(0, sim.h).toFixed(2) + ' m';
-            stats.a.textContent = sim.a.toFixed(2) + ' m/s²';
-        }
-
+        // --- DRAWING UTILITIES ---
         function drawVector(x1, y1, x2, y2, color, label) {
-            if(Math.abs(y2-y1) < 5) return;
+            if (Math.abs(y2 - y1) < 5) return;
             ctx.strokeStyle = color;
             ctx.fillStyle = color;
             ctx.lineWidth = 3;
             ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke();
-            const angle = Math.atan2(y2-y1, x2-x1);
+            const angle = Math.atan2(y2 - y1, x2 - x1);
             const head = 10;
             ctx.beginPath();
-            ctx.moveTo(x2,y2);
-            ctx.lineTo(x2 - head*Math.cos(angle-0.4), y2 - head*Math.sin(angle-0.4));
-            ctx.lineTo(x2 - head*Math.cos(angle+0.4), y2 - head*Math.sin(angle+0.4));
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x2 - head * Math.cos(angle - 0.4), y2 - head * Math.sin(angle - 0.4));
+            ctx.lineTo(x2 - head * Math.cos(angle + 0.4), y2 - head * Math.sin(angle + 0.4));
             ctx.fill();
             ctx.font = 'bold 12px JetBrains Mono';
-            ctx.fillText(label, x2 + 5, y2 + (y2 > y1 ? 15 : -5));
+            ctx.fillText(label, x2 + 8, y2 + (y2 > y1 ? 5 : -5));
         }
 
-        function drawLegend(items) {
-            const x = canvas.width - 180;
-            let y = 30;
-            ctx.fillStyle = 'rgba(15, 23, 42, 0.8)';
-            ctx.roundRect(x - 10, y - 20, 160, items.length * 25 + 15, 12);
-            ctx.fill();
-            
-            items.forEach(item => {
-                ctx.fillStyle = item.color;
-                ctx.beginPath();
-                ctx.arc(x, y, 5, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.fillStyle = 'white';
-                ctx.font = '600 11px Outfit';
-                ctx.fillText(item.text, x + 15, y + 4);
-                y += 25;
-            });
-        }
+        function render() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            const visualBallRadius = 10 + (sim.radius / 100) * 30;
+            // Padding for scale lines
+            const usableH = canvas.height - sim.groundHeight - visualBallRadius - 60;
 
-        let lastT = 0;
-        function update(t) {
-            if(!sim.active) return;
-            const dt = Math.min((t - lastT) / 1000, 0.05);
-            lastT = t;
+            // Ground
+            ctx.fillStyle = '#1e293b';
+            ctx.fillRect(0, canvas.height - sim.groundHeight, canvas.width, sim.groundHeight);
+            ctx.strokeStyle = '#89E37B';
+            ctx.lineWidth = 4;
+            ctx.strokeRect(0, canvas.height - sim.groundHeight, canvas.width, 0);
 
-            // Physics with Quadratic Drag: a = g - (g/vt^2)*v^2
-            const drag = (sim.g / (sim.vt * sim.vt)) * sim.v * Math.abs(sim.v);
-            sim.a = sim.g - drag;
-            sim.v += sim.a * dt;
-            sim.h -= sim.v * dt;
-            sim.time += dt;
-
-            sim.points.push({t: sim.time, h: sim.h, v: sim.v});
-
-            if(sim.h <= 0) {
-                sim.h = 0;
-                sim.active = false;
-                document.getElementById('impact-vel').textContent = sim.v.toFixed(2) + ' m/s';
-                document.getElementById('impact-time').textContent = sim.time.toFixed(2) + ' s';
+            // Horizontal Scale Lines
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            ctx.lineWidth = 1;
+            ctx.font = '10px JetBrains Mono';
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+            for (let i = 0; i <= 10; i++) {
+                let y = (canvas.height - sim.groundHeight - visualBallRadius) - (i / 10) * usableH;
+                ctx.beginPath(); ctx.moveTo(55, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+                ctx.fillText(`${(i * sim.h0 / 10).toFixed(0)}m`, 15, y + 4);
             }
 
-            render();
-            drawGraphs();
-            if(sim.active) requestAnimationFrame(update);
+            const ballY = (canvas.height - sim.groundHeight - visualBallRadius) - (sim.h / sim.h0) * usableH;
+            const midX = canvas.width / 2;
+
+            // Physics Vectors
+            if (sim.active || sim.v !== 0) {
+                drawVector(midX, ballY, midX, ballY + sim.v * 1.5, '#89E37B', 'v');
+                drawVector(midX - 45, ballY, midX - 45, ballY + sim.g * 10, '#FFD700', 'Fg');
+                const areaFactor = (sim.radius / 20) ** 2;
+                const dragCoeff = (sim.g / (sim.vt_base ** 2));
+                const dragAcc = (dragCoeff * sim.v * Math.abs(sim.v) * areaFactor) / sim.mass;
+                drawVector(midX + 45, ballY, midX + 45, ballY - dragAcc * 10, '#0047AB', 'Fd');
+            }
+
+            // Ball
+            const grad = ctx.createRadialGradient(midX - 5, ballY - 5, 2, midX, ballY, visualBallRadius);
+            grad.addColorStop(0, '#fff'); grad.addColorStop(0.5, '#0047AB'); grad.addColorStop(1, '#001a3d');
+            ctx.fillStyle = grad;
+            ctx.beginPath(); ctx.arc(midX, ballY, visualBallRadius, 0, Math.PI * 2); ctx.fill();
+
+            // Telemetry Update
+            statEls.t.textContent = sim.time.toFixed(2) + ' s';
+            statEls.v.textContent = sim.v.toFixed(2) + ' m/s';
+            statEls.h.textContent = Math.max(0, sim.h).toFixed(2) + ' m';
+            statEls.a.textContent = sim.a.toFixed(2) + ' m/s²';
         }
 
-        document.getElementById('btn-drop').addEventListener('click', () => {
-            if(sim.active) return;
-            sim.active = true;
-            lastT = performance.now();
-            requestAnimationFrame(update);
-        });
+        // --- GRAPHING ---
+        function drawGraph(id, key, color) {
+            const gCanvas = document.getElementById(id);
+            const gCtx = gCanvas.getContext('2d');
+            gCanvas.width = gCanvas.offsetWidth;
+            gCanvas.height = gCanvas.offsetHeight;
+            const m = { t: 30, r: 30, b: 40, l: 50 };
+            const w = gCanvas.width - m.l - m.r;
+            const h = gCanvas.height - m.t - m.b;
 
-        document.getElementById('btn-reset').addEventListener('click', () => {
-            sim.active = false;
-            sim.time = 0;
-            sim.h = sim.h0;
-            sim.v = sim.v0;
-            sim.points = [];
-            document.getElementById('impact-vel').textContent = '--';
-            document.getElementById('impact-time').textContent = '--';
-            render();
-            drawGraphs();
-        });
+            gCtx.strokeStyle = 'rgba(255,255,255,0.1)';
+            gCtx.strokeRect(m.l, m.t, w, h);
+
+            const p = sim.points;
+            if (p.length < 2) return;
+
+            const maxT = Math.max(5, p[p.length - 1].t);
+            const maxY = key === 'h' ? sim.h0 : Math.max(sim.v, 30);
+
+            gCtx.strokeStyle = color;
+            gCtx.lineWidth = 2;
+            gCtx.beginPath();
+            p.forEach((pt, i) => {
+                const x = m.l + (pt.t / maxT) * w;
+                const y = (m.t + h) - (Math.max(0, pt[key]) / maxY) * h;
+                if (i === 0) gCtx.moveTo(x, y); else gCtx.lineTo(x, y);
+            });
+            gCtx.stroke();
+        }
 
         function drawGraphs() {
             drawGraph('graph-h', 'h', '#0047AB');
             drawGraph('graph-v', 'v', '#89E37B');
         }
 
-        function drawGraph(id, key, color) {
-            const gCanvas = document.getElementById(id);
-            const gCtx = gCanvas.getContext('2d');
-            gCanvas.width = gCanvas.offsetWidth;
-            gCanvas.height = gCanvas.offsetHeight;
-            
-            const p = sim.points;
-            if(p.length < 2) return;
+        // --- PHYSICS ENGINE ---
+        let lastT = 0;
+        function update(t) {
+            if (!sim.active) return;
+            const dt = Math.min((t - lastT) / 1000, 0.016);
+            lastT = t;
 
-            const maxT = Math.max(5, p[p.length-1].t);
-            const maxY = key === 'h' ? sim.h0 : Math.max(sim.vt, 10);
+            const areaFactor = (sim.radius / 20) ** 2;
+            const dragCoeff = (sim.g / (sim.vt_base ** 2));
+            const getAcc = (v) => sim.g - (dragCoeff * v * Math.abs(v) * areaFactor) / sim.mass;
 
-            gCtx.strokeStyle = color;
-            gCtx.lineWidth = 3;
-            gCtx.beginPath();
-            p.forEach((pt, i) => {
-                const x = (pt.t / maxT) * gCanvas.width;
-                const y = gCanvas.height - (pt[key] / maxY) * gCanvas.height;
-                if(i === 0) gCtx.moveTo(x, y);
-                else gCtx.lineTo(x, y);
-            });
-            gCtx.stroke();
+            // Velocity Verlet Integration
+            let a1 = getAcc(sim.v);
+            sim.h -= (sim.v * dt + 0.5 * a1 * dt * dt);
+            let vMid = sim.v + 0.5 * a1 * dt;
+            let a2 = getAcc(vMid);
+            sim.v += a2 * dt;
+            sim.a = a2;
+            sim.time += dt;
+
+            sim.points.push({ t: sim.time, h: sim.h, v: sim.v });
+
+            if (sim.h <= 0) {
+                sim.h = 0; sim.v = 0; sim.a = 0; sim.active = false;
+                document.getElementById('impact-vel').textContent = sim.points[sim.points.length - 1].v.toFixed(2) + ' m/s';
+                document.getElementById('impact-time').textContent = sim.time.toFixed(2) + ' s';
+            }
+
+            render();
+            drawGraphs();
+            if (sim.active) requestAnimationFrame(update);
         }
 
-        drawGraphs();
+        // --- BUTTON CONTROLS ---
+        document.getElementById('btn-drop').addEventListener('click', () => {
+            if (sim.active) return;
+            sim.active = true; lastT = performance.now();
+            requestAnimationFrame(update);
+        });
+
+        document.getElementById('btn-reset').addEventListener('click', () => {
+            sim.active = false; sim.time = 0; sim.h = sim.h0; sim.v = 0; sim.a = sim.g; sim.points = [];
+            document.getElementById('impact-vel').textContent = '--';
+            document.getElementById('impact-time').textContent = '--';
+            render(); drawGraphs();
+        });
     </script>
 </body>
+
 </html>

@@ -1,0 +1,667 @@
+[
+    {
+        "id": "KIN_01",
+        "topic": "Kinematics",
+        "color": "#e53e3e",
+        "diff": "easy",
+        "tags": [
+            "equations",
+            "no-displacement"
+        ],
+        "q": "Which kinematic equation relates velocity, initial velocity, acceleration, and time — but does NOT include displacement?",
+        "opts": [
+            "$v = v_0 + at$",
+            "$\\Delta x = v_0 t + \\frac{1}{2}at^2$",
+            "$v^2 = v_0^2 + 2a\\Delta x$",
+            "$\\bar{v} = \\frac{v_0+v}{2}$"
+        ],
+        "correct": "$v = v_0 + at$",
+        "explain": "$v = v_0 + at$ has no $\\Delta x$ term. This is the go-to equation when displacement isn't involved."
+    },
+    {
+        "id": "KIN_02",
+        "topic": "Kinematics",
+        "color": "#e53e3e",
+        "diff": "easy",
+        "tags": [
+            "free-fall",
+            "no-v0"
+        ],
+        "q": "A rock is dropped from rest. How far has it fallen after 2 seconds? (Use $g = 9.8\\,\\text{m/s}^2$)",
+        "opts": [
+            "9.8 m",
+            "19.6 m",
+            "29.4 m",
+            "39.2 m"
+        ],
+        "correct": "19.6 m",
+        "explain": "$\\Delta y = \\frac{1}{2}gt^2 = \\frac{1}{2}(9.8)(4) = 19.6\\,\\text{m}$. The $t^2$ means distance grows fast!"
+    },
+    {
+        "id": "KIN_03",
+        "topic": "Kinematics",
+        "color": "#e53e3e",
+        "diff": "medium",
+        "tags": [
+            "acceleration",
+            "no-time"
+        ],
+        "q": "A car accelerates from $10\\,\\text{m/s}$ to $30\\,\\text{m/s}$ over a distance of $80\\,\\text{m}$. What is its acceleration?",
+        "opts": [
+            "$2.5\\,\\text{m/s}^2$",
+            "$4.0\\,\\text{m/s}^2$",
+            "$5.0\\,\\text{m/s}^2$",
+            "$8.0\\,\\text{m/s}^2$"
+        ],
+        "correct": "$5.0\\,\\text{m/s}^2$",
+        "explain": "Use $v^2 = v_0^2 + 2a\\Delta x$: $900 = 100 + 2a(80)$ → $a = 800/160 = 5.0\\,\\text{m/s}^2$. This equation is perfect when time is unknown."
+    },
+    {
+        "id": "KIN_04",
+        "topic": "Kinematics",
+        "color": "#e53e3e",
+        "diff": "medium",
+        "tags": [
+            "projectile",
+            "peak-height"
+        ],
+        "q": "A ball is thrown upward at $20\\,\\text{m/s}$. How high does it go above the throw point?",
+        "opts": [
+            "$10.2\\,\\text{m}$",
+            "$15.4\\,\\text{m}$",
+            "$20.4\\,\\text{m}$",
+            "$40.8\\,\\text{m}$"
+        ],
+        "correct": "$20.4\\,\\text{m}$",
+        "explain": "At peak: $v=0$. Use $v^2 = v_0^2 + 2a\\Delta y$: $0 = 400 + 2(-9.8)\\Delta y$ → $\\Delta y = 400/19.6 = 20.4\\,\\text{m}$."
+    },
+    {
+        "id": "DYN_01",
+        "topic": "Dynamics",
+        "color": "#dd6b20",
+        "diff": "easy",
+        "tags": [
+            "newtons-2nd-law",
+            "net-force"
+        ],
+        "q": "In $F = ma$, what exactly does $F$ represent?",
+        "opts": [
+            "The largest force acting on the object",
+            "Any single force",
+            "The net force (vector sum of all forces)",
+            "The applied force only"
+        ],
+        "correct": "The net force (vector sum of all forces)",
+        "explain": "$F$ is the NET force — the vector sum of ALL forces. A common mistake is using just one force instead of the sum."
+    },
+    {
+        "id": "DYN_02",
+        "topic": "Dynamics",
+        "color": "#dd6b20",
+        "diff": "easy",
+        "tags": [
+            "weight",
+            "gravity"
+        ],
+        "q": "How does your weight on the Moon compare to your weight on Earth?",
+        "opts": [
+            "Same weight",
+            "About 1/6 weight",
+            "About 1/2 weight",
+            "About 6x weight"
+        ],
+        "correct": "About 1/6 weight",
+        "explain": "Moon's $g \\approx 1.6\\,\\text{m/s}^2$ vs Earth's $9.8\\,\\text{m/s}^2$. Ratio ≈ 1/6. Mass stays the same, weight changes."
+    },
+    {
+        "id": "DYN_03",
+        "topic": "Dynamics",
+        "color": "#dd6b20",
+        "diff": "medium",
+        "tags": [
+            "inclined-plane",
+            "normal-force"
+        ],
+        "q": "A $5\\,\\text{kg}$ box sits on a ramp at $30°$. What is the normal force?",
+        "opts": [
+            "$49.0\\,\\text{N}$",
+            "$42.5\\,\\text{N}$",
+            "$24.5\\,\\text{N}$",
+            "$0\\,\\text{N}$"
+        ],
+        "correct": "$42.5\\,\\text{N}$",
+        "explain": "$N = mg\\cos\\theta = 5 \\times 9.8 \\times \\cos 30° = 49 \\times 0.866 = 42.5\\,\\text{N}$. Don't use $mg$ directly — the ramp changes the normal force!"
+    },
+    {
+        "id": "DYN_04",
+        "topic": "Dynamics",
+        "color": "#dd6b20",
+        "diff": "medium",
+        "tags": [
+            "elevator",
+            "apparent-weight"
+        ],
+        "q": "An elevator accelerates upward at $3\\,\\text{m/s}^2$. A $60\\,\\text{kg}$ person inside feels:",
+        "opts": [
+            "Lighter than normal",
+            "Normal weight",
+            "Heavier than normal",
+            "Weightless"
+        ],
+        "correct": "Heavier than normal",
+        "explain": "$N = m(g+a) = 60(9.8+3) = 768\\,\\text{N}$ vs normal $588\\,\\text{N}$. Upward acceleration increases apparent weight."
+    },
+    {
+        "id": "ENG_01",
+        "topic": "Energy & Work",
+        "color": "#38a169",
+        "diff": "easy",
+        "tags": [
+            "kinetic-energy",
+            "velocity"
+        ],
+        "q": "If you double an object's speed, what happens to its kinetic energy?",
+        "opts": [
+            "Doubles",
+            "Triples",
+            "Quadruples",
+            "Stays the same"
+        ],
+        "correct": "Quadruples",
+        "explain": "$KE = \\frac{1}{2}mv^2$. Double $v$ → $v^2$ becomes $4v^2$ → KE quadruples. This is why speeding is so dangerous."
+    },
+    {
+        "id": "ENG_02",
+        "topic": "Energy & Work",
+        "color": "#38a169",
+        "diff": "easy",
+        "tags": [
+            "conservation-of-energy",
+            "conditions"
+        ],
+        "q": "What condition is required for conservation of mechanical energy ($KE_1 + PE_1 = KE_2 + PE_2$)?",
+        "opts": [
+            "Object must be moving in a straight line",
+            "No friction or non-conservative forces",
+            "Mass must be constant",
+            "Acceleration must be positive"
+        ],
+        "correct": "No friction or non-conservative forces",
+        "explain": "Mechanical energy is only conserved when friction, air resistance, and other non-conservative forces are absent."
+    },
+    {
+        "id": "ENG_03",
+        "topic": "Energy & Work",
+        "color": "#38a169",
+        "diff": "medium",
+        "tags": [
+            "springs",
+            "potential-energy"
+        ],
+        "q": "A spring ($k = 200\\,\\text{N/m}$) is compressed $0.1\\,\\text{m}$. How much potential energy is stored?",
+        "opts": [
+            "$0.5\\,\\text{J}$",
+            "$1.0\\,\\text{J}$",
+            "$2.0\\,\\text{J}$",
+            "$10.0\\,\\text{J}$"
+        ],
+        "correct": "$1.0\\,\\text{J}$",
+        "explain": "$PE_s = \\frac{1}{2}kx^2 = \\frac{1}{2}(200)(0.01) = 1.0\\,\\text{J}$. Don't forget the $x^2$ — compressing 2x gives 4x the energy!"
+    },
+    {
+        "id": "ENG_04",
+        "topic": "Energy & Work",
+        "color": "#38a169",
+        "diff": "medium",
+        "tags": [
+            "work",
+            "sign-convention"
+        ],
+        "q": "When is work done by a force negative?",
+        "opts": [
+            "When the force is small",
+            "When force and displacement are perpendicular",
+            "When force opposes the displacement",
+            "When displacement is zero"
+        ],
+        "correct": "When force opposes the displacement",
+        "explain": "$W = Fd\\cos\\theta$. When $\\theta = 180°$, $\\cos\\theta = -1$, so work is negative. Friction always does negative work on moving objects."
+    },
+    {
+        "id": "MOM_01",
+        "topic": "Momentum",
+        "color": "#805ad5",
+        "diff": "easy",
+        "tags": [
+            "momentum",
+            "vectors"
+        ],
+        "q": "Is momentum a scalar or a vector quantity?",
+        "opts": [
+            "Scalar",
+            "Vector",
+            "It depends on the object",
+            "Neither — it's a tensor"
+        ],
+        "correct": "Vector",
+        "explain": "$\\vec{p} = m\\vec{v}$. Since velocity is a vector, momentum is also a vector — it has direction. This matters in collisions!"
+    },
+    {
+        "id": "MOM_02",
+        "topic": "Momentum",
+        "color": "#805ad5",
+        "diff": "medium",
+        "tags": [
+            "impulse",
+            "real-world"
+        ],
+        "q": "Why do airbags reduce injury in car crashes?",
+        "opts": [
+            "They reduce the change in momentum",
+            "They increase the time of impact, reducing force",
+            "They eliminate the impulse",
+            "They absorb all kinetic energy"
+        ],
+        "correct": "They increase the time of impact, reducing force",
+        "explain": "$F\\Delta t = \\Delta p$. The impulse ($\\Delta p$) is the same with or without an airbag. But airbags increase $\\Delta t$, so $F$ decreases. Same stop, less force."
+    },
+    {
+        "id": "MOM_03",
+        "topic": "Momentum",
+        "color": "#805ad5",
+        "diff": "hard",
+        "tags": [
+            "elastic-collision",
+            "equal-masses"
+        ],
+        "q": "In a perfectly elastic collision between equal masses, if one is at rest, what happens after collision?",
+        "opts": [
+            "They stick together and move at half speed",
+            "The moving one stops; the resting one moves at the original speed",
+            "Both move at half the original speed",
+            "They bounce back at equal speeds"
+        ],
+        "correct": "The moving one stops; the resting one moves at the original speed",
+        "explain": "Plug into $v_{1f} = \\frac{(m_1-m_2)v_{1i} + 2m_2 v_{2i}}{m_1+m_2}$. With $m_1=m_2$ and $v_{2i}=0$: $v_{1f}=0$, $v_{2f}=v_{1i}$. They swap velocities!"
+    },
+    {
+        "id": "CIR_01",
+        "topic": "Circular Motion",
+        "color": "#d69e2e",
+        "diff": "easy",
+        "tags": [
+            "centripetal-acceleration",
+            "direction"
+        ],
+        "q": "What direction does centripetal acceleration always point?",
+        "opts": [
+            "In the direction of motion",
+            "Opposite to motion",
+            "Toward the center of the circle",
+            "Away from the center"
+        ],
+        "correct": "Toward the center of the circle",
+        "explain": "Centripetal means \"center-seeking.\" It always points inward toward the center, perpendicular to velocity. It changes direction, not speed."
+    },
+    {
+        "id": "CIR_02",
+        "topic": "Circular Motion",
+        "color": "#d69e2e",
+        "diff": "medium",
+        "tags": [
+            "centripetal-force",
+            "conceptual"
+        ],
+        "q": "Is centripetal force a \"new\" type of force?",
+        "opts": [
+            "Yes, it's a fundamental force",
+            "No, it's the net inward force from existing forces",
+            "Only for planets",
+            "Only for charged particles"
+        ],
+        "correct": "No, it's the net inward force from existing forces",
+        "explain": "$F_c$ is NOT a separate force. It's the name for whichever force (tension, friction, gravity, normal) provides the inward net force."
+    },
+    {
+        "id": "CIR_03",
+        "topic": "Circular Motion",
+        "color": "#d69e2e",
+        "diff": "medium",
+        "tags": [
+            "orbital-speed",
+            "radius"
+        ],
+        "q": "As a satellite's orbital radius increases, what happens to its orbital speed?",
+        "opts": [
+            "Increases",
+            "Decreases",
+            "Stays the same",
+            "Depends on the satellite's mass"
+        ],
+        "correct": "Decreases",
+        "explain": "$v = \\sqrt{GM/r}$. Larger $r$ → smaller $v$. Counterintuitive but true: higher orbits are SLOWER. (Mass of satellite doesn't matter!)"
+    },
+    {
+        "id": "GRA_01",
+        "topic": "Gravitation",
+        "color": "#3182ce",
+        "diff": "easy",
+        "tags": [
+            "newtons-law-grav",
+            "variables"
+        ],
+        "q": "In Newton's law of gravitation, what does $r$ represent?",
+        "opts": [
+            "Surface-to-surface distance",
+            "Center-to-center distance",
+            "Radius of the larger object",
+            "Average of both radii"
+        ],
+        "correct": "Center-to-center distance",
+        "explain": "$r$ is the distance between the CENTERS of mass, not surfaces. For Earth-surface problems, $r = R_{\\text{Earth}}$, not zero."
+    },
+    {
+        "id": "GRA_02",
+        "topic": "Gravitation",
+        "color": "#3182ce",
+        "diff": "medium",
+        "tags": [
+            "escape-velocity",
+            "comparison"
+        ],
+        "q": "How does escape velocity compare to circular orbital velocity at the same radius?",
+        "opts": [
+            "$v_e = v_{\\text{orbital}}$",
+            "$v_e = \\sqrt{2} \\times v_{\\text{orbital}}$",
+            "$v_e = 2 \\times v_{\\text{orbital}}$",
+            "$v_e = v_{\\text{orbital}}^2$"
+        ],
+        "correct": "$v_e = \\sqrt{2} \\times v_{\\text{orbital}}$",
+        "explain": "$v_e = \\sqrt{2GM/r} = \\sqrt{2} \\times \\sqrt{GM/r} = \\sqrt{2}\\,v_{\\text{orbital}}$. Escape velocity is about 1.41× orbital velocity."
+    },
+    {
+        "id": "GRA_03",
+        "topic": "Gravitation",
+        "color": "#3182ce",
+        "diff": "medium",
+        "tags": [
+            "gravitational-field",
+            "altitude"
+        ],
+        "q": "At an altitude of $400\\,\\text{km}$ above Earth, the gravitational field strength is approximately:",
+        "opts": [
+            "$9.8\\,\\text{m/s}^2$",
+            "$8.7\\,\\text{m/s}^2$",
+            "$0\\,\\text{m/s}^2$",
+            "$15.2\\,\\text{m/s}^2$"
+        ],
+        "correct": "$8.7\\,\\text{m/s}^2$",
+        "explain": "$g = GM/r^2$ with $r = 6370 + 400 = 6770\\,\\text{km}$. $g \\approx 8.7\\,\\text{m/s}^2$. The ISS is NOT in zero gravity — astronauts float because they're in free fall!"
+    },
+    {
+        "id": "WAV_01",
+        "topic": "Waves",
+        "color": "#00b5d8",
+        "diff": "easy",
+        "tags": [
+            "wave-speed",
+            "medium"
+        ],
+        "q": "In $v = f\\lambda$, what determines the wave speed?",
+        "opts": [
+            "The source (frequency)",
+            "The wavelength",
+            "The medium properties",
+            "Both frequency and wavelength equally"
+        ],
+        "correct": "The medium properties",
+        "explain": "Wave speed depends on the MEDIUM (e.g., air, water, string). Changing the source frequency changes wavelength, not speed. This is a fundamental wave concept."
+    },
+    {
+        "id": "WAV_02",
+        "topic": "Waves",
+        "color": "#00b5d8",
+        "diff": "medium",
+        "tags": [
+            "standing-waves",
+            "harmonics"
+        ],
+        "q": "Which harmonics are possible in a pipe closed at one end?",
+        "opts": [
+            "All harmonics: $n = 1, 2, 3, \\ldots$",
+            "Only odd harmonics: $n = 1, 3, 5, \\ldots$",
+            "Only even harmonics: $n = 2, 4, 6, \\ldots$",
+            "Only the fundamental"
+        ],
+        "correct": "Only odd harmonics: $n = 1, 3, 5, \\ldots$",
+        "explain": "A closed pipe has a displacement node at the closed end and antinode at the open end. Only odd harmonics satisfy this: $f_n = \\frac{nv}{4L}$, $n = 1,3,5,\\ldots$"
+    },
+    {
+        "id": "WAV_03",
+        "topic": "Waves",
+        "color": "#00b5d8",
+        "diff": "hard",
+        "tags": [
+            "wave-equation",
+            "variables"
+        ],
+        "q": "In the wave equation $y(x,t) = A\\sin(kx - \\omega t)$, what does the wave number $k$ equal?",
+        "opts": [
+            "$2\\pi f$",
+            "$\\frac{2\\pi}{\\lambda}$",
+            "$\\frac{\\lambda}{2\\pi}$",
+            "$\\frac{f}{v}$"
+        ],
+        "correct": "$\\frac{2\\pi}{\\lambda}$",
+        "explain": "$k = \\frac{2\\pi}{\\lambda}$ (radians per meter). Similarly $\\omega = 2\\pi f$ (radians per second). Both are spatial/temporal frequency measures."
+    },
+    {
+        "id": "ELE_01",
+        "topic": "Electricity",
+        "color": "#e53e3e",
+        "diff": "easy",
+        "tags": [
+            "ohms-law",
+            "units"
+        ],
+        "q": "What are the SI units of resistance?",
+        "opts": [
+            "Volts",
+            "Amperes",
+            "Ohms",
+            "Watts"
+        ],
+        "correct": "Ohms",
+        "explain": "Resistance is measured in Ohms ($\\Omega$). From $V = IR$: $\\Omega = \\text{V}/\\text{A}$. Named after Georg Ohm."
+    },
+    {
+        "id": "ELE_02",
+        "topic": "Electricity",
+        "color": "#e53e3e",
+        "diff": "easy",
+        "tags": [
+            "series-circuits",
+            "rules"
+        ],
+        "q": "In a series circuit with multiple resistors, what quantity is the same through all of them?",
+        "opts": [
+            "Voltage",
+            "Current",
+            "Resistance",
+            "Power"
+        ],
+        "correct": "Current",
+        "explain": "In series: current is the same everywhere (only one path). Voltages add up. This is the opposite of parallel circuits."
+    },
+    {
+        "id": "ELE_03",
+        "topic": "Electricity",
+        "color": "#e53e3e",
+        "diff": "medium",
+        "tags": [
+            "parallel-circuits",
+            "calculation"
+        ],
+        "q": "Two $10\\,\\Omega$ resistors in parallel give a total resistance of:",
+        "opts": [
+            "$20\\,\\Omega$",
+            "$10\\,\\Omega$",
+            "$5\\,\\Omega$",
+            "$0\\,\\Omega$"
+        ],
+        "correct": "$5\\,\\Omega$",
+        "explain": "$\\frac{1}{R} = \\frac{1}{10} + \\frac{1}{10} = \\frac{2}{10}$, so $R = 5\\,\\Omega$. Parallel resistance is always LESS than the smallest individual resistor."
+    },
+    {
+        "id": "ELE_04",
+        "topic": "Electricity",
+        "color": "#e53e3e",
+        "diff": "medium",
+        "tags": [
+            "power",
+            "formulas"
+        ],
+        "q": "For calculating power in a series circuit, which form of $P = IV = I^2R = V^2/R$ is most convenient?",
+        "opts": [
+            "$P = IV$",
+            "$P = I^2R$",
+            "$P = V^2/R$",
+            "All are equally convenient"
+        ],
+        "correct": "$P = I^2R$",
+        "explain": "In series, current $I$ is the same through all components. So $P = I^2R$ lets you find each resistor's power directly. For parallel, use $P = V^2/R$ since voltage is the same."
+    },
+    {
+        "id": "MAG_01",
+        "topic": "Magnetism",
+        "color": "#6b46c1",
+        "diff": "medium",
+        "tags": [
+            "magnetic-force",
+            "angle"
+        ],
+        "q": "At what angle between velocity $\\vec{v}$ and magnetic field $\\vec{B}$ is the magnetic force on a charge maximum?",
+        "opts": [
+            "$0°$",
+            "$45°$",
+            "$90°$",
+            "$180°$"
+        ],
+        "correct": "$90°$",
+        "explain": "$F = qvB\\sin\\theta$. Maximum when $\\sin\\theta = 1$, i.e., $\\theta = 90°$. At $0°$ or $180°$, the force is zero — the charge moves parallel to the field."
+    },
+    {
+        "id": "MAG_02",
+        "topic": "Magnetism",
+        "color": "#6b46c1",
+        "diff": "medium",
+        "tags": [
+            "right-hand-rule",
+            "direction"
+        ],
+        "q": "A positive charge moves to the right. The magnetic field points into the page. The force on the charge is:",
+        "opts": [
+            "Upward",
+            "Downward",
+            "Into the page",
+            "Out of the page"
+        ],
+        "correct": "Downward",
+        "explain": "Use the right-hand rule: fingers point right (v), curl into the page (B) → thumb points downward. For negative charges, use left hand or reverse the result."
+    },
+    {
+        "id": "THE_01",
+        "topic": "Thermodynamics",
+        "color": "#c05621",
+        "diff": "medium",
+        "tags": [
+            "ideal-gas-law",
+            "units"
+        ],
+        "q": "In the ideal gas law $PV = nRT$, what units MUST temperature be in?",
+        "opts": [
+            "Celsius",
+            "Fahrenheit",
+            "Kelvin",
+            "Any temperature unit"
+        ],
+        "correct": "Kelvin",
+        "explain": "$T$ MUST be in Kelvin. $R = 8.314\\,\\text{J/(mol·K)}$. Always convert: $K = °C + 273.15$. Using Celsius gives a nonsensical result."
+    },
+    {
+        "id": "THE_02",
+        "topic": "Thermodynamics",
+        "color": "#c05621",
+        "diff": "medium",
+        "tags": [
+            "first-law",
+            "signs"
+        ],
+        "q": "A gas absorbs $400\\,\\text{J}$ of heat and does $150\\,\\text{J}$ of work. What is $\\Delta U$?",
+        "opts": [
+            "$+550\\,\\text{J}$",
+            "$+250\\,\\text{J}$",
+            "$-250\\,\\text{J}$",
+            "$-550\\,\\text{J}$"
+        ],
+        "correct": "$+250\\,\\text{J}$",
+        "explain": "$\\Delta U = Q - W = 400 - 150 = +250\\,\\text{J}$. Positive $Q$ = heat in, positive $W$ = work done by system. Internal energy increased."
+    },
+    {
+        "id": "MOD_01",
+        "topic": "Modern Physics",
+        "color": "#2b6cb0",
+        "diff": "easy",
+        "tags": [
+            "mass-energy",
+            "conceptual"
+        ],
+        "q": "What does $E = mc^2$ fundamentally tell us?",
+        "opts": [
+            "Energy can be created from nothing",
+            "Mass and energy are interchangeable",
+            "Mass is always conserved",
+            "Only nuclear reactions involve energy"
+        ],
+        "correct": "Mass and energy are interchangeable",
+        "explain": "Mass IS a form of energy. They're two sides of the same coin — convertible. A small mass yields enormous energy because $c^2 \\approx 9 \\times 10^{16}$."
+    },
+    {
+        "id": "MOD_02",
+        "topic": "Modern Physics",
+        "color": "#2b6cb0",
+        "diff": "medium",
+        "tags": [
+            "de-broglie",
+            "macroscopic"
+        ],
+        "q": "Does a baseball (mass $\\approx 0.15\\,\\text{kg}$, speed $\\approx 30\\,\\text{m/s}$) have a de Broglie wavelength?",
+        "opts": [
+            "No, only subatomic particles have wave properties",
+            "Yes, but it's immeasurably small",
+            "Yes, and it's about 1 nm",
+            "Only at relativistic speeds"
+        ],
+        "correct": "Yes, but it's immeasurably small",
+        "explain": "ALL matter has wave properties! $\\lambda = h/p = 6.626 \\times 10^{-34}/(0.15 \\times 30) \\approx 1.5 \\times 10^{-34}\\,\\text{m}$. It exists but is far too small to detect."
+    },
+    {
+        "id": "MOD_03",
+        "topic": "Modern Physics",
+        "color": "#2b6cb0",
+        "diff": "hard",
+        "tags": [
+            "time-dilation",
+            "calculation"
+        ],
+        "q": "A spaceship travels at $v = 0.8c$. How much does time dilate for the astronauts compared to Earth?",
+        "opts": [
+            "1.25× slower",
+            "1.67× slower",
+            "2.0× slower",
+            "5.0× slower"
+        ],
+        "correct": "1.67× slower",
+        "explain": "$t = \\frac{t_0}{\\sqrt{1 - v^2/c^2}} = \\frac{t_0}{\\sqrt{1 - 0.64}} = \\frac{t_0}{0.6} = 1.67\\,t_0$. For every 1 second on the ship, 1.67 seconds pass on Earth."
+    }
+]

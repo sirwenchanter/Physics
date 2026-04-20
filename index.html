@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Physics Lab</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0047AB; /* Cobalt Blue */
+            --secondary: #89E37B; /* Granny Smith Apple (Saturated) */
+            --accent: #FFD700; /* Yellow */
+            --dark: #0a192f;
+            --light: #f8fafc;
+            --text-main: #334155;
+            --text-muted: #64748b;
+            --glass: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(0, 71, 171, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(137, 227, 123, 0.05) 0px, transparent 50%);
+            color: var(--text-main);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #002d6b 100%);
+            color: white;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        header h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            letter-spacing: -0.05em;
+            position: relative;
+        }
+
+        header p {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: -4rem auto 4rem;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--dark);
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 4px;
+            background: linear-gradient(to right, var(--secondary), transparent);
+            border-radius: 2px;
+        }
+
+        .sim-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .sim-card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 24px;
+            padding: 2.5rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+        }
+
+        .sim-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.2);
+            border-color: var(--secondary);
+        }
+
+        .sim-card h3 {
+            font-size: 1.75rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .sim-card p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            flex-grow: 1;
+            margin-bottom: 1.5rem;
+        }
+
+        .sim-card .btn-more {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--secondary);
+            font-weight: 700;
+            font-size: 1rem;
+            transition: gap 0.2s;
+        }
+
+        .sim-card:hover .btn-more {
+            gap: 1rem;
+        }
+
+        .badge {
+            background: var(--accent);
+            color: var(--dark);
+            padding: 0.4rem 1rem;
+            border-radius: 99px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            align-self: flex-start;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        footer {
+            text-align: center;
+            padding: 6rem 2rem;
+            color: var(--text-muted);
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .decoration {
+            position: absolute;
+            background: var(--secondary);
+            filter: blur(100px);
+            opacity: 0.15;
+            z-index: 0;
+            border-radius: 50%;
+        }
+
+        .dec-1 { width: 400px; height: 400px; top: 10%; left: -5%; }
+        .dec-2 { width: 350px; height: 350px; bottom: 20%; right: -5%; background: var(--accent); }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="decoration dec-1"></div>
+        <div class="decoration dec-2"></div>
+        <h1>Physics Lab</h1>
+        <p>A premium interactive physics playground for scientific exploration.</p>
+    </header>
+
+    <div class="container" style="margin-top: 5rem;">
+        <h2 class="section-title">🎓 Learning Hub</h2>
+        <div style="background: var(--glass); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 24px; padding: 4rem; text-align: center; box-shadow: var(--shadow);">
+            <h3 style="font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem;">Knowledge Center</h3>
+            <p style="font-size: 1.25rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 3rem;">Master the laws of nature and challenge your scientific intuition with our integrated learning modules.</p>
+            <div style="display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
+                <a href="laws.html" style="text-decoration: none; padding: 1.5rem 3rem; background: var(--primary); color: white; border: none; border-radius: 16px; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fas fa-book"></i> Laws & Meanings
+                </a>
+                <a href="quizzes.html" style="text-decoration: none; padding: 1.5rem 3rem; background: var(--secondary); color: #064e3b; border: none; border-radius: 16px; font-size: 1.1rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; gap: 0.75rem; transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+                    <i class="fas fa-graduation-cap"></i> Tests & Quizzes
+                </a>
+            </div>
+            <p style="margin-top: 3rem; font-size: 0.8rem; font-weight: 800; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; opacity: 0.5;">Development phase: Alpha 2.0</p>
+        </div>
+    </div>
+
+
+    <div class="container">
+        <h2 class="section-title">🔬 Simulations</h2>
+        <div id="sim-grid" class="sim-grid">
+            <!-- Populated via script.js -->
+        </div>
+    </div>
+
+    <footer>
+        &copy; Copyright - Žula Z Žulacrew
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

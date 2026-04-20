@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RLC Circuit Lab | Physics Lab</title>
+    <script src="lang.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #0047AB; /* Cobalt Blue */
+            --secondary: #89E37B; /* Granny Smith Apple */
+            --accent: #FFD700; /* Yellow */
+            --bg: #f8fafc;
+            --card: #ffffff;
+            --text: #1e293b;
+            --muted: #64748b;
+            --radius: 24px;
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', sans-serif; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; padding-bottom: 2rem; overflow-x: hidden; }
+
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, #002d6b 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 1.5rem;
+            left: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            text-decoration: none;
+            border-radius: 99px;
+            font-weight: 600;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .back-btn:hover { background: white; color: var(--primary); transform: translateX(-5px); }
+
+        .dashboard {
+            max-width: 1300px;
+            margin: -2rem auto 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            padding: 0 2rem;
+            z-index: 10;
+            position: relative;
+        }
+
+        .stat-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border-bottom: 4px solid var(--secondary);
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .stat-card:hover { transform: translateY(-5px); }
+
+        .stat-label { font-size: 0.7rem; font-weight: 800; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .stat-value { font-family: 'JetBrains Mono', monospace; font-size: 1.2rem; font-weight: 700; color: var(--primary); }
+
+        .main-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .card { background: var(--card); border-radius: var(--radius); padding: 2rem; box-shadow: var(--shadow); }
+
+        .sim-area {
+            background: #0f172a;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            height: 400px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        canvas#circuitCanvas { width: 100%; height: 100%; }
+
+        .controls aside { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        h2 { font-size: 1.1rem; font-weight: 800; color: var(--primary); margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 0.75rem; }
+
+        .slider-box { margin-bottom: 1.25rem; }
+        .slider-header { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; font-weight: 600; }
+        .slider-val { font-family: 'JetBrains Mono', monospace; color: var(--primary); background: #f1f5f9; padding: 2px 8px; border-radius: 6px; }
+
+        input[type="range"] { -webkit-appearance: none; width: 100%; height: 6px; border-radius: 3px; background: #e2e8f0; outline: none; }
+        input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: white; border: 3px solid var(--primary); cursor: pointer; transition: transform 0.2s; }
+        input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+
+        .toggle-group {
+            display: flex;
+            background: #f1f5f9;
+            padding: 4px;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 0.6rem;
+            border: none;
+            background: transparent;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s;
+            color: var(--muted);
+        }
+
+        .toggle-btn.active { background: white; color: var(--primary); box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+
+        .btn-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; margin-top: 1rem; }
+        .btn { padding: 0.9rem; border: none; border-radius: 14px; font-weight: 800; cursor: pointer; transition: all 0.3s; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; }
+        .btn-p { background: var(--secondary); color: #064e3b; }
+        .btn-p:hover { background: #76d369; transform: translateY(-2px); }
+        .btn-s { background: #f1f5f9; color: var(--muted); }
+        .btn-s:hover { background: #e2e8f0; }
+
+        .graph-section { grid-column: 1 / span 2; margin-top: 2rem; }
+        .oscilloscope {
+            background: #020617;
+            border-radius: 24px;
+            padding: 1.5rem;
+            position: relative;
+        }
+        canvas#graphCanvas { width: 100%; height: 300px; }
+
+        .legend {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; color: #94a3b8; }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+
+        @media (max-width: 1000px) {
+            .main-container { grid-template-columns: 1fr; }
+            .dashboard { grid-template-columns: repeat(2, 1fr); }
+            .graph-section { grid-column: 1; }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="back-btn" data-i18n="sim.backHome"><i class="fas fa-arrow-left"></i> Home</a>
+        <h1 data-i18n="sim6.title">RLC Circuit Lab</h1>
+        <p data-i18n="sim6.subtitle">Explore transient and steady-state behavior of resonant circuits</p>
+    </header>
+
+    <div class="dashboard">
+        <div class="stat-card">
+            <div class="stat-label" data-i18n="sim6.current">Current (I)</div>
+            <div class="stat-value" id="val-i">0.000 A</div>
+        </div>
+        <div class="stat-card" style="border-color: #ef4444;">
+            <div class="stat-label" data-i18n="sim6.vResistor">U-Resistor (Ur)</div>
+            <div class="stat-value" id="val-vr">0.00 V</div>
+        </div>
+        <div class="stat-card" style="border-color: #3b82f6;">
+            <div class="stat-label" data-i18n="sim6.vInductor">U-Inductor (Ul)</div>
+            <div class="stat-value" id="val-vl">0.00 V</div>
+        </div>
+        <div class="stat-card" style="border-color: #f59e0b;">
+            <div class="stat-label" data-i18n="sim6.vCapacitor">U-Capacitor (Uc)</div>
+            <div class="stat-value" id="val-vc">0.00 V</div>
+        </div>
+        <div class="stat-card" style="border-color: var(--accent);">
+            <div class="stat-label" data-i18n="sim6.resonance">Resonance Freq</div>
+            <div class="stat-value" id="val-f0">0.00 Hz</div>
+        </div>
+    </div>
+
+    <div class="main-container">
+        <main class="card">
+            <h2 data-i18n="sim6.schematic"><i class="fas fa-microchip"></i> Circuit Schematic</h2>
+            <div class="sim-area">
+                <canvas id="circuitCanvas"></canvas>
+            </div>
+        </main>
+
+        <aside class="card">
+            <h2 data-i18n="sim.parameters"><i class="fas fa-sliders-h"></i> Parameters</h2>
+            
+            <div class="slider-box">
+                <div class="slider-header"><span data-i18n="sim6.resistance">Resistance (R)</span><span class="slider-val" id="rv">10 Ω</span></div>
+                <input type="range" id="sr" min="0" max="100" step="1" value="10">
+            </div>
+
+            <div class="slider-box">
+                <div class="slider-header"><span data-i18n="sim6.inductance">Inductance (L)</span><span class="slider-val" id="lv">0.50 H</span></div>
+                <input type="range" id="sl" min="0.01" max="5" step="0.01" value="0.5">
+            </div>
+
+            <div class="slider-box">
+                <div class="slider-header"><span data-i18n="sim6.capacitance">Capacitance (C)</span><span class="slider-val" id="cv">100 µF</span></div>
+                <input type="range" id="sc" min="10" max="1000" step="10" value="100">
+            </div>
+
+            <div style="height: 1px; background: #e2e8f0; margin: 1rem 0;"></div>
+
+            <div class="stat-label" data-i18n="sim6.mode" style="text-align: left; margin-bottom: 0.75rem;">Source Mode</div>
+            <div class="toggle-group">
+                <button class="toggle-btn active" id="mode-dc" data-i18n="sim6.modeDC">DC Step</button>
+                <button class="toggle-btn" id="mode-ac" data-i18n="sim6.modeAC">AC Sine</button>
+            </div>
+
+            <div class="slider-box">
+                <div class="slider-header"><span data-i18n="sim6.voltage">Voltage (U)</span><span class="slider-val" id="vv">5.0 V</span></div>
+                <input type="range" id="sv" min="0" max="20" step="0.5" value="5">
+            </div>
+
+            <div id="freq-ctrl" class="slider-box" style="display: none;">
+                <div class="slider-header"><span data-i18n="sim6.frequency">Frequency (f)</span><span class="slider-val" id="fv">1.0 Hz</span></div>
+                <input type="range" id="sf" min="0.1" max="20" step="0.1" value="1">
+            </div>
+
+            <div class="btn-row">
+                <button class="btn btn-p" id="play" data-i18n="sim.pause">PAUSE</button>
+                <button class="btn btn-s" id="reset" data-i18n="sim.reset">RESET</button>
+            </div>
+
+            <div style="margin-top: 2rem; border-top: 1px solid #e2e8f0; padding-top: 1.5rem;">
+                <h2 style="font-size: 0.8rem; opacity: 0.6;" data-i18n="sim.learningHub">Learning Hub</h2>
+                <div class="btn-row">
+                    <a href="laws.html" class="btn btn-s" style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-book" style="margin-right: 5px; color: var(--primary)"></i> <span data-i18n="sim.laws">Laws</span></a>
+                    <a href="quizzes.html" class="btn btn-s" style="text-decoration: none; font-size: 0.75rem; background: #fff; border: 1px solid #e2e8f0; display: flex; align-items: center; justify-content: center;"><i class="fas fa-graduation-cap" style="margin-right: 5px; color: var(--secondary)"></i> <span data-i18n="sim.quiz">Quiz</span></a>
+                </div>
+            </div>
+        </aside>
+
+        <section class="graph-section card oscilloscope">
+            <h2 style="color: white;" data-i18n="sim6.oscilloscope"><i class="fas fa-wave-square"></i> Oscilloscope</h2>
+            <canvas id="graphCanvas"></canvas>
+            <div class="legend">
+                <div class="legend-item"><div class="dot" style="background: white;"></div> Uin</div>
+                <div class="legend-item"><div class="dot" style="background: var(--secondary);"></div> I (x10)</div>
+                <div class="legend-item"><div class="dot" style="background: #ef4444;"></div> Ur</div>
+                <div class="legend-item"><div class="dot" style="background: #3b82f6;"></div> Ul</div>
+                <div class="legend-item"><div class="dot" style="background: #f59e0b;"></div> Uc</div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const cCanvas = document.getElementById('circuitCanvas');
+        const cCtx = cCanvas.getContext('2d');
+        const gCanvas = document.getElementById('graphCanvas');
+        const gCtx = gCanvas.getContext('2d');
+
+        // Electron flow animation accumulator
+        let electronDashOffset = 0;
+
+        // State variables
+        let params = {
+            R: 10,
+            L: 0.5,
+            C: 100e-6,
+            V0: 5,
+            freq: 1,
+            isAC: false,
+            running: true
+        };
+
+        // Physical state: q = charge, i = current
+        let state = {
+            q: 0,
+            i: 0,
+            t: 0,
+            history: []
+        };
+
+        function resize() {
+            cCanvas.width = cCanvas.offsetWidth * devicePixelRatio;
+            cCanvas.height = cCanvas.offsetHeight * devicePixelRatio;
+            gCanvas.width = gCanvas.offsetWidth * devicePixelRatio;
+            gCanvas.height = gCanvas.offsetHeight * devicePixelRatio;
+            // Reset transform before scaling to prevent stacking on repeated resize
+            cCtx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+            gCtx.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
+        }
+
+        window.addEventListener('resize', resize);
+        document.addEventListener('DOMContentLoaded', () => {
+            initLang();
+            resize();
+            requestAnimationFrame(loop);
+        });
+
+        // UI Listeners
+        document.getElementById('sr').addEventListener('input', e => { params.R = parseFloat(e.target.value); document.getElementById('rv').textContent = params.R + ' Ω'; });
+        document.getElementById('sl').addEventListener('input', e => { params.L = parseFloat(e.target.value); document.getElementById('lv').textContent = params.L.toFixed(2) + ' H'; });
+        document.getElementById('sc').addEventListener('input', e => { params.C = parseFloat(e.target.value) * 1e-6; document.getElementById('cv').textContent = e.target.value + ' µF'; });
+        document.getElementById('sv').addEventListener('input', e => { params.V0 = parseFloat(e.target.value); document.getElementById('vv').textContent = params.V0.toFixed(1) + ' V'; });
+        document.getElementById('sf').addEventListener('input', e => { params.freq = parseFloat(e.target.value); document.getElementById('fv').textContent = params.freq.toFixed(1) + ' Hz'; });
+        
+        document.getElementById('mode-dc').addEventListener('click', () => { 
+            params.isAC = false; 
+            document.getElementById('mode-dc').classList.add('active');
+            document.getElementById('mode-ac').classList.remove('active');
+            document.getElementById('freq-ctrl').style.display = 'none';
+        });
+        document.getElementById('mode-ac').addEventListener('click', () => { 
+            params.isAC = true; 
+            document.getElementById('mode-ac').classList.add('active');
+            document.getElementById('mode-dc').classList.remove('active');
+            document.getElementById('freq-ctrl').style.display = 'block';
+        });
+
+        document.getElementById('play').addEventListener('click', e => {
+            params.running = !params.running;
+            e.target.textContent = params.running ? t('sim.pause') : t('sim.resume');
+        });
+
+        document.getElementById('reset').addEventListener('click', () => {
+            state.q = 0;
+            state.i = 0;
+            state.t = 0;
+            state.history = [];
+        });
+
+        function getVin(t) {
+            if (params.isAC) {
+                return params.V0 * Math.sin(2 * Math.PI * params.freq * t);
+            } else {
+                return params.V0; // Step response
+            }
+        }
+
+        function getAcc(q, i, t) {
+            const Uin = getVin(t);
+            // L*i' + R*i + q/C = U(t)  => i' = (U - Ri - q/C) / L
+            return (Uin - params.R * i - q / params.C) / params.L;
+        }
+
+        function updatePhysics() {
+            const dt = 0.001; // Small time step for precision
+            const subSteps = 16; // Run physics faster than visual frame rate
+            
+            for (let s = 0; s < subSteps; s++) {
+                /* VELOCITY VERLET INTEGRATOR (Modified for Damping) */
+                const a1 = getAcc(state.q, state.i, state.t);
+                
+                // 1. Update position (charge)
+                state.q += state.i * dt + 0.5 * a1 * dt * dt;
+                
+                // 2. Predict velocity (current) for next acceleration calculation
+                const iMid = state.i + 0.5 * a1 * dt;
+                
+                // 3. Acceleration at new position and predicted velocity
+                const a2 = getAcc(state.q, iMid, state.t + dt);
+                
+                // 4. Update final velocity (current)
+                state.i = iMid + 0.5 * a2 * dt;
+                
+                state.t += dt;
+            }
+
+            const Uin = getVin(state.t);
+            const Ur = state.i * params.R;
+            const Uc = state.q / params.C;
+            const Ul = Uin - Ur - Uc;
+            state.history.push({ t: state.t, i: state.i, q: state.q, Uin, Ur, Uc, Ul });
+            if (state.history.length > 500) state.history.shift();
+
+            // Update stats
+            document.getElementById('val-i').textContent = state.i.toFixed(3) + ' A';
+            document.getElementById('val-vr').textContent = Ur.toFixed(2) + ' V';
+            document.getElementById('val-vl').textContent = Ul.toFixed(2) + ' V';
+            document.getElementById('val-vc').textContent = Uc.toFixed(2) + ' V';
+            
+            const f0 = 1 / (2 * Math.PI * Math.sqrt(params.L * params.C));
+            document.getElementById('val-f0').textContent = f0.toFixed(2) + ' Hz';
+        }
+
+        function drawSchematic() {
+            const w = cCanvas.width / devicePixelRatio;
+            const h = cCanvas.height / devicePixelRatio;
+            // Clear full canvas (use pixel dimensions to ensure complete clear)
+            cCtx.save();
+            cCtx.setTransform(1, 0, 0, 1, 0, 0);
+            cCtx.clearRect(0, 0, cCanvas.width, cCanvas.height);
+            cCtx.restore();
+
+            const centerX = w / 2;
+            const centerY = h / 2;
+            const size = 120;
+
+            cCtx.strokeStyle = '#64748b';
+            cCtx.lineWidth = 3;
+            cCtx.setLineDash([]);
+
+            // Square loop
+            cCtx.strokeRect(centerX - size, centerY - size/1.5, size * 2, size * 1.5);
+
+            // Draw Source (Left side)
+            cCtx.fillStyle = '#0f172a';
+            cCtx.beginPath();
+            cCtx.arc(centerX - size, centerY + 10, 20, 0, Math.PI * 2);
+            cCtx.fill();
+            cCtx.stroke();
+            cCtx.fillStyle = 'white';
+            cCtx.font = 'bold 16px Outfit';
+            cCtx.textAlign = 'center';
+            cCtx.fillText(params.isAC ? '~' : 'U', centerX - size, centerY + 16);
+
+            // Draw Resistor (Top side)
+            drawResistor(centerX - 30, centerY - size/1.5, 60);
+
+            // Draw Inductor (Right side)
+            drawInductor(centerX + size, centerY - 30, 60);
+
+            // Draw Capacitor (Bottom side)
+            drawCapacitor(centerX - 15, centerY + size/1.5 - 10);
+
+            // Electron flow animation — accumulate dash offset based on current
+            electronDashOffset += state.i * 50;
+            cCtx.save();
+            cCtx.setLineDash([5, 15]);
+            cCtx.lineDashOffset = -electronDashOffset;
+            cCtx.strokeStyle = 'rgba(137, 227, 123, 0.6)';
+            cCtx.lineWidth = 8;
+            cCtx.strokeRect(centerX - size, centerY - size/1.5, size * 2, size * 1.5);
+            cCtx.restore();
+        }
+
+        function drawResistor(x, y, len) {
+            cCtx.fillStyle = '#0f172a';
+            cCtx.fillRect(x, y - 10, len, 20);
+            cCtx.strokeStyle = '#ef4444';
+            cCtx.lineWidth = 3;
+            cCtx.strokeRect(x, y - 10, len, 20);
+            cCtx.fillStyle = 'white';
+            cCtx.font = 'bold 12px Outfit';
+            cCtx.textAlign = 'center';
+            cCtx.fillText('R', x + len/2, y + 4);
+        }
+
+        function drawInductor(x, y, len) {
+            cCtx.beginPath();
+            cCtx.strokeStyle = '#3b82f6';
+            cCtx.lineWidth = 3;
+            for (let i = 0; i < 4; i++) {
+                cCtx.arc(x, y + i * 15, 10, -Math.PI/2, Math.PI/2);
+            }
+            cCtx.stroke();
+            cCtx.fillStyle = 'white';
+            cCtx.font = 'bold 12px Outfit';
+            cCtx.fillText('L', x + 20, y + len/2);
+        }
+
+        function drawCapacitor(x, y) {
+            cCtx.strokeStyle = '#f59e0b';
+            cCtx.lineWidth = 3;
+            cCtx.beginPath();
+            cCtx.moveTo(x, y - 10); cCtx.lineTo(x, y + 30);
+            cCtx.moveTo(x + 30, y - 10); cCtx.lineTo(x + 30, y + 30);
+            cCtx.stroke();
+            cCtx.fillStyle = 'white';
+            cCtx.font = 'bold 12px Outfit';
+            cCtx.fillText('C', x + 15, y + 45);
+        }
+
+        function drawGraphs() {
+            const w = gCanvas.width / devicePixelRatio;
+            const h = gCanvas.height / devicePixelRatio;
+            // Clear full canvas at pixel resolution
+            gCtx.save();
+            gCtx.setTransform(1, 0, 0, 1, 0, 0);
+            gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
+            gCtx.restore();
+
+            // Grid
+            gCtx.strokeStyle = 'rgba(255,255,255,0.05)';
+            gCtx.lineWidth = 1;
+            for (let i = 0; i <= 10; i++) {
+                const x = (i / 10) * w;
+                gCtx.beginPath(); gCtx.moveTo(x, 0); gCtx.lineTo(x, h); gCtx.stroke();
+                const y = (i / 10) * h;
+                gCtx.beginPath(); gCtx.moveTo(0, y); gCtx.lineTo(w, y); gCtx.stroke();
+            }
+
+            if (state.history.length < 2) return;
+
+            const scaleU = h / 30; // 30V range
+            const scaleI = h / 3;  // 3A range (but we'll multiply by 10 for display)
+            const midY = h / 2;
+
+            function plot(key, color, scale, multiplier = 1) {
+                gCtx.strokeStyle = color;
+                gCtx.lineWidth = 2;
+                gCtx.beginPath();
+                state.history.forEach((pt, i) => {
+                    const x = (i / 500) * w;
+                    const y = midY - pt[key] * multiplier * scale;
+                    if (i === 0) gCtx.moveTo(x, y); else gCtx.lineTo(x, y);
+                });
+                gCtx.stroke();
+            }
+
+            // Zero line
+            gCtx.strokeStyle = 'rgba(255,255,255,0.2)';
+            gCtx.beginPath(); gCtx.moveTo(0, midY); gCtx.lineTo(w, midY); gCtx.stroke();
+
+            plot('Uin', 'rgba(255,255,255,0.8)', scaleU);
+            plot('i', '#89e37b', scaleI, 10); // Current magnified (raw hex, CSS vars don't work in canvas)
+            plot('Ur', '#ef4444', scaleU);
+            plot('Ul', '#3b82f6', scaleU);
+            plot('Uc', '#f59e0b', scaleU);
+        }
+
+        function loop() {
+            if (params.running) {
+                updatePhysics();
+            }
+            drawSchematic();
+            drawGraphs();
+            requestAnimationFrame(loop);
+        }
+    </script>
+</body>
+
+</html>

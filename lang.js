@@ -74,7 +74,7 @@ const TRANSLATIONS = {
 
   "law.ohm.name":         { en: "Ohm's Law", cs: "Ohmův zákon" },
   "law.ohm.meaning":      { en: "The current through a conductor between two points is directly proportional to the voltage across the two points.", cs: "Proud procházející vodičem mezi dvěma body je přímo úměrný napětí mezi těmito body." },
-  "law.ohm.V":            { en: "V: Voltage (V)", cs: "V: Napětí (V)" },
+  "law.ohm.V":            { en: "U: Voltage (V)", cs: "U: Napětí (V)" },
   "law.ohm.I":            { en: "I: Current (A)", cs: "I: Elektrický proud (A)" },
   "law.ohm.R":            { en: "R: Resistance (Ω)", cs: "R: Odpor (Ω)" },
 
@@ -230,6 +230,25 @@ const TRANSLATIONS = {
   "sim5.phaseGraph":      { en: "Phase Space (v vs x)", cs: "Fázový prostor (v vs x)" },
   "sim5.kineticBar":      { en: "KINETIC ENERGY", cs: "KINETICKÁ ENERGIE" },
   "sim5.potentialBar":    { en: "POTENTIAL ENERGY", cs: "POTENCIÁLNÍ ENERGIE" },
+
+  // ── simulation-6.html (RLC) ─────────────────────────────────────────────
+  "sim6.title":           { en: "RLC Circuit Lab", cs: "Laboratoř RLC obvodu" },
+  "sim6.subtitle":        { en: "Explore transient and steady-state behavior of resonant circuits", cs: "Prozkoumejte přechodové jevy a ustálený stav rezonančních obvodů" },
+  "sim6.resistance":      { en: "Resistance (R)", cs: "Odpor (R)" },
+  "sim6.inductance":      { en: "Inductance (L)", cs: "Indukčnost (L)" },
+  "sim6.capacitance":     { en: "Capacitance (C)", cs: "Kapacita (C)" },
+  "sim6.voltage":         { en: "Voltage (U)", cs: "Napětí (U)" },
+  "sim6.frequency":       { en: "Frequency (f)", cs: "Frekvence (f)" },
+  "sim6.mode":            { en: "Source Mode", cs: "Režim zdroje" },
+  "sim6.modeDC":          { en: "DC Step", cs: "DC Skok" },
+  "sim6.modeAC":          { en: "AC Sine", cs: "AC Sinus" },
+  "sim6.current":         { en: "Current (I)", cs: "Proud (I)" },
+  "sim6.vResistor":       { en: "U-Resistor (Ur)", cs: "U-Rezistor (Ur)" },
+  "sim6.vInductor":       { en: "U-Inductor (Ul)", cs: "U-Induktor (Ul)" },
+  "sim6.vCapacitor":      { en: "U-Capacitor (Uc)", cs: "U-Kapacitor (Uc)" },
+  "sim6.resonance":       { en: "Resonance Freq", cs: "Rezonanční f." },
+  "sim6.oscilloscope":    { en: "Oscilloscope", cs: "Osciloskop" },
+  "sim6.schematic":       { en: "Circuit Schematic", cs: "Schéma obvodu" },
 
   // ── quizzes.html ────────────────────────────────────────────────────────
   "quiz.title":           { en: "Physics Quizzes", cs: "Fyzikální kvízy" },

@@ -33,6 +33,13 @@ const simulations = [
         description: "Analyze spring-mass systems with damping and real-time energy conversion phase-space plots.",
         file: "simulation-5.html",
         tag: "Mechanics"
+    },
+    {
+        id: 6,
+        title: "RLC Circuit Lab",
+        description: "Design and analyze RLC circuits. Explore resonance, damping, and phase relationships in AC/DC modes.",
+        file: "simulation-6.html",
+        tag: "Electronics"
     }
 ];
 
